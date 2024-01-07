@@ -4,7 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require('mongoose');
 //const uri = `mongodb+srv://admin:${process.env.mongoPass}${process.env.mongoAtlasURL}`;
-const uri = `mongodb+srv://admin:9VxocsGp0kOwa5pF@pzkoszcluster.ns9maab.mongodb.net/?retryWrites=true&w=majority"`
+// wiadomo ze tego tu nie powinno byc XD ALE cos sie piepszy z dotenv
+const uri = `mongodb+srv://admin:9VxocsGp0kOwa5pF@pzkoszcluster.ns9maab.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(uri, {
     dbName: 'pzkoszNBA'
 });
