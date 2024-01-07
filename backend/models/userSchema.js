@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
   pictureLink: {
     type: String
   }
+},
+{
+    collection: 'Users'
 });
 
 // Hash the password before saving

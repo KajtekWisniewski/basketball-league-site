@@ -28,6 +28,9 @@ const teamSchema = new Schema({
       default: 0
     }
   }
+},
+{
+    collection: 'Teams'
 });
 
 const Team = mongoose.model('Team', teamSchema);
