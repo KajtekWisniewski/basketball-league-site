@@ -24,9 +24,6 @@ const userSchema = new mongoose.Schema({
   pictureLink: {
     type: String
   }
-},
-{
-    collection: 'Users'
 });
 
 // Hash the password before saving
@@ -50,6 +47,6 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema, 'Users');
 
 module.exports = User;

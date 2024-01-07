@@ -28,11 +28,8 @@ const teamSchema = new Schema({
       default: 0
     }
   }
-},
-{
-    collection: 'Teams'
 });
 
-const Team = mongoose.model('Team', teamSchema);
+const Team = mongoose.model('Team', teamSchema, 'Teams');
 
 module.exports = Team;

@@ -66,12 +66,8 @@ const playerSchema = new Schema({
       default: 0
     }
   }
-},
-{
-    collection: 'Players'
-}
-);
+});
 
-const Player = mongoose.model('Player', playerSchema);
+const Player = mongoose.model('Player', playerSchema, 'Players');
 
 module.exports = Player;

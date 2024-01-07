@@ -49,11 +49,8 @@ const matchSchema = new mongoose.Schema({
     required: true
   },
   opponents: [opponentSchema]
-},
-{
-  collection: 'Matches'
 });
 
-const Match = mongoose.model('Match', matchSchema);
+const Match = mongoose.model('Match', matchSchema, 'Matches');
 
 module.exports = Match;
