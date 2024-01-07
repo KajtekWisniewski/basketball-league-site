@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Player = require('../models/playerSchema');
+const Team = require('../models/teamSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
-const playerHandler = new DataHandler();
+const teamHandler = new DataHandler();
 
 router.use(bodyParser.json());
 
 router.post('/', async (req, res) => {
   try {
     const newPlayerData = req.body;
-    const addedPlayer = await playerHandler.addDocument(Player, newPlayerData);
+    const addedPlayer = await teamHandler.addDocument(Team, newPlayerData);
     res.status(201).json(addedPlayer);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const players = await playerHandler.getAllDocuments(Player);
+    const players = await teamHandler.getAllDocuments(Team);
     res.json(players);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -30,7 +30,7 @@ router.put('/:id', async (req, res) => {
   const playerId = req.params.id;
   const updateData = req.body; 
   try {
-    const updatedPlayer = await playerHandler.patchDocument(Player, { _id: playerId }, updateData);
+    const updatedPlayer = await teamHandler.patchDocument(Team, { _id: playerId }, updateData);
     res.json(updatedPlayer);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -40,7 +40,7 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const playerId = req.params.id;
   try {
-    const retrievedPlayer = await playerHandler.getSingleDocument(Player, playerId)
+    const retrievedPlayer = await teamHandler.getSingleDocument(Team, playerId)
     res.json(retrievedPlayer);
   } catch (error) {
     res.status(500).json({error: 'Didnt find such player'});
@@ -51,7 +51,7 @@ router.delete('/:id', async (req, res) => {
   const playerId = req.params.id;
 
   try {
-    const deletedPlayer = await playerHandler.deleteDocument(Player, { _id: playerId });
+    const deletedPlayer = await teamHandler.deleteDocument(Team, { _id: playerId });
     res.json(deletedPlayer);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
