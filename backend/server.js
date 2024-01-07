@@ -20,6 +20,8 @@ db.once('open', () => console.log('Connected to database'));
 
 const playersRouter = require('./routes/playersRoutes');
 app.use('/players', playersRouter);
+const teamsRouter = require('./routes/teamsRoutes');
+app.use('/teams', teamsRouter);
 
 app.listen(PORT, () => console.log(`server started on ${PORT}`));
 
