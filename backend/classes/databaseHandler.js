@@ -1,8 +1,8 @@
 class DatabaseHandler {
 
-    async getAllDocuments(model) {
+    async getAllDocuments(model, populateArray="") {
         try {
-          const documents = await model.find();
+          const documents = await model.find().populate(populateArray);
           return documents;
         } catch (error) {
           console.error('Error fetching documents:', error);
@@ -29,9 +29,9 @@ class DatabaseHandler {
       }
     }
 
-    async getSingleDocument(model, identifier) {
+    async getSingleDocument(model, identifier, populateArray="") {
       try {
-        const document = await model.findOne({ _id: identifier });
+        const document = await model.findOne({ _id: identifier }).populate(populateArray);
         return document;
       } catch (error) {
         console.error('Error getting the document', error)

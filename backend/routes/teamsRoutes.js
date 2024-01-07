@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const players = await teamHandler.getAllDocuments(Team);
+    const players = await teamHandler.getAllDocuments(Team, 'roster');
     res.json(players);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -40,10 +40,10 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const playerId = req.params.id;
   try {
-    const retrievedPlayer = await teamHandler.getSingleDocument(Team, playerId)
+    const retrievedPlayer = await teamHandler.getSingleDocument(Team, playerId, 'roster')
     res.json(retrievedPlayer);
   } catch (error) {
-    res.status(500).json({error: 'Didnt find such player'});
+    res.status(500).json({error: 'Didnt find such team'});
   }
 })
 
