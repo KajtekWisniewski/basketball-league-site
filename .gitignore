@@ -1,5 +1,7 @@
 .env
 node_modules
+*.env
+config.env
 
 /node_modules
 /.pnp

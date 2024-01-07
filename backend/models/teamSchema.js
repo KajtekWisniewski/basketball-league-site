@@ -10,6 +10,11 @@ const teamSchema = new Schema({
     type: String,
     required: true
   },
+  conference: {
+    type: String,
+    enum: ['western', 'eastern'],
+    required: true
+  },
   roster: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',

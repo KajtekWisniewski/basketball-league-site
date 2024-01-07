@@ -39,7 +39,6 @@ router.post('/', async (req, res) => {
       });
   
       const savedPlayer = await newPlayer.save();
-  
       res.status(201).json(savedPlayer);
     } catch (err) {
       res.status(400).json({ message: err.message });
