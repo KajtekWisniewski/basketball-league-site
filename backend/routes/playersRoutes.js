@@ -49,4 +49,15 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  const playerId = req.params.id;
+
+  try {
+    const deletedPlayer = await playerHandler.deleteDocument(Player, { _id: playerId });
+    res.json(deletedPlayer);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;

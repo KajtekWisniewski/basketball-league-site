@@ -53,6 +53,16 @@ class DatabaseHandler {
         throw error;
       }
     }
+
+    async deleteDocument(model, identifier) {
+      try {
+        const deletedDocument = await model.findOneAndDelete(identifier);
+        return deletedDocument;
+      } catch (error) {
+        console.error('Error deleting document:', error);
+        throw error;
+      }
+    }
 }
 
 module.exports = DatabaseHandler;
