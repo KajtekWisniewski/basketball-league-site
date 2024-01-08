@@ -5,7 +5,7 @@ const cors = require("cors");
 const mongoose = require('mongoose');
 const uri = `mongodb+srv://admin:${process.env.mongoPass}${process.env.mongoAtlasURL}`;
 mongoose.connect(uri, {
-    dbName: 'pzkoszNBA'
+    dbName: `${process.env.mongoDBname}`
 });
 
 const app = express();
