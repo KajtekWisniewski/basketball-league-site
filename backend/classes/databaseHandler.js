@@ -63,6 +63,38 @@ class DatabaseHandler {
         throw error;
       }
     }
+
+    async getMatchWithPopulatedTeamsAndPlayers(model, matchId) {
+      try {
+        // Populate opponents array with teams and teams' players
+        const populatedMatch = await this.getSingleDocument(model, matchId, 'opponents.team.opponents.players.player');
+        return populatedMatch;
+      } catch (error) {
+        console.error('Error getting the match with populated teams and players', error);
+        throw error;
+      }
+    }
+
+    async getAllDocumentsPopulated(model, populateFields = {}) {
+      try {
+        const query = Object.entries(populateFields).reduce((q, [field, value]) => q.populate(field, value), model.find());
+        const documents = await query.exec();
+        return documents;
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+        throw error;
+      }
+    }
+
+    async getTeamsByConferenceOrDivision(model, conferenceOrDivision) {
+      try {
+        const teams = await model.find({ $or: [{ conference: conferenceOrDivision }, { division: conferenceOrDivision }] });
+        return teams;
+      } catch (error) {
+        console.error('Error fetching teams by conference or division:', error);
+        throw error;
+      }
+    }
 }
 
 module.exports = DatabaseHandler;
