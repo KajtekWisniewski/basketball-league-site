@@ -28,6 +28,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/calcwr', async (req, res) => {
+
+  try {
+    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(Team);
+    res.json(teamsWithWinPercentage);
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   const teamId = req.params.id;
   const updateData = req.body; 
@@ -72,17 +83,7 @@ router.get('/t/:conferenceOrDivision', async (req, res) => {
   }
 });
 
-router.get('/calcwr', async (req, res) => {
-  const { conferenceOrDivision } = req.params;
 
-  try {
-    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(Team);
-    res.json(teamsWithWinPercentage);
-  } catch (error) {
-    console.error('Error fetching teams:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 
 module.exports = router;

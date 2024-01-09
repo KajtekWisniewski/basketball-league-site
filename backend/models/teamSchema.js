@@ -35,6 +35,10 @@ const teamSchema = new Schema({
     losses: {
       type: Number,
       default: 0
+    },
+    winPercentage: {
+      type: Number,
+      default: 100
     }
   }
 });

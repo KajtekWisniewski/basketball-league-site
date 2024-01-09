@@ -28,6 +28,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/calcage', async (req, res) => {
+  try {
+    const playersWithAge = await playerAggregationHandler.calculateAge(Player);
+    res.json(playersWithAge);
+  } catch (error) {
+    console.error('Error fetching players:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 router.put('/:id', async (req, res) => {
   const playerId = req.params.id;
   const updateData = req.body; 
@@ -72,14 +82,6 @@ router.get('/p/:teamName', async (req, res) => {
   }
 });
 
-router.get('/calcage', async (req, res) => {
-  try {
-    const playersWithAge = await playerAggregationHandler.calculateAge(Player);
-    res.json(playersWithAge);
-  } catch (error) {
-    console.error('Error fetching players:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-})
+
 
 module.exports = router;
