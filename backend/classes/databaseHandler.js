@@ -95,6 +95,39 @@ class DatabaseHandler {
         throw error;
       }
     }
+
+    async getDocumentsByField(model, fieldToSearch, valueToMatch) {
+      try {
+        const query = {};
+        query[fieldToSearch] = valueToMatch;
+  
+        const documents = await model.find(query);
+        return documents;
+      } catch (error) {
+        console.error(`Error fetching documents by ${fieldToSearch}:`, error);
+        throw error;
+      }
+    }
+
+    async countCollection(model) {
+      try {
+        const count = await model.countDocuments();
+        return count;
+      } catch (error) {
+        console.error('Error counting documents:', error);
+        throw error;
+      }
+    }
+
+    async countDocuments(model, condition = {}) {
+      try {
+        const count = await model.countDocuments(condition);
+        return count;
+      } catch (error) {
+        console.error('Error counting documents:', error);
+        throw error;
+      }
+    }
 }
 
 module.exports = DatabaseHandler;
