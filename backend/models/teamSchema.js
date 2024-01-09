@@ -15,6 +15,10 @@ const teamSchema = new Schema({
     enum: ['western', 'eastern'],
     required: true
   },
+  division: {
+    type: String,
+    enum: ['atlantic', 'central', 'southeast', 'northwest', 'pacific', 'southwest']
+  },
   roster: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',
@@ -31,6 +35,10 @@ const teamSchema = new Schema({
     losses: {
       type: Number,
       default: 0
+    },
+    winPercentage: {
+      type: Number,
+      default: 100
     }
   }
 });

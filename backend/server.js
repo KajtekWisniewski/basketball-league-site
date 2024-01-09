@@ -20,6 +20,10 @@ const playersRouter = require('./routes/playersRoutes');
 app.use('/players', playersRouter);
 const teamsRouter = require('./routes/teamsRoutes');
 app.use('/teams', teamsRouter);
+const matchRouter = require('./routes/matchesRoutes');
+app.use('/matches', matchRouter);
+const utilRouter = require('./routes/utilRoutes');
+app.use('/util', utilRouter);
 
 app.listen(PORT, () => console.log(`server started on ${PORT}`));
 

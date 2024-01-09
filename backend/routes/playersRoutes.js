@@ -4,6 +4,8 @@ const Player = require('../models/playerSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const playerHandler = new DataHandler();
+const AggregationHandler = require('../classes/aggregationHandler');
+const playerAggregationHandler = new AggregationHandler();
 
 router.use(bodyParser.json());
 
@@ -25,6 +27,16 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.get('/calcage', async (req, res) => {
+  try {
+    const playersWithAge = await playerAggregationHandler.calculateAge(Player);
+    res.json(playersWithAge);
+  } catch (error) {
+    console.error('Error fetching players:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 
 router.put('/:id', async (req, res) => {
   const playerId = req.params.id;
@@ -57,5 +69,19 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.get('/p/:teamName', async (req, res) => {
+  const { teamName } = req.params;
+
+  try {
+    const players = await playerHandler.getDocumentsByField(Player, 'team', teamName);
+    res.json(players);
+  } catch (error) {
+    console.error('Error fetching players:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 module.exports = router;
