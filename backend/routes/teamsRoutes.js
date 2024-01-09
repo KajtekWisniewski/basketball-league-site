@@ -3,7 +3,9 @@ const router = express.Router();
 const Team = require('../models/teamSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
+const AggregationHandler = require('../classes/aggregationHandler');
 const teamHandler = new DataHandler();
+const teamAggregationHandler = new AggregationHandler();
 
 router.use(bodyParser.json());
 
@@ -69,5 +71,18 @@ router.get('/t/:conferenceOrDivision', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.get('/calcwr', async (req, res) => {
+  const { conferenceOrDivision } = req.params;
+
+  try {
+    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(TeamModel);
+    res.json(teamsWithWinPercentage);
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 module.exports = router;

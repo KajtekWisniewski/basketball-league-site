@@ -128,6 +128,8 @@ class DatabaseHandler {
         throw error;
       }
     }
+
+    
 }
 
 module.exports = DatabaseHandler;
