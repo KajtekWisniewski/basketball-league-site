@@ -76,7 +76,7 @@ router.get('/calcwr', async (req, res) => {
   const { conferenceOrDivision } = req.params;
 
   try {
-    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(TeamModel);
+    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(Team);
     res.json(teamsWithWinPercentage);
   } catch (error) {
     console.error('Error fetching teams:', error);

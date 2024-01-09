@@ -37,19 +37,21 @@ class AggregationHandler {
         }
       }
 
-      //player specific method
+      //player specific method 
       async calculateAge(playerModel) {
         try {
           const result = await playerModel.aggregate([
             {
               $project: {
-                name: 1, // Include existing fields
-                birthdate: 1,
+                ...Object.keys(playerModel.schema.paths).reduce((acc, field) => {
+                  acc[field] = 1;
+                  return acc;
+                }, {}),
                 age: {
                   $floor: {
                     $divide: [
                       { $subtract: [new Date(), '$birthdate'] },
-                      1000 * 60 * 60 * 24 * 365
+                      1000 * 60 * 60 * 24 * 365 // Milliseconds per year
                     ]
                   }
                 }

@@ -74,7 +74,7 @@ router.get('/p/:teamName', async (req, res) => {
 
 router.get('/calcage', async (req, res) => {
   try {
-    const playersWithAge = await playerAggregationHandler.calculateAge(PlayerModel);
+    const playersWithAge = await playerAggregationHandler.calculateAge(Player);
     res.json(playersWithAge);
   } catch (error) {
     console.error('Error fetching players:', error);
