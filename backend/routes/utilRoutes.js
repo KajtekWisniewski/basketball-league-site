@@ -6,6 +6,7 @@ const utilHandler = new DataHandler();
 
 router.use(bodyParser.json());
 
+//collection size
 router.get('/count/:model', async (req, res) => {
     const { model } = req.params;
   
@@ -18,6 +19,7 @@ router.get('/count/:model', async (req, res) => {
     }
   });
 
+//amount of documents from specified key value pair eg /util/count/player/team/boston-celtics
 router.get('/count/:model/:field/:value', async (req, res) => {
     const { model, field, value } = req.params;
   
