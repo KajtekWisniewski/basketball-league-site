@@ -38,7 +38,8 @@ const playerSchema = new Schema({
     type: String
   },
   fantasyScore: {
-    type: Number
+    type: Number,
+    default: 0
   },
   statistics: {
     gamesPlayed: {
