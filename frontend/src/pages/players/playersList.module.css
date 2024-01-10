@@ -16,3 +16,7 @@
     flex-direction: column;
 
 }
+
+.playersTable > tr > th:hover {
+    opacity: 80%;
+}

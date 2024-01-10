@@ -1,8 +1,8 @@
 import axios from 'axios';
-import PlayerCard from '../components/PlayerCard';
-import PlayerPreview from '../components/PlayerPreview';
+import PlayerPreview from '../../components/PlayerPreview';
 import React, { useState, useEffect } from 'react';
 import styles from './playersList.module.css'
+import Link from 'next/link';
 
 export default function PlayersList() {
     const [players, setPlayers] = useState(null);
@@ -30,6 +30,7 @@ export default function PlayersList() {
       setSortField(field);
     };
 
+    //to change, sorting players by lastname instead of first
     const sortedPlayers = [...players].sort((a, b) => {
       const compareValue = (field) => (a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0);
       return sortOrder === 'asc' ? compareValue(sortField) : compareValue(sortField) * -1;
@@ -52,7 +53,7 @@ export default function PlayersList() {
         </thead>
         <tbody>
           {sortedPlayers.map((player) => (
-            <PlayerPreview key={player._id} playerId={player._id} />
+              <PlayerPreview key={player._id} playerId={player._id} />
           ))}
         </tbody>
       </table>

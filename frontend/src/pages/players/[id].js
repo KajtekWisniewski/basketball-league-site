@@ -1,0 +1,37 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import PlayerCard from '../../components/PlayerCard';
+
+function PlayerDetails() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [player, setPlayer] = useState(null);
+
+  useEffect(() => {
+    const fetchPlayerDetails = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:3001/players/${id}`);
+        setPlayer(response.data);
+      } catch (error) {
+        console.error(`Error fetching player details for ID ${id}:`, error);
+      }
+    };
+
+    if (id) {
+      fetchPlayerDetails();
+    }
+  }, [id]);
+
+  if (!player) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <PlayerCard playerId={id}/>
+    </>
+  );
+}
+
+export default PlayerDetails;
