@@ -24,8 +24,9 @@ const PlayerPreview = ({ playerId }) => {
     fetchPlayerData();
   }, [playerId]);
 
+  //placeholder for loading
   if (!player) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (

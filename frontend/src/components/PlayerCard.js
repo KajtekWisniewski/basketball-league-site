@@ -22,8 +22,9 @@ const PlayerCard = ({ playerId }) => {
     fetchPlayerData();
   }, [playerId]);
 
+  //placeholder for loading
   if (!player) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (

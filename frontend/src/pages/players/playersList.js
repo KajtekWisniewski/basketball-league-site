@@ -21,8 +21,9 @@ export default function PlayersList() {
       fetchPlayersList();
     }, [])
 
+    //placeholder for loading
     if (!players) {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
 
     const handleSort = (field) => {
