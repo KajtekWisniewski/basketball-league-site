@@ -28,6 +28,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/allids', async (req, res) => {
+  try {
+    const players = await playerHandler.getAllDocuments(Player);
+    res.json(players);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/calcage', async (req, res) => {
   try {
     const playersWithAge = await playerAggregationHandler.calculateAge(Player);
@@ -82,6 +91,18 @@ router.get('/p/:teamName', async (req, res) => {
   }
 });
 
+//array of player-ids from specific team, more of a util for populating database
+router.get('/team/:teamName/players', async (req, res) => {
+  try {
+    const { teamName } = req.params;
 
+    const playerIds = await playerHandler.getSpecificDocumentValuesByField(Player, 'team', teamName, '_id');
+
+    res.json(playerIds);
+  } catch (error) {
+    console.error('Error fetching player IDs:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;

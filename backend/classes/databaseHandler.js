@@ -88,7 +88,7 @@ class DatabaseHandler {
 
     async getTeamsByConferenceOrDivision(model, conferenceOrDivision) {
       try {
-        const teams = await model.find({ $or: [{ conference: conferenceOrDivision }, { division: conferenceOrDivision }] });
+        const teams = await model.find({ $or: [{ conference: conferenceOrDivision }, { division: conferenceOrDivision }] }).populate('roster');
         return teams;
       } catch (error) {
         console.error('Error fetching teams by conference or division:', error);
@@ -125,6 +125,20 @@ class DatabaseHandler {
         return count;
       } catch (error) {
         console.error('Error counting documents:', error);
+        throw error;
+      }
+    }
+
+    async getSpecificDocumentValuesByField(model, field, value, select = '') {
+      try {
+        const query = {};
+        query[field] = value;
+  
+        const result = await model.find(query).select(select);
+  
+        return result;
+      } catch (error) {
+        console.error(`Error fetching documents by ${field}:`, error);
         throw error;
       }
     }
