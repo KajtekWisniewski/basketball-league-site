@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../hooks/useTeamColor';
 import styles from './PlayerCard.module.css'
-
-function formatDatabaseData(inputString) {
-    return inputString
-      .replace("-", " ")
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
+import formatDatabaseData from '../functions/formatDatabaseData';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);

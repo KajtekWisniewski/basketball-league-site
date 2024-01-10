@@ -1,0 +1,12 @@
+.playerimg {
+    aspect-ratio: auto;
+    height: 5rem;
+}
+
+.playerPreviewData {
+    display: flex;
+    flex-direction: row;
+    background-color: pink;
+    justify-content: space-around;
+}
+

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import PlayerCard from '../components/PlayerCard';
+import PlayerPreview from '../components/PlayerPreview';
 import React, { useState, useEffect } from 'react';
+import styles from './playersList.module.css'
 
 export default function PlayersList() {
     const [players, setPlayers] = useState(null);
@@ -23,7 +25,18 @@ export default function PlayersList() {
 
     return (
       <>
-      {players.map((player) => <PlayerCard playerId={player._id} />)}
+      <div className={styles.bannerList}>
+        <p className={styles.lol}>Photo</p>
+        <p>Name</p>
+        <p>Age</p>
+        <p>Team</p>
+        <p>Number</p>
+        <p>Position</p>
+        <p>Height</p>
+        <p>Birthdate</p>
+        <p>Origin</p>
+    </div>
+      {players.reverse().slice(0,5).map((player) => <PlayerPreview playerId={player._id} key={player._id}/>)}
       </>
     ) 
   }
