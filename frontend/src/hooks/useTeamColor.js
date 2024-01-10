@@ -5,6 +5,7 @@ const useTeamColor = (teamName) => {
     const teamColorSchema = {
       'boston-celtics': '#007a33',
       'toronto-raptors': '#b41a1a',
+      'new-york-knicks': '#0953a0'
     };
 
     return teamColorSchema[teamName] || 'white';

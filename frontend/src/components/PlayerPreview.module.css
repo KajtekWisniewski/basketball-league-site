@@ -8,5 +8,9 @@
     flex-direction: row;
     background-color: pink;
     justify-content: space-around;
+    padding: 0.25em;
+    padding-bottom: 0;
+    margin-bottom: 0.5em;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 2px;
 }
-

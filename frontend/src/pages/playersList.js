@@ -6,6 +6,8 @@ import styles from './playersList.module.css'
 
 export default function PlayersList() {
     const [players, setPlayers] = useState(null);
+    const [sortField, setSortField] = useState('name');
+    const [sortOrder, setSortOrder] = useState('asc')
 
     useEffect(() => {
       const fetchPlayersList = () => {
@@ -23,20 +25,37 @@ export default function PlayersList() {
       return <div>Loading...</div>;
     }
 
+    const handleSort = (field) => {
+      setSortOrder((prevOrder) => (sortField === field ? (prevOrder === 'asc' ? 'desc' : 'asc') : 'asc'));
+      setSortField(field);
+    };
+
+    const sortedPlayers = [...players].sort((a, b) => {
+      const compareValue = (field) => (a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0);
+      return sortOrder === 'asc' ? compareValue(sortField) : compareValue(sortField) * -1;
+    });
+
     return (
       <>
-      <div className={styles.bannerList}>
-        <p className={styles.lol}>Photo</p>
-        <p>Name</p>
-        <p>Age</p>
-        <p>Team</p>
-        <p>Number</p>
-        <p>Position</p>
-        <p>Height</p>
-        <p>Birthdate</p>
-        <p>Origin</p>
-    </div>
-      {players.reverse().slice(0,5).map((player) => <PlayerPreview playerId={player._id} key={player._id}/>)}
+     <table className={styles.playersTable}>
+        <thead>
+          <tr>
+            <th onClick={() => handleSort('name')}>Name</th>
+            <th onClick={() => handleSort('age')}>Age</th>
+            <th onClick={() => handleSort('team')}>Team</th>
+            <th onClick={() => handleSort('teamNumber')}>Number</th>
+            <th onClick={() => handleSort('position')}>Position</th>
+            <th onClick={() => handleSort('height')}>Height</th>
+            <th>Birthdate</th>
+            <th onClick={() => handleSort('countryOfOrigin')}>Origin</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedPlayers.map((player) => (
+            <PlayerPreview key={player._id} playerId={player._id} />
+          ))}
+        </tbody>
+      </table>
       </>
     ) 
   }

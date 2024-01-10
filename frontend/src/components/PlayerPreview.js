@@ -29,21 +29,17 @@ const PlayerPreview = ({ playerId }) => {
 
   return (
     <>
-    <div className={styles.playerPreview}>
-        
-        <div className={styles.playerPreviewData}>
-        <img className={styles.playerimg} src={player.pictureLink} alt={`${player.name}'s picture`} />
-            <h2>{player.name}</h2>
+        <div className={styles.playerPreviewData} style={{ backgroundColor: teamColor}}>
+            <img className={styles.playerimg} src={player.pictureLink} alt={`${player.name}'s picture`} />
+            <h3>{player.name}</h3>
             <p>{player.age}</p>
-            <p style={{ color: teamColor}}>{abbreviateTeamName(player.team)}</p>
+            <h4>{abbreviateTeamName(player.team)}</h4>
             <p>{player.teamNumber}</p>
             <p>{formatDatabaseData(player.position)}</p>
-            <p>{player.age}</p>
             <p>{player.height}cm</p>
             <p>{player.birthdate.slice(0,10)}</p>
             <p>{formatDatabaseData(player.countryOfOrigin)}</p>
         </div>
-    </div>
     </>
   );
 };
