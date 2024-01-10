@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../hooks/useTeamColor';
 
+function formatDatabaseData(inputString) {
+    return inputString
+      .replace("-", " ")
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
   const [team, setTeam] = useState(null)
@@ -29,10 +37,10 @@ const PlayerCard = ({ playerId }) => {
       <h2>{player.name}</h2>
       <p>Age: {player.age}</p>
       <p>Birthdate: {player.birthdate.slice(0,10)}</p>
-      <p>Country of Origin: {player.countryOfOrigin.toUpperCase()}</p>
+      <p>Country of Origin: {formatDatabaseData(player.countryOfOrigin)}</p>
       <p>Height: {player.height} cm</p>
-      <p>Team: {player.team.replace("-"," ")}</p>
-      <p>Position: {player.position.replace("-"," ")}</p>
+      <p>Team: {formatDatabaseData(player.team)}</p>
+      <p>Position: {formatDatabaseData(player.position)}</p>
       <p>Team Number: {player.teamNumber}</p>
 
       <img src={player.pictureLink} alt={`${player.name}'s picture`} />
