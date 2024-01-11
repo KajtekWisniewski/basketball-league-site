@@ -32,7 +32,7 @@ export default function TeamsList() {
     };
 
     //to change, sorting players by lastname instead of first
-    const sortedPlayers = [...teams].sort((a, b) => {
+    const sortedTeams = [...teams].sort((a, b) => {
       const compareValue = (field) => (a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0);
       return sortOrder === 'asc' ? compareValue(sortField) : compareValue(sortField) * -1;
     });
@@ -42,15 +42,17 @@ export default function TeamsList() {
       <Link style={styles.linkStyle} href={`/players/playersList`}>
             <h2>ALL PLAYERS</h2>
         </Link>
-     <table className={styles.playersTable}>
+     <table className={styles.teamsTable}>
         <thead>
           <tr>
             <th onClick={() => handleSort('name')}>Name</th>
             <th onClick={() => handleSort('statistics.winPercentage')}>WR</th>
+            <th onClick={() => handleSort('conference')}>conference</th>
+            <th onClick={() => handleSort('division')}>divison</th>
           </tr>
         </thead>
         <tbody>
-          {sortedPlayers.map((team) => (
+          {sortedTeams.map((team) => (
               <TeamPreview key={team._id} teamId={team._id} />
           ))}
         </tbody>
