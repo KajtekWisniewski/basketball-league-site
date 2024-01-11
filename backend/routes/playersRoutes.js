@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Player = require('../models/playerSchema');
+const Player = require('../models/PlayerSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const playerHandler = new DataHandler();
