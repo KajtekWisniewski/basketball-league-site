@@ -44,6 +44,7 @@ const TeamCard = ({ teamId }) => {
             <p>Wins: {team.statistics.wins}</p>
             <p>Losses: {team.statistics.losses}</p>
             <p>Win Ratio: {team.statistics.winPercentage.toString().slice(0,5)}%</p>
+            <p>TEST id: {team._id}</p>
         </div>
     </div>
     <div>
