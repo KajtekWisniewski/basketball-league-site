@@ -1,0 +1,13 @@
+.teamimg {
+    aspect-ratio: auto;
+    height: 5em;
+}
+.teamCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1em;
+}
