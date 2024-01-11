@@ -16,7 +16,7 @@ const TeamCard = ({ teamId }) => {
             .get(`http://127.0.0.1:3001/teams/${teamId}`)
             .then((response) => {
                 setTeam(response.data)
-                setTeamCol(response.data.team)
+                setTeamCol(response.data.name.toLowerCase().replaceAll(" ", "-"))
             })
             .catch((error) => console.error('Error fetching player data:', error));
     };
