@@ -35,7 +35,8 @@ const playerSchema = new Schema({
     required: true
   },
   pictureLink: {
-    type: String
+    type: String,
+    default: "https://cdn.nba.com/headshots/nba/latest/1040x760/1627885.png"
   },
   fantasyScore: {
     type: Number,

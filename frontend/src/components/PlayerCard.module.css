@@ -1,0 +1,23 @@
+.playerimg {
+    aspect-ratio: auto;
+    height: 22rem;
+    min-height: 5rem;
+}
+
+.playerCard {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0.5em;
+    padding-bottom: 0;
+    border-radius: 8px;
+    margin: 0.5em;
+    margin-bottom: 0;
+    display: flex;
+    gap: 1em;
+}
+.playerStatistics {
+    color: white;
+}
+.playerStatistics > p:hover {
+    opacity: 80%;
+}
+

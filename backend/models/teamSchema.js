@@ -25,7 +25,8 @@ const teamSchema = new Schema({
     required: true
   }],
   logoLink: {
-    type: String
+    type: String,
+    default: "https://cdn.nba.com/teams/uploads/sites/1610612738/2022/05/celtics_secondary.svg"
   },
   statistics: {
     wins: {
