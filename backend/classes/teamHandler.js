@@ -14,7 +14,7 @@ class TeamHandler {
         }
       }
 
-      async addToRoster(teamId, playerId) {
+      async addExistingPlayerToRoster(teamId, playerId) {
         try {
           const isPlayerAlreadyInRoster = await this.isPlayerInAnyRoster(playerId);
     

@@ -6,18 +6,18 @@
     display: flex;
     flex-direction: row;
     gap: 1em;
+    align-items: center;
 }
 
-.singleTeamPrevRight {
-    color: red;
+.singleTeamPrev {
+    color: white;
     display: flex;
     flex-direction: row;
     gap: 1em;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 8px;
+    align-items: center;
 }
 
-.singleTeamPrevLeft {
-    color: blue;
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-}
+

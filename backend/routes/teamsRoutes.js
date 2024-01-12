@@ -95,7 +95,7 @@ router.put('/:teamId/changeRoster', async (req, res) => {
       return res.status(400).json({ error: 'PlayerId is required in the request body.' });
     }
 
-    const updatedTeam = await teamHandler.addToRoster(teamId, playerId);
+    const updatedTeam = await teamHandler.addExistingPlayerToRoster(teamId, playerId);
     const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId)
     res.json([updatedTeam, updatePlayersTeam]);
   } catch (error) {
