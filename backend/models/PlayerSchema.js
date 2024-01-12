@@ -24,7 +24,8 @@ const playerSchema = new Schema({
   },
   team: {
     type: String,
-    required: true
+    required: true,
+    default: 'teamless'
   },
   position: {
     type: String,
