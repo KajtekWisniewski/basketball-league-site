@@ -96,7 +96,8 @@ router.put('/:teamId/changeRoster', async (req, res) => {
     }
 
     const updatedTeam = await teamHandler.addToRoster(teamId, playerId);
-    res.json(updatedTeam);
+    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId)
+    res.json([updatedTeam, updatePlayersTeam]);
   } catch (error) {
     res.status(500).json({ error: 'Player already in a roster' });
   }
@@ -112,7 +113,8 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
     }
 
     const updatedTeam = await teamHandler.removeFromRoster(teamId, playerId);
-    res.json(updatedTeam);
+    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId)
+    res.json([updatedTeam, updatePlayersTeam]);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

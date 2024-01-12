@@ -32,7 +32,8 @@ const useTeamColor = (teamName, color="white") => {
       'sacramento-kings': '#5A2D81',
       'san-antonio-spurs': '#C4CED4',
       'utah-jazz': '#002B5C',
-      'washington-wizards': '#002B5C'
+      'washington-wizards': '#002B5C',
+      'teamless': '#CCCCCC'
     };
 
     return teamColorSchema[teamName] || color;

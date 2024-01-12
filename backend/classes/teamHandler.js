@@ -1,4 +1,5 @@
 const Team = require('../models/teamSchema')
+const Player = require('../models/PlayerSchema')
 
 class TeamHandler {
 
@@ -70,8 +71,24 @@ class TeamHandler {
     } catch (error) {
         console.error('Error converting team names to lowercase:', error);
         throw error;
+        }
     }
-    }
+
+    async updatePlayerTeamById(playerId) {
+        try {
+          const teamsWithPlayer = await Team.find({ roster: playerId });
+    
+          if (teamsWithPlayer.length === 1) {
+            const team = teamsWithPlayer[0];
+            await Player.findByIdAndUpdate(playerId, { $set: { team: team.name } });
+          } else {
+            await Player.findByIdAndUpdate(playerId, { $set: { team: "teamless" } });
+          }
+        } catch (error) {
+          console.error('Error updating player team by roster:', error);
+          throw error;
+        }
+      }
     
 
 }
