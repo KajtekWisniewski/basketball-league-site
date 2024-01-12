@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useTeamColor from '../hooks/useTeamColor';
+import useTeamColor from '../../hooks/useTeamColor';
 import styles from './PlayerPreview.module.css'
-import formatDatabaseData from '../functions/formatDatabaseData';
-import abbreviateTeamName from '../functions/abbreviateTeamName';
+import formatDatabaseData from '../../functions/formatDatabaseData';
+import abbreviateTeamName from '../../functions/abbreviateTeamName';
 import Link from 'next/link'
 
 const PlayerPreview = ({ playerId }) => {

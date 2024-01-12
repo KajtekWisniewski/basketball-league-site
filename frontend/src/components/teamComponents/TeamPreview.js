@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useTeamColor from '../hooks/useTeamColor';
+import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamPreview.module.css'
-import formatDatabaseData from '../functions/formatDatabaseData';
+import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link'
 
 const TeamPreview = ({ teamId }) => {
@@ -33,7 +33,7 @@ const TeamPreview = ({ teamId }) => {
     <div className={styles.teamCard} style={{ backgroundColor: teamColor}}>
         <img className={styles.teamimg} src={team.logoLink} alt={`${team.name} logo`} />
         <Link style={styles.linkStyle} href={`/teams/${team._id}`}>
-            <h2>{team.name}</h2>
+            <h2>{formatDatabaseData(team.name)}</h2>
         </Link>
         <p>{team.location}</p>
         <p>{formatDatabaseData(team.conference)}</p>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useTeamColor from '../hooks/useTeamColor';
+import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamCard.module.css'
-import formatDatabaseData from '../functions/formatDatabaseData';
-import PlayerPreview from './PlayerPreview';
+import formatDatabaseData from '../../functions/formatDatabaseData';
+import PlayerPreview from '../playerComponents/PlayerPreview';
 
 const TeamCard = ({ teamId }) => {
   const [team, setTeam] = useState(null);
@@ -33,7 +33,7 @@ const TeamCard = ({ teamId }) => {
     <div className={styles.teamCard} style={{ backgroundColor: teamColor}}>
     <img className={styles.teamimg} src={team.logoLink} alt={`${team.name} logo`} />
         <div className={styles.teamBasicData}>
-            <h2>{team.name}</h2>
+            <h2>{formatDatabaseData(team.name)}</h2>
             <p>City: {team.location}</p>
             <p>Conference: {formatDatabaseData(team.conference)}</p>
             <p>Division: {formatDatabaseData(team.division)}</p>

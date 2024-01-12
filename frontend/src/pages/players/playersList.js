@@ -1,5 +1,5 @@
 import axios from 'axios';
-import PlayerPreview from '../../components/PlayerPreview';
+import PlayerPreview from '../../components/playerComponents/PlayerPreview';
 import React, { useState, useEffect } from 'react';
 import styles from './playersList.module.css'
 import Link from 'next/link'

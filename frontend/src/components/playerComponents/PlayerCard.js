@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useTeamColor from '../hooks/useTeamColor';
+import useTeamColor from '../../hooks/useTeamColor';
 import styles from './PlayerCard.module.css'
-import formatDatabaseData from '../functions/formatDatabaseData';
+import formatDatabaseData from '../../functions/formatDatabaseData';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);

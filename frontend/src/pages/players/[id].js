@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import PlayerCard from '../../components/PlayerCard';
+import PlayerCard from '../../components/playerComponents/PlayerCard';
 
 function PlayerDetails() {
   const router = useRouter();
