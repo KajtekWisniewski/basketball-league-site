@@ -1,0 +1,18 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    text-transform: none;
+    color: black;
+    gap: 1em;
+    background-color: rgb(143, 148, 146);
+}
+
+.linkStyle {
+    color: orange;
+    text-decoration: none;
+}
+
+.linkStyle:hover {
+    opacity: 50%;
+}

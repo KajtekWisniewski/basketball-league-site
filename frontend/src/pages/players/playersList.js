@@ -1,8 +1,9 @@
 import axios from 'axios';
-import PlayerPreview from '../../components/PlayerPreview';
+import PlayerPreview from '../../components/playerComponents/PlayerPreview';
 import React, { useState, useEffect } from 'react';
 import styles from './playersList.module.css'
 import Link from 'next/link'
+import NavBar from '../../components/NavBar';
 
 export default function PlayersList() {
     const [players, setPlayers] = useState(null);
@@ -39,9 +40,7 @@ export default function PlayersList() {
 
     return (
       <>
-      <Link style={styles.linkStyle} href={`/teams/teamsList`}>
-            <h2>ALL TEAMS</h2>
-        </Link>
+      <NavBar></NavBar>
      <table className={styles.playersTable}>
         <thead>
           <tr>

@@ -48,6 +48,10 @@ const matchSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  played: {
+    type: Boolean,
+    required: true
+  },
   opponents: [opponentSchema]
 });
 

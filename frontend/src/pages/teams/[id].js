@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import TeamCard from '../../components/TeamCard';
+import TeamCard from '../../components/teamComponents/TeamCard';
+import NavBar from '../../components/NavBar';
 
 function PlayerDetails() {
   const router = useRouter();
@@ -30,6 +31,7 @@ function PlayerDetails() {
 
   return (
     <>
+      <NavBar></NavBar>
       <TeamCard teamId={id}/>
     </>
   );

@@ -1,21 +1,21 @@
 import axios from 'axios';
-import TeamPreview from '../../components/teamComponents/TeamPreview';
 import React, { useState, useEffect } from 'react';
-import styles from './teamsList.module.css'
+import styles from './matchesArchive.module.css'
 import Link from 'next/link'
+import MatchPreview from '../../components/matchComponents/MatchPreview';
 import NavBar from '../../components/NavBar';
 
 export default function TeamsList() {
-    const [teams, setTeams] = useState(null);
-    const [sortField, setSortField] = useState('name');
-    const [sortOrder, setSortOrder] = useState('asc')
+    const [matches, setMatches] = useState(null);
+    const [sortField, setSortField] = useState('date');
+    const [sortOrder, setSortOrder] = useState('desc')
 
     useEffect(() => {
       const fetchPlayersList = () => {
         axios
-        .get(`http://127.0.0.1:3001/teams`)
+        .get(`http://127.0.0.1:3001/matches`)
         .then((response) => {
-          setTeams(response.data)
+          setMatches(response.data)
         })
         .catch((error) => console.error('Error fetching players data:', error));
       };
@@ -23,7 +23,7 @@ export default function TeamsList() {
     }, [])
 
     //placeholder for loading
-    if (!teams) {
+    if (!matches) {
       return <div></div>;
     }
 
@@ -33,7 +33,7 @@ export default function TeamsList() {
     };
 
     //to change, sorting players by lastname instead of first
-    const sortedTeams = [...teams].sort((a, b) => {
+    const sortedMatches = [...matches].sort((a, b) => {
       const compareValue = (field) => (a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0);
       return sortOrder === 'asc' ? compareValue(sortField) : compareValue(sortField) * -1;
     });
@@ -41,21 +41,10 @@ export default function TeamsList() {
     return (
       <>
       <NavBar></NavBar>
-     <table className={styles.teamsTable}>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('name')}>Name</th>
-            <th onClick={() => handleSort('statistics.winPercentage')}>WR</th>
-            <th onClick={() => handleSort('conference')}>conference</th>
-            <th onClick={() => handleSort('division')}>divison</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedTeams.map((team) => (
-              <TeamPreview key={team._id} teamId={team._id} />
+      <button onClick={() => handleSort('date')}>Date</button>
+          {sortedMatches.map((match) => (
+              <MatchPreview key={match._id} matchId={match._id} />
           ))}
-        </tbody>
-      </table>
       </>
     ) 
   }

@@ -1,0 +1,29 @@
+.teamimg {
+    aspect-ratio: auto;
+    height: 10em;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.individualMatchStats {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    gap: 1em;
+}
+
+.singleTeamPrev {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.basicInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

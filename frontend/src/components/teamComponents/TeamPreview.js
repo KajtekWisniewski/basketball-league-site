@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useTeamColor from '../hooks/useTeamColor';
+import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamPreview.module.css'
-import formatDatabaseData from '../functions/formatDatabaseData';
+import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link'
 
 const TeamPreview = ({ teamId }) => {
@@ -16,7 +16,7 @@ const TeamPreview = ({ teamId }) => {
             .get(`http://127.0.0.1:3001/teams/${teamId}`)
             .then((response) => {
                 setTeam(response.data)
-                setTeamCol(response.data.name.toLowerCase().replaceAll(" ", "-"))
+                setTeamCol(response.data.name)
             })
             .catch((error) => console.error('Error fetching player data:', error));
     };
@@ -32,8 +32,8 @@ const TeamPreview = ({ teamId }) => {
     <>
     <div className={styles.teamCard} style={{ backgroundColor: teamColor}}>
         <img className={styles.teamimg} src={team.logoLink} alt={`${team.name} logo`} />
-        <Link style={styles.linkStyle} href={`/teams/${team._id}`}>
-            <h2>{team.name}</h2>
+        <Link className={styles.linkStyle} href={`/teams/${team._id}`}>
+            <h2>{formatDatabaseData(team.name)}</h2>
         </Link>
         <p>{team.location}</p>
         <p>{formatDatabaseData(team.conference)}</p>
