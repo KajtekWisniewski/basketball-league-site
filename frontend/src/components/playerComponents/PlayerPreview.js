@@ -32,7 +32,7 @@ const PlayerPreview = ({ playerId }) => {
   return (
     <>
         <div className={styles.playerPreviewData} style={{ backgroundColor: teamColor}}>
-            <Link style={styles.linkStyle} href={`/players/${player._id}`}>
+            <Link className={styles.linkStyle} href={`/players/${player._id}`}>
                 <img className={styles.playerimg} src={player.pictureLink} alt={`${player.name}'s picture`} />
             </Link>
             <h3>{player.name}</h3>

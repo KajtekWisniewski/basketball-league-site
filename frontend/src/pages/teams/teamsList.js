@@ -3,6 +3,7 @@ import TeamPreview from '../../components/teamComponents/TeamPreview';
 import React, { useState, useEffect } from 'react';
 import styles from './teamsList.module.css'
 import Link from 'next/link'
+import NavBar from '../../components/NavBar';
 
 export default function TeamsList() {
     const [teams, setTeams] = useState(null);
@@ -39,9 +40,7 @@ export default function TeamsList() {
 
     return (
       <>
-      <Link style={styles.linkStyle} href={`/players/playersList`}>
-            <h2>ALL PLAYERS</h2>
-        </Link>
+      <NavBar></NavBar>
      <table className={styles.teamsTable}>
         <thead>
           <tr>

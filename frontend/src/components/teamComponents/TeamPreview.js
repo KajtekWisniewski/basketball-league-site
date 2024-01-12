@@ -32,7 +32,7 @@ const TeamPreview = ({ teamId }) => {
     <>
     <div className={styles.teamCard} style={{ backgroundColor: teamColor}}>
         <img className={styles.teamimg} src={team.logoLink} alt={`${team.name} logo`} />
-        <Link style={styles.linkStyle} href={`/teams/${team._id}`}>
+        <Link className={styles.linkStyle} href={`/teams/${team._id}`}>
             <h2>{formatDatabaseData(team.name)}</h2>
         </Link>
         <p>{team.location}</p>

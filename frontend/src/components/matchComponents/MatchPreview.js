@@ -28,12 +28,14 @@ const MatchPreview = ({ matchId }) => {
 
   return (
     <div className={styles.matchPreviewCard}> 
-     <Link style={styles.linkStyle} href={`/matches/${match._id}`}>
+     <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
       <h3>{match.date.slice(0,10)} {match.date.slice(14,19)}</h3>
       </Link>
       <div className={styles.singleTeamPrevLeft}>
+      <Link className={styles.linkStyle} href={`/teams/${match.opponents[0].team?._id}`}>
       <img className={styles.teamimg} src={match.opponents[0].team?.logoLink} alt={`${match.opponents[0].team?.name} logo`} />
-        <p>{match.opponents[0].team?.name}</p>
+      </Link>
+        <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
         <p>W{match.opponents[0].team?.statistics.wins}</p>
         <p>L{match.opponents[0].team?.statistics.losses}</p>
         <p>{match.opponents[0].team?.statistics.winPercentage.toString().slice(0,5)}%</p>
@@ -45,8 +47,10 @@ const MatchPreview = ({ matchId }) => {
         <p>{match.opponents[1].team?.statistics.winPercentage.toString().slice(0,5)}%</p>
         <p>W{match.opponents[1].team?.statistics.wins}</p>
         <p>L{match.opponents[1].team?.statistics.losses}</p>
-        <p>{match.opponents[1].team?.name}</p>
+        <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+        <Link className={styles.linkStyle} href={`/teams/${match.opponents[1].team?._id}`}>
         <img className={styles.teamimg} src={match.opponents[1].team?.logoLink} alt={`${match.opponents[1].team?.name} logo`} />
+        </Link>
 
 
       </div>

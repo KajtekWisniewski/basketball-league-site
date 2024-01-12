@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './matchesArchive.module.css'
 import Link from 'next/link'
 import MatchPreview from '../../components/matchComponents/MatchPreview';
+import NavBar from '../../components/NavBar';
 
 export default function TeamsList() {
     const [matches, setMatches] = useState(null);
@@ -39,9 +40,7 @@ export default function TeamsList() {
 
     return (
       <>
-      <Link style={styles.linkStyle} href={`/players/playersList`}>
-            <h2>ALL PLAYERS</h2>
-        </Link>
+      <NavBar></NavBar>
       <button onClick={() => handleSort('date')}>Date</button>
           {sortedMatches.map((match) => (
               <MatchPreview key={match._id} matchId={match._id} />
