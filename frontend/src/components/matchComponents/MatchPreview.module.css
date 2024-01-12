@@ -1,0 +1,23 @@
+.teamimg {
+    aspect-ratio: auto;
+    height: 5em;
+}
+.matchPreviewCard {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.singleTeamPrevRight {
+    color: red;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.singleTeamPrevLeft {
+    color: blue;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}

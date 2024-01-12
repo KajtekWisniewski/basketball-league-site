@@ -42,18 +42,10 @@ export default function TeamsList() {
       <Link style={styles.linkStyle} href={`/players/playersList`}>
             <h2>ALL PLAYERS</h2>
         </Link>
-     <table className={styles.teamsTable}>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('date')}>Date</th>
-          </tr>
-        </thead>
-        <tbody>
+      <button onClick={() => handleSort('date')}>Date</button>
           {sortedMatches.map((match) => (
               <MatchPreview key={match._id} matchId={match._id} />
           ))}
-        </tbody>
-      </table>
       </>
     ) 
   }
