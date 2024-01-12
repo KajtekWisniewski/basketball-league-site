@@ -3,6 +3,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const utilHandler = new DataHandler();
+const TeamHandler = require('../classes/teamHandler')
+const teamHandler = new TeamHandler();
 
 router.use(bodyParser.json());
 
@@ -34,3 +36,14 @@ router.get('/count/:model/:field/:value', async (req, res) => {
   });
 
 module.exports = router;
+
+//convert badly formatted database names for teams:
+router.get('/convertTeamNames', async (req,res) => {
+  try {
+    const results = await teamHandler.convertTeamNamesToLowerCase()
+    res.json(results)
+  } catch (error) {
+    console.error('Error converting names', error);
+    res.status(500).json({error: 'Internal server error'});
+  }
+})
