@@ -28,6 +28,25 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/assign-player-stats', async (req, res) => {
+  try {
+    const matches = await matchHandler.assignRandomPlayerStatistics();
+    res.json(matches);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/update-player-stats', async (req, res) => {
+  try {
+    const matches = await matchHandler.updatePlayerTotalStatistics();
+    res.json(matches);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 router.put('/:id', async (req, res) => {
   const matchId = req.params.id;
   const updateData = req.body; 
