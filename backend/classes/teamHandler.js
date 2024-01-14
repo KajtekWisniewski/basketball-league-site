@@ -90,6 +90,37 @@ class TeamHandler {
         }
       }
     
+    async assignRandomStatistics() {
+        try {
+          const teams = await Team.find(); 
+      
+
+          const totalGames = 30;
+      
+          const updatePromises = teams.map(async (team) => {
+            const newWins = Math.floor(Math.random() * (totalGames + 1));
+            const newLosses = totalGames - newWins;
+      
+            await Team.updateOne(
+              { _id: team._id },
+              {
+                $set: {
+                  'statistics.wins': newWins,
+                  'statistics.losses': newLosses,
+                },
+              }
+            );
+          });
+      
+          await Promise.all(updatePromises);
+      
+          console.log('Random statistics assigned and saved successfully');
+        } catch (error) {
+          console.error('Error assigning random statistics:', error);
+          throw error;
+        }
+      };
+    
 
 }
 

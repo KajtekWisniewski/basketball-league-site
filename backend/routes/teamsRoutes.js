@@ -42,6 +42,18 @@ router.get('/calcwr', async (req, res) => {
   }
 });
 
+router.get('/assign-stats', async (req, res) => {
+
+  try {
+    const teamsWithRandomStats = await teamHandler.assignRandomStatistics();
+    const calcWr = await teamAggregationHandler.calculateWinPercentage(Team);
+    res.json(calcWr);
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   const teamId = req.params.id;
   const updateData = req.body; 
@@ -119,5 +131,7 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
 
 module.exports = router;
