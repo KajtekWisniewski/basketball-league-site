@@ -13,6 +13,9 @@ const NavBar = ({}) => {
         <Link className={styles.linkStyle} href={`/matches/matchArchive`}>
             <h2>MATCH ARCHIVE</h2>
         </Link>
+        <Link className={styles.linkStyle} href={`/`}>
+            <h2>STANDINGS</h2>
+        </Link>
     </nav>
  )
 }

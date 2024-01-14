@@ -74,7 +74,35 @@ class AggregationHandler {
         console.error('Error calculating age:', error);
         throw error;
       }
-    }
+    };
+
+    async assignRandomStatistics(playerModel) {
+      try {
+        const players = await playerModel.find(); 
+    
+        const updatePromises = players.map(async (team) => {
+          const newWins = Math.floor(Math.random() * (totalGames + 1));
+          const newLosses = totalGames - newWins;
+    
+          await playerModel.updateOne(
+            { _id: team._id },
+            {
+              $set: {
+                'statistics.wins': newWins,
+                'statistics.losses': newLosses,
+              },
+            }
+          );
+        });
+    
+        await Promise.all(updatePromises);
+        
+        console.log('Random statistics assigned and saved successfully');
+      } catch (error) {
+        console.error('Error assigning random statistics:', error);
+        throw error;
+      }
+    };
 
 }
 
