@@ -98,6 +98,7 @@ router.get('/t/:conferenceOrDivision', async (req, res) => {
   }
 });
 
+//this is specifically for ADDING to a roster, not changing one's roster
 router.put('/:teamId/changeRoster', async (req, res) => {
   const { teamId } = req.params;
   const { playerId } = req.body;

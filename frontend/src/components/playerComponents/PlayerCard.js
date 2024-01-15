@@ -4,6 +4,7 @@ import useTeamColor from '../../hooks/useTeamColor';
 import styles from './PlayerCard.module.css'
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import DeletePlayerButton from './DeletePlayer';
+import AssignToTeam from './AssignToTeam';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
@@ -32,6 +33,13 @@ const PlayerCard = ({ playerId }) => {
   const handlePlayerDelete = () => {
     setDeleted(true);
   };
+
+  const handleTeamChange = () => {
+    console.log(`Team changed for player with ID ${playerId}`);
+    setTeam(player.team);
+  };
+
+  const isPlayerTeamless = () => team === 'teamless' ? true : false;
 
   return (
     <>
@@ -63,6 +71,8 @@ const PlayerCard = ({ playerId }) => {
         </div>
 
         <DeletePlayerButton playerId={playerId} onDelete={handlePlayerDelete}></DeletePlayerButton>
+        
+        { isPlayerTeamless() && <AssignToTeam playerId={playerId} onTeamChange={handleTeamChange}></AssignToTeam>}
     </div>
     }
   {deleted && <p>player has been deleted successfully</p>}

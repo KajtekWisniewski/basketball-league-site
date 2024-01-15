@@ -11,7 +11,7 @@ export default function TeamsList() {
     const [sortOrder, setSortOrder] = useState('asc')
 
     useEffect(() => {
-      const fetchPlayersList = () => {
+      const fetchTeamList = () => {
         axios
         .get(`http://127.0.0.1:3001/teams`)
         .then((response) => {
@@ -19,7 +19,7 @@ export default function TeamsList() {
         })
         .catch((error) => console.error('Error fetching players data:', error));
       };
-      fetchPlayersList();
+      fetchTeamList();
     }, [])
 
     //placeholder for loading
