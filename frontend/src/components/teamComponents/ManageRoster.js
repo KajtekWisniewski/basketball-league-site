@@ -43,7 +43,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
         value={playerId}
         onChange={(e) => setPlayerId(e.target.value)}
       >
-        <option value="">Select Team</option>
+        <option value="">Select Player</option>
         {playersData.map((player) => (
           <option key={player._id} value={player._id}>
             {formatDatabaseData(player.name)}
@@ -52,7 +52,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
       </select>
 
       <button type="button" onClick={handleTeamChange} disabled={!playerId}>
-        Change Team
+        Add to roster
       </button>
     </div>
   );

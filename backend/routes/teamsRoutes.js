@@ -133,6 +133,24 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
   }
 });
 
+router.get('/getTeamId/:playerId', async (req, res) => {
+  const { playerId } = req.params;
+
+  try {
+    const teamId = await teamHandler.getTeamIdByPlayer(playerId);
+
+    if (teamId !== null) {
+      res.json({ teamId });
+    } else {
+      res.status(404).json({ error: 'Player not found in any team roster.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 
 module.exports = router;

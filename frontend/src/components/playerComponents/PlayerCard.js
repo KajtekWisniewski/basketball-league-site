@@ -5,25 +5,34 @@ import styles from './PlayerCard.module.css'
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import DeletePlayerButton from './DeletePlayer';
 import AssignToTeam from './AssignToTeam';
+import Link from 'next/link';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
   const [team, setTeam] = useState(null)
   const teamColor = useTeamColor(team);
   const [deleted, setDeleted] = useState(false);
+  const [triggerRerender, setTriggerRerender] = useState(0);
+  const [teamId, setTeamId] = useState(null);
 
   useEffect(() => {
     const fetchPlayerData = () => {
-        axios
+        const response1 = axios
             .get(`http://127.0.0.1:3001/players/${playerId}`)
             .then((response) => {
                 setPlayer(response.data)
                 setTeam(response.data.team)
             })
             .catch((error) => console.error('Error fetching player data:', error));
-    };
+          const response2 = axios
+            .get(`http://127.0.0.1:3001/teams/getTeamId/${playerId}`)
+            .then((response) => {
+                setTeamId(response.data.teamId)
+            })
+            .catch((error) => console.error('Error fetching player data:', error));
+      };
     fetchPlayerData();
-  }, [playerId]);
+  }, [playerId, triggerRerender]);
 
   //placeholder for loading
   if (!player) {
@@ -37,6 +46,7 @@ const PlayerCard = ({ playerId }) => {
   const handleTeamChange = () => {
     console.log(`Team changed for player with ID ${playerId}`);
     setTeam(player.team);
+    setTriggerRerender(triggerRerender+1);
   };
 
   const isPlayerTeamless = () => team === 'teamless' ? true : false;
@@ -52,7 +62,10 @@ const PlayerCard = ({ playerId }) => {
             <p>Birthdate: {player.birthdate.slice(0,10)}</p>
             <p>Country of Origin: {formatDatabaseData(player.countryOfOrigin)}</p>
             <p>Height: {player.height} cm</p>
+            {teamId && <Link className={styles.linkStyle} href={`/teams/${teamId}`}>
             <p>Team: {formatDatabaseData(player.team)}</p>
+            </Link>}
+            {!teamId && <p>Team: {formatDatabaseData(player.team)}</p>}
             <p>Position: {formatDatabaseData(player.position)}</p>
             <p>Team Number: {player.teamNumber}</p>
         </div>

@@ -120,6 +120,22 @@ class TeamHandler {
           throw error;
         }
       };
+
+    async getTeamIdByPlayer(playerId) {
+      try {
+        const teamsWithPlayer = await Team.findOne({ roster: playerId });
+    
+        if (teamsWithPlayer) {
+          return teamsWithPlayer._id; 
+        } else {
+          return null;
+        }
+      } catch (error) {
+        console.error('Error getting team ID by player roster:', error);
+        throw error;
+      }
+    }
+      
     
 
 }
