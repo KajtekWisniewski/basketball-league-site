@@ -1,8 +1,8 @@
-import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './PlayerPreview.module.css'
+import React, { useState, useEffect } from 'react';
 
 function getRandomNumber(min, max) {
     min = typeof min === 'number' ? min : 0;
@@ -12,9 +12,12 @@ function getRandomNumber(min, max) {
   }
 
 const AddPlayerForm = () => {
+  const [calculatedAge, setCalculatedAge] = useState(0);
+  const [nameError, setNameError] = useState(false);
+
   const initialValues = {
     name: '',
-    age: '',
+    age: calculatedAge,
     birthdate: '',
     countryOfOrigin: '',
     height: '',
@@ -35,7 +38,7 @@ const AddPlayerForm = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required').min(3, "name cannot be shorter than three characters"),
-    age: Yup.number().required('Age is required').min(18, "Players cannot be younger than 18"),
+    age: Yup.number(),
     birthdate: Yup.date()
     .required('Birthdate is required')
     .max(new Date('2006-01-01'), 'Selected date cannot be in the future and before 2006'),
@@ -56,11 +59,15 @@ const AddPlayerForm = () => {
   });
 
   const onSubmit = async (values, { resetForm }) => {
+    console.log(values)
+    values.age = calculatedAge
     try {
       const response = await axios.post('http://127.0.0.1:3001/players', values);
       console.log('Player added successfully:', response.data);
+      setNameError(false);
       resetForm();
     } catch (error) {
+      setNameError(true)
       console.error('Error adding player:', error);
     }
   };
@@ -70,6 +77,27 @@ const AddPlayerForm = () => {
     validationSchema,
     onSubmit,
   });
+
+  useEffect(() => {
+
+    const calculateAge = () => {
+      const birthdate = formik.values.birthdate;
+      const today = new Date();
+      const birthDate = new Date(birthdate);
+      let age = today.getFullYear() - birthDate.getFullYear();
+
+      const todayMonth = today.getMonth();
+      const birthMonth = birthDate.getMonth();
+
+      if (todayMonth < birthMonth || (todayMonth === birthMonth && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      setCalculatedAge(age);
+    };
+
+    calculateAge();
+  }, [formik.values.birthdate]);
 
   return (
 
@@ -82,7 +110,7 @@ const AddPlayerForm = () => {
   
       <div>
         <label htmlFor="age">Age:</label>
-        <input type="number" id="age" {...formik.getFieldProps('age')} />
+        <input type="number" id="age" {...formik.getFieldProps('age')} value={calculatedAge} disabled/>
         {formik.touched.age && formik.errors.age && <div className={styles.error}>{formik.errors.age}</div>}
       </div>
   
@@ -203,6 +231,7 @@ const AddPlayerForm = () => {
       <button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
         Add Player
       </button>
+      {nameError && <p className={styles.error}>Player with this name already exists</p>}
     </form>
   );
   
