@@ -17,7 +17,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
           .catch((error) => console.error('Error fetching players data:', error));
         };
         fetchTeamlessPlayers();
-      }, [])
+      }, [playersData])
 
   const handleTeamChange = async () => {
     try {

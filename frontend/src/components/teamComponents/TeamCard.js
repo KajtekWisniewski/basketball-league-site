@@ -5,6 +5,8 @@ import styles from './TeamCard.module.css'
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import ManageRoster from './ManageRoster';
+import DeletePlayerButton from '../playerComponents/DeletePlayer';
+import RemoveFromRoster from './RemoveFromRoster';
 
 const TeamCard = ({ teamId }) => {
   const [team, setTeam] = useState(null);
@@ -52,8 +54,11 @@ const TeamCard = ({ teamId }) => {
     </div>
     <div>
         <h2>Current Roster</h2>
-        {team.roster.map((player) => (
+        {team.roster.map((player, index) => (
+            <>
               <PlayerPreview key={player._id} playerId={player._id} />
+              <RemoveFromRoster key={index} teamId={teamId} playerId={player._id} onTeamChange={() => setTeamRoster(teamRoster-1)}></RemoveFromRoster>
+              </>
           ))}
     </div>
     <ManageRoster teamId={teamId} onTeamChange={() => setTeamRoster(teamRoster+1)}></ManageRoster>
