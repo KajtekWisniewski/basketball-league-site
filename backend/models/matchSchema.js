@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
 
+const commentSchema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+});
+
 const playerSchema = new mongoose.Schema({
   player: {
     type: mongoose.Schema.Types.ObjectId,
@@ -52,7 +69,8 @@ const matchSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  opponents: [opponentSchema]
+  opponents: [opponentSchema],
+  comments: [commentSchema]
 });
 
 const Match = mongoose.model('Match', matchSchema, 'Matches');

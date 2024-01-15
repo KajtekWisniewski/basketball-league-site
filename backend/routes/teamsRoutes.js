@@ -42,6 +42,18 @@ router.get('/calcwr', async (req, res) => {
   }
 });
 
+router.get('/assign-stats', async (req, res) => {
+
+  try {
+    const teamsWithRandomStats = await teamHandler.assignRandomStatistics();
+    const calcWr = await teamAggregationHandler.calculateWinPercentage(Team);
+    res.json(calcWr);
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   const teamId = req.params.id;
   const updateData = req.body; 
@@ -86,6 +98,7 @@ router.get('/t/:conferenceOrDivision', async (req, res) => {
   }
 });
 
+//this is specifically for ADDING to a roster, not changing one's roster
 router.put('/:teamId/changeRoster', async (req, res) => {
   const { teamId } = req.params;
   const { playerId } = req.body;
@@ -119,5 +132,25 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.get('/getTeamId/:playerId', async (req, res) => {
+  const { playerId } = req.params;
+
+  try {
+    const teamId = await teamHandler.getTeamIdByPlayer(playerId);
+
+    if (teamId !== null) {
+      res.json({ teamId });
+    } else {
+      res.status(404).json({ error: 'Player not found in any team roster.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 
 module.exports = router;
