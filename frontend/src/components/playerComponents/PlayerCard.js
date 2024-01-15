@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
 import styles from './PlayerCard.module.css'

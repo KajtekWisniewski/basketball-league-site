@@ -4,11 +4,13 @@ import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamCard.module.css'
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import PlayerPreview from '../playerComponents/PlayerPreview';
+import ManageRoster from './ManageRoster';
 
 const TeamCard = ({ teamId }) => {
   const [team, setTeam] = useState(null);
   const [teamCol, setTeamCol] = useState(null)
   const teamColor = useTeamColor(teamCol);
+  const [teamRoster, setTeamRoster] = useState(0);
 
   useEffect(() => {
     const fetchPlayerData = () => {
@@ -17,11 +19,12 @@ const TeamCard = ({ teamId }) => {
             .then((response) => {
                 setTeam(response.data)
                 setTeamCol(response.data.name)
+                setTeamRoster(response.data.roster.length)
             })
             .catch((error) => console.error('Error fetching player data:', error));
     };
     fetchPlayerData();
-  }, [teamId]);
+  }, [teamId, teamRoster]);
 
   //placeholder for loading
   if (!team) {
@@ -53,6 +56,7 @@ const TeamCard = ({ teamId }) => {
               <PlayerPreview key={player._id} playerId={player._id} />
           ))}
     </div>
+    <ManageRoster teamId={teamId} onTeamChange={() => setTeamRoster(teamRoster+1)}></ManageRoster>
     </>
   );
 };
