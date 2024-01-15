@@ -24,6 +24,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
       const response = await axios.put(`http://127.0.0.1:3001/teams/${teamId}/changeRoster`, { playerId });
       console.log('Team changed successfully:', response.data);
       onTeamChange();
+      setPlayersData(playersData.filter((player) => player._id !== playerId))
     } catch (error) {
       console.error('Error changing team:', error);
     }
