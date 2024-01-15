@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './playersList.module.css'
 import Link from 'next/link'
 import NavBar from '../../components/NavBar';
+import globalStyles from '../../app/globals.css';
 
 export default function PlayersList() {
     const [players, setPlayers] = useState(null);
@@ -41,6 +42,9 @@ export default function PlayersList() {
     return (
       <>
       <NavBar></NavBar>
+      <Link className={globalStyles.linkStyle} href={`/players/add-player`}>
+            <h1>ADD A PLAYER</h1>
+      </Link>
      <table className={styles.playersTable}>
         <thead>
           <tr>
