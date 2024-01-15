@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './PlayerPreview.module.css'
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 function getRandomNumber(min, max) {
     min = typeof min === 'number' ? min : 0;
@@ -14,6 +15,8 @@ function getRandomNumber(min, max) {
 const AddPlayerForm = () => {
   const [calculatedAge, setCalculatedAge] = useState(0);
   const [nameError, setNameError] = useState(false);
+  const [playerPage, setPlayerPage] = useState("")
+  const [submitted, setSubmitted] = useState(false);
 
   const initialValues = {
     name: '',
@@ -65,6 +68,8 @@ const AddPlayerForm = () => {
       const response = await axios.post('http://127.0.0.1:3001/players', values);
       console.log('Player added successfully:', response.data);
       setNameError(false);
+      setPlayerPage(response.data._id)
+      setSubmitted(true);
       resetForm();
     } catch (error) {
       setNameError(true)
@@ -232,6 +237,9 @@ const AddPlayerForm = () => {
         Add Player
       </button>
       {nameError && <p className={styles.error}>Player with this name already exists</p>}
+      {submitted && <Link className={styles.linkStyle} href={`/players/${playerPage}`}>
+            <h2>player page</h2>
+        </Link>}
     </form>
   );
   

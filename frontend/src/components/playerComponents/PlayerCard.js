@@ -3,11 +3,13 @@ import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
 import styles from './PlayerCard.module.css'
 import formatDatabaseData from '../../functions/formatDatabaseData';
+import DeletePlayerButton from './DeletePlayer';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
   const [team, setTeam] = useState(null)
   const teamColor = useTeamColor(team);
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     const fetchPlayerData = () => {
@@ -27,7 +29,13 @@ const PlayerCard = ({ playerId }) => {
     return <div></div>;
   }
 
+  const handlePlayerDelete = () => {
+    setDeleted(true);
+  };
+
   return (
+    <>
+    {!deleted &&
     <div className={styles.playerCard} style={{ backgroundColor: teamColor}}>
         <img className={styles.playerimg} src={player.pictureLink} alt={`${player.name}'s picture`} />
         <div className={styles.playerBasicData}>
@@ -53,7 +61,12 @@ const PlayerCard = ({ playerId }) => {
             <p>Fantasy Score: {player.fantasyScore}</p>
             <p>TEST: playerid : {player._id}</p>
         </div>
+
+        <DeletePlayerButton playerId={playerId} onDelete={handlePlayerDelete}></DeletePlayerButton>
     </div>
+    }
+  {deleted && <p>player has been deleted successfully</p>}
+  </>
   );
 };
 
