@@ -28,6 +28,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/teamless', async (req, res) => {
+  try {
+    const players = await playerHandler.getDocumentsByField(Player, "team", "teamless");
+    res.json(players);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 router.get('/allids', async (req, res) => {
   try {
     const players = await playerHandler.getAllDocuments(Player);

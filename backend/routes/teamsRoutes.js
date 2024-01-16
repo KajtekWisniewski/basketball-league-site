@@ -142,7 +142,8 @@ router.get('/getTeamId/:playerId', async (req, res) => {
     if (teamId !== null) {
       res.json({ teamId });
     } else {
-      res.status(404).json({ error: 'Player not found in any team roster.' });
+      //res.status(404).json({ error: 'Player not found in any team roster.' });
+      res.json({teamId: "teamless"})
     }
   } catch (error) {
     console.error(error);
@@ -150,6 +151,18 @@ router.get('/getTeamId/:playerId', async (req, res) => {
   }
 });
 
+//XDDD
+router.get('/teamless/:playerId', async (req, res) => {
+  const { playerId } = req.params;
+
+  try {
+    res.json({playerId})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './teamsList.module.css'
 import Link from 'next/link'
 import NavBar from '../../components/NavBar';
+import globalStyles from '../../app/globals.css';
 
 export default function TeamsList() {
     const [teams, setTeams] = useState(null);
@@ -41,6 +42,9 @@ export default function TeamsList() {
     return (
       <>
       <NavBar></NavBar>
+      <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
+            <h1>ADD A TEAM</h1>
+      </Link>
      <table className={styles.teamsTable}>
         <thead>
           <tr>
