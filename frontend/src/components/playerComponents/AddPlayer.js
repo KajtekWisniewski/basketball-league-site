@@ -2,8 +2,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './PlayerPreview.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Link from 'next/link';
+import { INITIAL_STATE, addPlayerReducer } from '@/reducers/AddPlayerReducer';
 
 function getRandomNumber(min, max) {
   min = typeof min === 'number' ? min : 0;
@@ -13,14 +14,11 @@ function getRandomNumber(min, max) {
 }
 
 const AddPlayerForm = () => {
-  const [calculatedAge, setCalculatedAge] = useState(0);
-  const [nameError, setNameError] = useState(false);
-  const [playerPage, setPlayerPage] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [state, dispatch] = useReducer(addPlayerReducer, INITIAL_STATE);
 
   const initialValues = {
     name: '',
-    age: calculatedAge,
+    age: state.calculatedAge,
     birthdate: '',
     countryOfOrigin: '',
     height: '',
@@ -78,16 +76,14 @@ const AddPlayerForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     console.log(values);
-    values.age = calculatedAge;
+    values.age = state.calculatedAge;
     try {
       const response = await axios.post('http://127.0.0.1:3001/players', values);
       console.log('Player added successfully:', response.data);
-      setNameError(false);
-      setPlayerPage(response.data._id);
-      setSubmitted(true);
+      dispatch({ type: 'SUBMIT', payload: response.data._id });
       resetForm();
     } catch (error) {
-      setNameError(true);
+      dispatch({ type: 'ERROR' });
       console.error('Error adding player:', error);
     }
   };
@@ -115,7 +111,7 @@ const AddPlayerForm = () => {
         age--;
       }
 
-      setCalculatedAge(age);
+      dispatch({ type: 'CALCULATE', payload: age });
     };
 
     calculateAge();
@@ -137,7 +133,7 @@ const AddPlayerForm = () => {
           type="number"
           id="age"
           {...formik.getFieldProps('age')}
-          value={calculatedAge}
+          value={state.calculatedAge}
           disabled
         />
         {formik.touched.age && formik.errors.age && (
@@ -314,11 +310,11 @@ const AddPlayerForm = () => {
       <button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
         Add Player
       </button>
-      {nameError && (
+      {state.nameError && (
         <p className={styles.error}>Player with this name already exists</p>
       )}
-      {submitted && (
-        <Link className={styles.linkStyle} href={`/players/${playerPage}`}>
+      {state.submitted && (
+        <Link className={styles.linkStyle} href={`/players/${state.playerPage}`}>
           <h2>player page</h2>
         </Link>
       )}
