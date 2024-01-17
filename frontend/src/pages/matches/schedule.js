@@ -6,7 +6,7 @@ import MatchPreview from '../../components/matchComponents/MatchPreview';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
 
-export default function MatchesArchive() {
+export default function Schedule() {
   const [matches, setMatches] = useState(null);
   const [sortField, setSortField] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
@@ -14,7 +14,7 @@ export default function MatchesArchive() {
   useEffect(() => {
     const fetchPlayersList = () => {
       axios
-        .get(`http://127.0.0.1:3001/matches`)
+        .get(`http://127.0.0.1:3001/matches/future`)
         .then((response) => {
           setMatches(response.data);
         })

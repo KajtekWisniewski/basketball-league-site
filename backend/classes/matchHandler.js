@@ -3,9 +3,9 @@ const Team = require('../models/teamSchema');
 const Player = require('../models/PlayerSchema');
 
 class MatchesHandler {
-  async getPopulatedMatches() {
+  async getPopulatedMatches(playedBool) {
     try {
-      const populatedMatch = await Match.find().populate({
+      const populatedMatch = await Match.find({ played: playedBool }).populate({
         path: 'opponents',
         populate: [
           {
