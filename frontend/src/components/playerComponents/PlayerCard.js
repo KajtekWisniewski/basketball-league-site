@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
@@ -14,6 +15,7 @@ const PlayerCard = ({ playerId }) => {
   const [deleted, setDeleted] = useState(false);
   const [triggerRerender, setTriggerRerender] = useState(0);
   const [teamId, setTeamId] = useState(null);
+  // do use reducera
 
   useEffect(() => {
     const fetchPlayerData = () => {

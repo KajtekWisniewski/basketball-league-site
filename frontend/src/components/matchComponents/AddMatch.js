@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { ACTION_TYPES_MATCH } from '@/reducers/ActionTypes';

@@ -1,3 +1,4 @@
+'use client';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from './matchesArchive.module.css';
@@ -6,7 +7,7 @@ import MatchPreview from '../../components/matchComponents/MatchPreview';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
 
-export default function Schedule() {
+export default function MatchesArchive() {
   const [matches, setMatches] = useState(null);
   const [sortField, setSortField] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
@@ -14,7 +15,7 @@ export default function Schedule() {
   useEffect(() => {
     const fetchPlayersList = () => {
       axios
-        .get(`http://127.0.0.1:3001/matches/future`)
+        .get(`http://127.0.0.1:3001/matches`)
         .then((response) => {
           setMatches(response.data);
         })

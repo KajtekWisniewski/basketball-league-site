@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';

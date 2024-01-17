@@ -1,12 +1,11 @@
+'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import MatchCard from '../../components/matchComponents/MatchCard';
-import NavBar from '../../components/NavBar';
+import MatchCard from '../../../components/matchComponents/MatchCard';
+import NavBar from '../../../components/NavBar';
 
-function MatchDetails() {
-  const router = useRouter();
-  const { id } = router.query;
+function MatchDetails({ params }) {
+  const { id } = params;
   const [match, setMatch] = useState(null);
 
   useEffect(() => {
@@ -26,13 +25,13 @@ function MatchDetails() {
 
   //placeholder for loading
   if (!match) {
-    return <div></div>;
+    return <div>COKOLWIEK</div>;
   }
 
   return (
     <>
       <NavBar></NavBar>
-      <MatchCard matchId={id}/>
+      <MatchCard matchId={id} />
     </>
   );
 }

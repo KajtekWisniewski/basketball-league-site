@@ -1,5 +1,5 @@
-import AddMatchForm from '../../components/matchComponents/AddMatch';
-import NavBar from '../../components/NavBar';
+import AddMatchForm from '@/components/matchComponents/AddMatch';
+import NavBar from '@/components/NavBar';
 
 export default function AddPlayer() {
   return (

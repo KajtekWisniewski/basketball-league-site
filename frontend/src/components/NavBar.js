@@ -4,16 +4,16 @@ import styles from './NavBar.module.css';
 const NavBar = ({}) => {
   return (
     <nav className={styles.navbar}>
-      <Link className={styles.linkStyle} href={`/teams/teamsList`}>
+      <Link className={styles.linkStyle} href={`/teams/`}>
         <h2>ALL TEAMS</h2>
       </Link>
-      <Link className={styles.linkStyle} href={`/players/playersList`}>
+      <Link className={styles.linkStyle} href={`/players/`}>
         <h2>ALL PLAYERS</h2>
       </Link>
       <Link className={styles.linkStyle} href={`/`}>
         <h2>STANDINGS</h2>
       </Link>
-      <Link className={styles.linkStyle} href={`/matches/matchArchive`}>
+      <Link className={styles.linkStyle} href={`/matches/`}>
         <h2>MATCH ARCHIVE</h2>
       </Link>
       <Link className={styles.linkStyle} href={`/matches/schedule`}>
