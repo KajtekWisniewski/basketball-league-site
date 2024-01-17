@@ -12,7 +12,7 @@ export const INITIAL_STATE = {
   deleted: false
 };
 
-export const playerCardReducer = (state, action) => {
+export const teamCardReducer = (state, action) => {
   switch (action.type) {
     case ACTION_TYPES.FETCH:
       return {

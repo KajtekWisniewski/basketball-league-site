@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
+import { ACTION_TYPES_MATCH } from '@/reducers/ActionTypes';
+import { INITIAL_STATE, addMatchReducer } from '@/reducers/AddMatchReducer';
 
 const AddMatchForm = () => {
   const [teams, setTeams] = useState([]);
   const [selectedTeams, setSelectedTeams] = useState({});
-  const [selectedPlayers, setSelectedPlayers] = useState({});
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [matchDate, setMatchDate] = useState('');
   const [isDateFromPast, setIsDateFromPast] = useState(false);
+  const [state, dispatch] = useReducer(addMatchReducer, INITIAL_STATE);
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
         const response = await axios.get('http://localhost:3001/teams');
-        setTeams(response.data);
+        //setTeams(response.data);
+        dispatch({ type: ACTION_TYPES_MATCH.FETCH_TEAMS, payload: response.data });
       } catch (error) {
         console.error('Error fetching teams:', error);
       }
@@ -21,90 +25,106 @@ const AddMatchForm = () => {
     fetchTeams();
   }, []);
 
-  const handleTeamChange = (opponentIndex, teamId) => {
-    setSelectedTeams((prevSelectedTeams) => ({
-      ...prevSelectedTeams,
-      [opponentIndex]: teamId
-    }));
-  };
+  // const handleTeamChange = (opponentIndex, teamId) => {
+  //   setSelectedTeams((prevSelectedTeams) => ({
+  //     ...prevSelectedTeams,
+  //     [opponentIndex]: teamId
+  //   }));
+  // };
 
-  const handlePlayerChange = (opponentIndex, playerId) => {
-    setSelectedPlayers((prevSelectedPlayers) => ({
-      ...prevSelectedPlayers,
-      [opponentIndex]: {
-        ...prevSelectedPlayers[opponentIndex],
-        [playerId]: !prevSelectedPlayers[opponentIndex]?.[playerId]
+  // const handlePlayerChange = (opponentIndex, playerId) => {
+  //   setSelectedPlayers((prevSelectedPlayers) => ({
+  //     ...prevSelectedPlayers,
+  //     [opponentIndex]: {
+  //       ...prevSelectedPlayers[opponentIndex],
+  //       [playerId]: !prevSelectedPlayers[opponentIndex]?.[playerId]
+  //     }
+  //   }));
+  // };
+  const handleTeamSelect = (selectedTeamId, opponentIndex) => {
+    const selectedTeam = state.allteams.find((team) => team._id === selectedTeamId);
+    dispatch({
+      type: 'SELECT_TEAM',
+      payload: {
+        selectedTeam: selectedTeam || { _id: '', name: '', roster: [] },
+        opponentIndex
       }
-    }));
+    });
   };
 
-  const handleDateChange = (e) => {
-    const selectedDate = new Date(e.target.value);
-    const currentDate = new Date();
-
-    setIsDateFromPast(selectedDate < currentDate);
-    setMatchDate(e.target.value);
+  const handlePlayersUpdate = (selectedPlayers, opponentIndex) => {
+    dispatch({
+      type: ACTION_TYPES_MATCH.UPDATE_PLAYERS,
+      payload: { selectedPlayers, opponentIndex }
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Selected Teams:', selectedTeams);
-    console.log('Selected Players:', selectedPlayers);
-    console.log('Match Date:', matchDate);
+    console.log(state);
+    try {
+      const response = await axios.post('http://127.0.0.1:3001/matches', state);
+      console.log('Match added successfully:', response.data);
+    } catch (error) {
+      console.error('Error adding a match', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Match Date:</label>
-        <input type="date" value={matchDate} onChange={handleDateChange} />
+        <input
+          type="datetime-local"
+          value={state.date}
+          onChange={(e) =>
+            dispatch({ type: ACTION_TYPES_MATCH.SET_DATE, payload: e.target.value })
+          }
+        />
       </div>
-      {[0, 1].map((index) => (
+
+      {state.opponents.map((opponent, index) => (
         <div key={index}>
-          <label>{`Opponent ${index + 1} Team:`}</label>
+          <h3>Opponent {index + 1}</h3>
+          <label>Select Team:</label>
           <select
-            value={selectedTeams[index] || ''}
-            onChange={(e) => handleTeamChange(index, e.target.value)}
+            value={opponent.team._id}
+            onChange={(e) => handleTeamSelect(e.target.value, index)}
           >
-            <option value="" disabled>
-              Select Team
-            </option>
-            {teams
-              .filter((t) => t._id !== selectedTeams[1 - index])
-              .map((t) => (
-                <option key={t._id} value={t._id}>
-                  {t.name}
-                </option>
-              ))}
+            <option value="">Select Team</option>
+            {state.allteams.map((team) => (
+              <option key={team._id} value={team._id}>
+                {team.name}
+              </option>
+            ))}
           </select>
 
-          {selectedTeams[index] && (
+          {opponent.team && (
             <div>
-              <label>{`Opponent ${index + 1} Players:`}</label>
-              {teams
-                .find((t) => t._id === selectedTeams[index])
+              <label>Select Players:</label>
+              {state.allteams
+                .find((team) => team._id === opponent.team)
                 ?.roster.map((player) => (
                   <div key={player._id}>
                     <input
                       type="checkbox"
-                      id={`player-${player._id}`}
-                      checked={selectedPlayers[index]?.[player._id] || false}
-                      onChange={() => handlePlayerChange(index, player._id)}
+                      id={`player_${player._id}`}
+                      checked={opponent.players.some((p) => p.player === player._id)}
+                      onChange={(e) => {
+                        const selectedPlayers = e.target.checked
+                          ? [...opponent.players, { player: player._id }]
+                          : opponent.players.filter((p) => p.player !== player._id);
+                        handlePlayersUpdate(selectedPlayers, index);
+                      }}
                     />
-                    <label htmlFor={`player-${player._id}`}>{player.name}</label>
+                    <label htmlFor={`player_${player._id}`}>{player.name}</label>
                   </div>
                 ))}
             </div>
           )}
-
-          {isDateFromPast && (
-            <div>
-              <label>{`Opponent ${index + 1} Score:`}</label>
-              <input type="number" placeholder="Score" disabled={!isDateFromPast} />
-            </div>
-          )}
         </div>
       ))}
+
       <button type="submit">Submit</button>
     </form>
   );

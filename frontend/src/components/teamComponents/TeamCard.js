@@ -7,10 +7,10 @@ import PlayerPreview from '../playerComponents/PlayerPreview';
 import ManageRoster from './ManageRoster';
 import RemoveFromRoster from './RemoveFromRoster';
 import DeleteTeamButton from './RemoveTeam';
-import { INITIAL_STATE, playerCardReducer } from '@/reducers/TeamCardReducer';
+import { INITIAL_STATE, teamCardReducer } from '@/reducers/TeamCardReducer';
 
 const TeamCard = ({ teamId }) => {
-  const [state, dispatch] = useReducer(playerCardReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(teamCardReducer, INITIAL_STATE);
   const teamColor = useTeamColor(state.teamCol);
 
   useEffect(() => {
