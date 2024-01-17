@@ -52,6 +52,11 @@ export const addMatchReducer = (state, action) => {
             : opponent
         )
       };
+    case 'UPDATE_OPPONENTS':
+      return {
+        ...state,
+        opponents: action.payload
+      };
     default:
       return state;
   }
