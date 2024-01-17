@@ -34,7 +34,7 @@ export const addMatchReducer = (state, action) => {
         date,
         played: isDateFromPast
       };
-    case 'SELECT_TEAM':
+    case ACTION_TYPES_MATCH.SELECT_TEAM:
       return {
         ...state,
         opponents: state.opponents.map((opponent, index) =>
@@ -43,7 +43,7 @@ export const addMatchReducer = (state, action) => {
             : opponent
         )
       };
-    case 'UPDATE_PLAYERS':
+    case ACTION_TYPES_MATCH.UPDATE_PLAYERS:
       return {
         ...state,
         opponents: state.opponents.map((opponent, index) =>
@@ -52,7 +52,7 @@ export const addMatchReducer = (state, action) => {
             : opponent
         )
       };
-    case 'UPDATE_OPPONENTS':
+    case ACTION_TYPES_MATCH.UPDATE_OPPONENTS:
       return {
         ...state,
         opponents: action.payload

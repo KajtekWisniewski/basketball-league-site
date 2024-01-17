@@ -20,26 +20,10 @@ const AddMatchForm = () => {
     fetchTeams();
   }, []);
 
-  // const handleTeamChange = (opponentIndex, teamId) => {
-  //   setSelectedTeams((prevSelectedTeams) => ({
-  //     ...prevSelectedTeams,
-  //     [opponentIndex]: teamId
-  //   }));
-  // };
-
-  // const handlePlayerChange = (opponentIndex, playerId) => {
-  //   setSelectedPlayers((prevSelectedPlayers) => ({
-  //     ...prevSelectedPlayers,
-  //     [opponentIndex]: {
-  //       ...prevSelectedPlayers[opponentIndex],
-  //       [playerId]: !prevSelectedPlayers[opponentIndex]?.[playerId]
-  //     }
-  //   }));
-  // };
   const handleTeamSelect = (selectedTeamId, opponentIndex) => {
     const selectedTeam = state.allteams.find((team) => team._id === selectedTeamId);
     dispatch({
-      type: 'SELECT_TEAM',
+      type: ACTION_TYPES_MATCH.SELECT_TEAM,
       payload: {
         selectedTeam: selectedTeam || { _id: '', name: '', roster: [] },
         opponentIndex
@@ -57,14 +41,15 @@ const AddMatchForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(state);
-    // try {
-    //   const response = await axios.post('http://127.0.0.1:3001/matches', state);
-    //   console.log('Match added successfully:', response.data);
-    // } catch (error) {
-    //   console.error('Error adding a match', error);
-    // }
+    try {
+      const response = await axios.post('http://127.0.0.1:3001/matches', state);
+      console.log('Match added successfully:', response.data);
+    } catch (error) {
+      console.error('Error adding a match', error);
+    }
   };
 
+  //to do -> zmienic forme na formika i zrobic walidacje
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -103,7 +88,10 @@ const AddMatchForm = () => {
                 onChange={(e) => {
                   const updatedOpponents = [...state.opponents];
                   updatedOpponents[index] = { ...opponent, score: e.target.value };
-                  dispatch({ type: 'UPDATE_OPPONENTS', payload: updatedOpponents });
+                  dispatch({
+                    type: ACTION_TYPES_MATCH.UPDATE_OPPONENTS,
+                    payload: updatedOpponents
+                  });
                 }}
               />
               <label>Select Players:</label>
