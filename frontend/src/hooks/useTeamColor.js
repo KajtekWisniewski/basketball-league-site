@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const useTeamColor = (teamName, color="white") => {
+const useTeamColor = (teamName, color="#CCCCCC") => {
   const getColor = useMemo(() => {
     const teamColorSchema = {
       'boston-celtics': '#007a33',

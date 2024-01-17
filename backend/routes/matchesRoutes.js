@@ -4,8 +4,8 @@ const Match = require('../models/matchSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const databaseHandler = new DataHandler();
-const MatchHandler = require('../classes/matchHandler')
-const matchHandler = new MatchHandler()
+const MatchHandler = require('../classes/matchHandler');
+const matchHandler = new MatchHandler();
 
 router.use(bodyParser.json());
 
@@ -21,7 +21,16 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const matches = await matchHandler.getPopulatedMatches();
+    const matches = await matchHandler.getPopulatedMatches(true);
+    res.json(matches);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/future', async (req, res) => {
+  try {
+    const matches = await matchHandler.getPopulatedMatches(false);
     res.json(matches);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -46,12 +55,15 @@ router.get('/update-player-stats', async (req, res) => {
   }
 });
 
-
 router.put('/:id', async (req, res) => {
   const matchId = req.params.id;
-  const updateData = req.body; 
+  const updateData = req.body;
   try {
-    const updatedMatch = await databaseHandler.patchDocument(Match, { _id: matchId }, updateData);
+    const updatedMatch = await databaseHandler.patchDocument(
+      Match,
+      { _id: matchId },
+      updateData
+    );
     res.json(updatedMatch);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -64,9 +76,9 @@ router.get('/:id', async (req, res) => {
     const retrievedMatch = await matchHandler.getSinglePopulatedMatch(matchId);
     res.json(retrievedMatch);
   } catch (error) {
-    res.status(500).json({error: 'Didnt find such team'});
+    res.status(500).json({ error: 'Didnt find such team' });
   }
-})
+});
 
 router.delete('/:id', async (req, res) => {
   const matchId = req.params.id;

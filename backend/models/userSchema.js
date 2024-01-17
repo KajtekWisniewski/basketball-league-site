@@ -17,12 +17,14 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   team: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
+    required: true
   },
   role: {
     type: String,
-    enum: ['player', 'referee', 'admin'],
-    default: 'player'
+    enum: ['user', 'admin'],
+    default: 'user'
   },
   pictureLink: {
     type: String
