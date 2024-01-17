@@ -4,17 +4,17 @@ const Team = require('../models/teamSchema');
 const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const AggregationHandler = require('../classes/aggregationHandler');
-const TeamHandler = require('../classes/teamHandler')
+const TeamHandler = require('../classes/teamHandler');
 const genericHandler = new DataHandler();
 const teamAggregationHandler = new AggregationHandler();
 const teamHandler = new TeamHandler();
-
 
 router.use(bodyParser.json());
 
 router.post('/', async (req, res) => {
   try {
     const newTeamData = req.body;
+    newTeamData.name = req.body.name.toLowerCase().replaceAll(' ', '-');
     const addedTeam = await genericHandler.addDocument(Team, newTeamData);
     res.status(201).json(addedTeam);
   } catch (error) {
@@ -32,9 +32,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/calcwr', async (req, res) => {
-
   try {
-    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(Team);
+    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(
+      Team
+    );
     res.json(teamsWithWinPercentage);
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -43,7 +44,6 @@ router.get('/calcwr', async (req, res) => {
 });
 
 router.get('/assign-stats', async (req, res) => {
-
   try {
     const teamsWithRandomStats = await teamHandler.assignRandomStatistics();
     const calcWr = await teamAggregationHandler.calculateWinPercentage(Team);
@@ -56,9 +56,13 @@ router.get('/assign-stats', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const teamId = req.params.id;
-  const updateData = req.body; 
+  const updateData = req.body;
   try {
-    const updatedTeam = await genericHandler.patchDocument(Team, { _id: teamId }, updateData);
+    const updatedTeam = await genericHandler.patchDocument(
+      Team,
+      { _id: teamId },
+      updateData
+    );
     res.json(updatedTeam);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -68,17 +72,23 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const teamId = req.params.id;
   try {
-    const retrievedTeam = await genericHandler.getSingleDocument(Team, teamId, 'roster')
+    const retrievedTeam = await genericHandler.getSingleDocument(
+      Team,
+      teamId,
+      'roster'
+    );
     res.json(retrievedTeam);
   } catch (error) {
-    res.status(500).json({error: 'Didnt find such team'});
+    res.status(500).json({ error: 'Didnt find such team' });
   }
-})
+});
 
 router.delete('/:id', async (req, res) => {
   const teamId = req.params.id;
 
   try {
+    const updatePlayersToTeamless =
+      await teamHandler.updateAllPlayersInTheRosterToTeamless(teamId);
     const deletedTeam = await genericHandler.deleteDocument(Team, { _id: teamId });
     res.json(deletedTeam);
   } catch (error) {
@@ -90,7 +100,9 @@ router.get('/t/:conferenceOrDivision', async (req, res) => {
   const { conferenceOrDivision } = req.params;
 
   try {
-    const teams = await teamHandler.getTeamsByConferenceOrDivision(conferenceOrDivision);
+    const teams = await teamHandler.getTeamsByConferenceOrDivision(
+      conferenceOrDivision
+    );
     res.json(teams);
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -105,11 +117,13 @@ router.put('/:teamId/changeRoster', async (req, res) => {
 
   try {
     if (!playerId) {
-      return res.status(400).json({ error: 'PlayerId is required in the request body.' });
+      return res
+        .status(400)
+        .json({ error: 'PlayerId is required in the request body.' });
     }
 
     const updatedTeam = await teamHandler.addExistingPlayerToRoster(teamId, playerId);
-    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId)
+    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId);
     res.json([updatedTeam, updatePlayersTeam]);
   } catch (error) {
     res.status(500).json({ error: 'Player already in a roster' });
@@ -122,11 +136,13 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
 
   try {
     if (!playerId) {
-      return res.status(400).json({ error: 'PlayerId is required in the request body.' });
+      return res
+        .status(400)
+        .json({ error: 'PlayerId is required in the request body.' });
     }
 
     const updatedTeam = await teamHandler.removeFromRoster(teamId, playerId);
-    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId)
+    const updatePlayersTeam = await teamHandler.updatePlayerTeamById(playerId);
     res.json([updatedTeam, updatePlayersTeam]);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -143,7 +159,7 @@ router.get('/getTeamId/:playerId', async (req, res) => {
       res.json({ teamId });
     } else {
       //res.status(404).json({ error: 'Player not found in any team roster.' });
-      res.json({teamId: "teamless"})
+      res.json({ teamId: 'teamless' });
     }
   } catch (error) {
     console.error(error);
@@ -156,14 +172,11 @@ router.get('/teamless/:playerId', async (req, res) => {
   const { playerId } = req.params;
 
   try {
-    res.json({playerId})
-
+    res.json({ playerId });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
 
 module.exports = router;
