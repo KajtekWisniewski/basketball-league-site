@@ -1,9 +1,8 @@
-// models/user.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  nickname: {
+  name: {
     type: String,
     required: true
   },
@@ -21,33 +20,32 @@ const userSchema = new mongoose.Schema({
     ref: 'Team',
     required: true
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
   },
   pictureLink: {
-    type: String
+    type: String,
+    required: true,
+    default:
+      'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'
   }
 });
 
-// Hash the password before saving
 userSchema.pre('save', async function (next) {
   try {
     if (!this.isModified('password')) {
       return next();
     }
 
-    const hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
-
-    return next();
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
   } catch (error) {
     return next(error);
   }
 });
 
-// Method to compare passwords
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

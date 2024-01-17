@@ -11,14 +11,9 @@ import LogIn from '@/components/userComponents/login-page';
 // });
 
 export default function Home() {
-  const username = useSelector((state) => state.authReducer.value.username);
-  const isModerator = useSelector((state) => state.authReducer.value.isModerator);
   return (
     <>
       <NavBar></NavBar>
-      <LogIn></LogIn>
-      <h1>Username: {username}</h1>
-      {isModerator && <h1> this user is a moderator</h1>}
       <Standings></Standings>
     </>
   );

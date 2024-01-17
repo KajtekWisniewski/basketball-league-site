@@ -1,16 +1,17 @@
 require('dotenv').config();
 
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
-const uri = `mongodb+srv://admin:${process.env.mongoPass}${process.env.mongoAtlasURL}`;
+//const uri = `mongodb+srv://admin:${process.env.mongoPass}${process.env.mongoAtlasURL}`;
+const uri = 'mongodb://localhost:27017';
 mongoose.connect(uri, {
-    dbName: `${process.env.mongoDBname}`
+  dbName: `${process.env.mongoDBname}`
 });
 
 const app = express();
 app.use(cors());
-const PORT = 3001
+const PORT = 3001;
 
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
@@ -24,10 +25,9 @@ const matchRouter = require('./routes/matchesRoutes');
 app.use('/matches', matchRouter);
 const utilRouter = require('./routes/utilRoutes');
 app.use('/util', utilRouter);
+const userRouter = require('./routes/userRoutes');
+app.use('/users', userRouter);
 
 app.listen(PORT, () => console.log(`server started on ${PORT}`));
 
 module.exports = app;
-
-
-

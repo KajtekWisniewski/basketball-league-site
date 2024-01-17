@@ -73,7 +73,7 @@ const MatchCard = ({ matchId }) => {
             <>
               <PlayerPreview key={player?.player._id} playerId={player?.player._id} />
               <div className={styles.individualMatchStats}>
-                <p>{player?.player.name}'s match statistics</p>
+                <p>{player?.player.name}&apos; match statistics</p>
                 <p>rebounds: {player?.matchStatistics.rebounds}</p>
                 <p>points: {player?.matchStatistics.points}</p>
                 <p>fouls: {player?.matchStatistics.foulsCommitted}</p>
@@ -112,7 +112,7 @@ const MatchCard = ({ matchId }) => {
             <>
               <PlayerPreview key={player?.player._id} playerId={player?.player._id} />
               <div className={styles.individualMatchStats}>
-                <p>{player?.player.name}'s match statistics</p>
+                <p>{player?.player.name}&apos; match statistics</p>
                 <p>rebounds: {player?.matchStatistics.rebounds}</p>
                 <p>points: {player?.matchStatistics.points}</p>
                 <p>fouls: {player?.matchStatistics.foulsCommitted}</p>
