@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import globalStyles from '../../app/globals.css';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Team name is required'),
@@ -206,7 +207,7 @@ const AddTeamForm = () => {
         Add Team
       </button>
       {submitted && (
-        <Link className={styles.linkStyle} href={`/teams/${playerPage}`}>
+        <Link className={globalStyles.linkStyle} href={`/teams/${playerPage}`}>
           <h2>team page</h2>
         </Link>
       )}
