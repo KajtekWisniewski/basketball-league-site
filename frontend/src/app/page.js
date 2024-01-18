@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import Standings from '@/components/teamComponents/Standings';
 import LogIn from '@/components/userComponents/login-page';
+import variables from './variables.module.scss';
 
 // const Standings = dynamic(() => import('../components/teamComponents/Standings'), {
 //   ssr: false
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <NavBar></NavBar>
+      <h1 style={{ color: variables.primaryColor }}>STANDINGS:</h1>
       <Standings></Standings>
     </>
   );

@@ -1,8 +1,10 @@
 'use client';
-import React, { createContext } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { ACTION_TYPES_LOGIN } from '@/reducers/ActionTypes';
+import { LoginScreenReducer, INITIAL_STATE } from '@/reducers/LoginScreenReducer';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -10,6 +12,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const [state, dispatch] = useReducer(LoginScreenReducer, INITIAL_STATE);
+
   const initialValues = {
     email: '',
     password: ''
@@ -24,6 +28,19 @@ const LoginForm = () => {
 
       // Handle successful login, e.g., store token in local storage
       console.log('Login successful! Token:', token);
+      dispatch({
+        type: ACTION_TYPES_LOGIN.LOGIN,
+        payload: {
+          name: response.data.user.name,
+          email: response.data.user.email,
+          team: response.data.user.team,
+          isAdmin: response.data.user.isAdmin,
+          id: response.data.user._id,
+          pictureLink: response.data.user.pictureLink
+        }
+      });
+      localStorage.setItem('userInfo', JSON.stringify(state));
+      resetForm();
     } catch (error) {
       // Handle login failure, e.g., show error message
       console.error('Login failed', error.response?.data || 'An error occurred');

@@ -31,9 +31,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/profile', async (req, res) => {
+router.post('/profile/:id', async (req, res) => {
   try {
-    const protect = await userHandler.protectMiddleware(req, res);
+    //const protect = await userHandler.protectMiddleware(req, res);
     const updatedUser = await userHandler.updateUser(req, res);
     res.json({
       _id: updatedUser._id,
