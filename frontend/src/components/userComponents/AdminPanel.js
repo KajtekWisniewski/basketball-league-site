@@ -20,18 +20,28 @@ const AdminPanel = () => {
 
   const handleImport = async () => {
     if (file) {
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log(formData);
-        // const response = await axios.post(
-        //   `http://127.0.0.1:3001/${selectedEndpoint}/import`,
-        //   formData
-        // );
+      if (file.type === 'application/json') {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
 
-        //console.log('Import result:', response.data);
-      } catch (error) {
-        console.error('Error importing data:', error);
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/${selectedEndpoint}/import`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+          );
+
+          console.log('Import result:', response.data);
+          console.log(formData);
+        } catch (error) {
+          console.error('Error importing data:', error);
+        }
+      } else {
+        console.error('Only JSON files are allowed');
       }
     } else {
       console.error('No file selected');
@@ -44,6 +54,7 @@ const AdminPanel = () => {
     <>
       {userInfo?.user?.isAdmin ? (
         <div>
+          <div>Import na backendzie wspierany poki co tylko dla endpointu players</div>
           <div>
             {' '}
             <label htmlFor="endpoints">Select Endpoint:</label>
