@@ -25,6 +25,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (userInfo) {
       router.push('/user-profile');
+      //console.log(userInfo);
     }
   }, [router, userInfo]);
 

@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import styles from './NavBar.module.css';
+import { useSelector } from 'react-redux';
 
 const NavBar = ({}) => {
+  const { userInfo } = useSelector((state) => state.auth);
+
   return (
     <nav className={styles.navbar}>
       <Link className={styles.linkStyle} href={`/teams/`}>
@@ -19,12 +22,31 @@ const NavBar = ({}) => {
       <Link className={styles.linkStyle} href={`/matches/schedule`}>
         <h2>SCHEDULE</h2>
       </Link>
-      <Link className={styles.linkStyle} href={`/login`}>
-        <h2>LOGIN</h2>
-      </Link>
-      <Link className={styles.linkStyle} href={`/register`}>
-        <h2>REGISTER</h2>
-      </Link>
+      <div>
+        {!userInfo && (
+          <>
+            <Link className={styles.linkStyle} href={`/login`}>
+              <h2>LOGIN</h2>
+            </Link>
+            <Link className={styles.linkStyle} href={`/register`}>
+              <h2>REGISTER</h2>
+            </Link>
+          </>
+        )}
+        {userInfo && (
+          <>
+            <h2>WELCOME {userInfo.user.name}</h2>
+            <Link className={styles.linkStyle} href={`/user-profile`}>
+              <h2>YOUR PROFILE</h2>
+            </Link>
+          </>
+        )}
+        {userInfo && userInfo.user.isAdmin && (
+          <>
+            <h1>ADMIN VIEW</h1>
+          </>
+        )}
+      </div>
     </nav>
   );
 };
