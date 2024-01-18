@@ -7,16 +7,16 @@ const DeletePlayerButton = ({ playerId, onDelete }) => {
       //to jest glupie XDD pozatym lepiej to zrobic po stronie backendu ale narazie mi sie nie chce wiec tak zostawiam
       // jak bedzie czas to naprawie
       const teamid = await axios
-        .get(`http://127.0.0.1:3001/teams/getTeamId/${playerId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/getTeamId/${playerId}`)
         .then(async (response) =>
           response.data.teamId === 'teamless'
             ? console.log('XD')
             : await axios.delete(
-                `http://127.0.0.1:3001/teams/${response.data.teamId}/changeRoster`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${response.data.teamId}/changeRoster`,
                 { data: { playerId } }
               )
         );
-      await axios.delete(`http://127.0.0.1:3001/players/${playerId}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players/${playerId}`);
       console.log(`Player with ID ${playerId} deleted successfully`);
       onDelete();
     } catch (error) {

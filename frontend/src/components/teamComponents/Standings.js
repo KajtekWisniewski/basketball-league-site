@@ -13,7 +13,9 @@ const Standings = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:3001/teams');
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`
+        );
         setTeams(response.data);
       } catch (error) {
         console.error('Error fetching teams:', error);

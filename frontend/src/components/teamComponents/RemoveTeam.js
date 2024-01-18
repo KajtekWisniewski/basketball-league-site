@@ -4,7 +4,7 @@ import axios from 'axios';
 const DeleteTeamButton = ({ teamId, onDelete }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:3001/teams/${teamId}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}`);
       console.log(`Team with ID ${teamId} deleted successfully`);
       onDelete();
     } catch (error) {

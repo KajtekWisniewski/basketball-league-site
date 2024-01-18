@@ -17,7 +17,7 @@ export default function Schedule() {
   useEffect(() => {
     const fetchPlayersList = () => {
       axios
-        .get(`http://127.0.0.1:3001/matches/future`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/future`)
         .then((response) => {
           setMatches(response.data);
         })

@@ -16,7 +16,7 @@ const MatchPreview = ({ matchId }) => {
   useEffect(() => {
     const fetchMatchData = () => {
       axios
-        .get(`http://127.0.0.1:3001/matches/${matchId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchId}`)
         .then((response) => {
           setMatch(response.data);
           setTeamCol1(response.data.opponents[0].team.name);

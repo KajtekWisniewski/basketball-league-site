@@ -79,7 +79,10 @@ const AddPlayerForm = () => {
     console.log(values);
     values.age = state.calculatedAge;
     try {
-      const response = await axios.post('http://127.0.0.1:3001/players', values);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/players`,
+        values
+      );
       console.log('Player added successfully:', response.data);
       dispatch({ type: 'SUBMIT', payload: response.data._id });
       resetForm();

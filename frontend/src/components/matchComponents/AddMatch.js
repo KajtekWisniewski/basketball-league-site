@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import globalStyles from '@/app/globals.css';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 21);
@@ -16,11 +17,14 @@ const AddMatchForm = () => {
   const [state, dispatch] = useReducer(addMatchReducer, INITIAL_STATE);
   const [errors, setErrors] = useState([]);
   const { userInfo } = useSelector((state) => state.auth);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/teams');
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`
+        );
         //setTeams(response.data);
         dispatch({ type: ACTION_TYPES_MATCH.FETCH_TEAMS, payload: response.data });
       } catch (error) {
@@ -105,6 +109,7 @@ const AddMatchForm = () => {
       const response = await axios.post('http://127.0.0.1:3001/matches', state);
       console.log('Match added successfully:', response.data);
       setErrors([]);
+      router.push(`/matches/${response.data._id}`);
     } catch (error) {
       console.error('Validation Error:', error.errors);
       setErrors(error.errors);

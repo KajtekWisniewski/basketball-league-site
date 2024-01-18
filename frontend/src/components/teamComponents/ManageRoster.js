@@ -11,7 +11,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
   useEffect(() => {
     const fetchTeamlessPlayers = () => {
       axios
-        .get(`http://127.0.0.1:3001/players`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`)
         .then((response) => {
           setPlayersData(response.data.filter((player) => player.team === 'teamless'));
         })
@@ -23,7 +23,7 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
   const handleTeamChange = async () => {
     try {
       const response = await axios.put(
-        `http://127.0.0.1:3001/teams/${teamId}/changeRoster`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}/changeRoster`,
         { playerId }
       );
       console.log('Team changed successfully:', response.data);

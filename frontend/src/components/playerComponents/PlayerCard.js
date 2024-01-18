@@ -21,9 +21,6 @@ const PlayerCard = ({ playerId }) => {
 
   useEffect(() => {
     const fetchPlayerData = () => {
-      const response0 = axios.get(
-        `http://127.0.0.1:3001/players/updateStats/${playerId}`
-      );
       const response1 = axios
         .get(`http://127.0.0.1:3001/players/${playerId}`)
         .then((response) => {
@@ -39,7 +36,7 @@ const PlayerCard = ({ playerId }) => {
         .catch((error) => console.error('Error fetching player data:', error));
     };
     fetchPlayerData();
-  }, [playerId, triggerRerender]);
+  }, [playerId]);
 
   //placeholder for loading
   if (!player) {

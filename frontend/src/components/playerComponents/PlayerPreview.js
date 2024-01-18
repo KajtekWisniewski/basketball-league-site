@@ -15,7 +15,7 @@ const PlayerPreview = ({ playerId }) => {
   useEffect(() => {
     const fetchPlayerData = () => {
       axios
-        .get(`http://127.0.0.1:3001/players/${playerId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players/${playerId}`)
         .then((response) => {
           setPlayer(response.data);
           setTeam(response.data.team);

@@ -9,23 +9,24 @@ const NavBar = ({}) => {
   const dispatch = useDispatch();
 
   return (
-    <nav className={styles.navbar}>
-      <Link className={styles.linkStyle} href={`/teams/`}>
-        <h2>ALL TEAMS</h2>
-      </Link>
-      <Link className={styles.linkStyle} href={`/players/`}>
-        <h2>ALL PLAYERS</h2>
-      </Link>
-      <Link className={styles.linkStyle} href={`/`}>
-        <h2>STANDINGS</h2>
-      </Link>
-      <Link className={styles.linkStyle} href={`/matches/`}>
-        <h2>MATCH ARCHIVE</h2>
-      </Link>
-      <Link className={styles.linkStyle} href={`/matches/schedule`}>
-        <h2>SCHEDULE</h2>
-      </Link>
-      <div>
+    <>
+      <nav className={styles.navbar}>
+        <Link className={styles.linkStyle} href={`/teams/`}>
+          <h2>ALL TEAMS</h2>
+        </Link>
+        <Link className={styles.linkStyle} href={`/players/`}>
+          <h2>ALL PLAYERS</h2>
+        </Link>
+        <Link className={styles.linkStyle} href={`/`}>
+          <h2>STANDINGS</h2>
+        </Link>
+        <Link className={styles.linkStyle} href={`/matches/`}>
+          <h2>MATCH ARCHIVE</h2>
+        </Link>
+        <Link className={styles.linkStyle} href={`/matches/schedule`}>
+          <h2>SCHEDULE</h2>
+        </Link>
+
         {!userInfo && (
           <>
             <Link className={styles.linkStyle} href={`/login`}>
@@ -49,11 +50,15 @@ const NavBar = ({}) => {
         )}
         {userInfo && userInfo.user.isAdmin && (
           <>
-            <h1>ADMIN VIEW</h1>
+            <Link className={styles.linkStyle} href={`/admin-panel`}>
+              <h2>ADMIN PANEL</h2>
+            </Link>
+            <h1>--ADMIN VIEW--</h1>
           </>
         )}
-      </div>
-    </nav>
+        <></>
+      </nav>
+    </>
   );
 };
 

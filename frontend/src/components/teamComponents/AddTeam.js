@@ -28,7 +28,9 @@ const AddTeamForm = () => {
   useEffect(() => {
     const fetchTeamlessPlayers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/players/teamless');
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/players/teamless`
+        );
         setTeamlessPlayers(response.data);
       } catch (error) {
         console.error('Error fetching teamless players:', error);
@@ -70,7 +72,10 @@ const AddTeamForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post('http://localhost:3001/teams', values);
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`,
+          values
+        );
         console.log('Team added successfully:', response.data);
         resetForm();
       } catch (error) {

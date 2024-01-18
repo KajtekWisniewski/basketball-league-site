@@ -11,7 +11,9 @@ function PlayerDetails({ params }) {
   useEffect(() => {
     const fetchPlayerDetails = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:3001/teams/${id}`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${id}`
+        );
         setTeam(response.data);
       } catch (error) {
         console.error(`Error fetching player details for ID ${id}:`, error);

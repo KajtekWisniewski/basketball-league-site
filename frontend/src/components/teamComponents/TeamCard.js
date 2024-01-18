@@ -21,7 +21,7 @@ const TeamCard = ({ teamId }) => {
   useEffect(() => {
     const fetchPlayerData = () => {
       axios
-        .get(`http://127.0.0.1:3001/teams/${teamId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}`)
         .then((response) => {
           // setTeam(response.data);
           // setTeamCol(response.data.name);
