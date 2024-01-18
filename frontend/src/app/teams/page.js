@@ -12,6 +12,7 @@ export default function TeamsList() {
   const [teams, setTeams] = useState(null);
   const [sortField, setSortField] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchTeamList = () => {
@@ -47,9 +48,11 @@ export default function TeamsList() {
   return (
     <>
       <NavBar></NavBar>
-      <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
-        <h1>ADD A TEAM</h1>
-      </Link>
+      {userInfo?.user && (
+        <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
+          <h1>ADD A TEAM</h1>
+        </Link>
+      )}
       <table className={styles.teamsTable}>
         <thead>
           <tr>

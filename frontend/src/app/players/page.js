@@ -6,11 +6,13 @@ import styles from './playersList.module.css';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
+import { useSelector } from 'react-redux';
 
 export default function PlayersList() {
   const [players, setPlayers] = useState(null);
   const [sortField, setSortField] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPlayersList = () => {
@@ -46,9 +48,11 @@ export default function PlayersList() {
   return (
     <>
       <NavBar></NavBar>
-      <Link className={globalStyles.linkStyle} href={`/players/add-player`}>
-        <h1>ADD A PLAYER</h1>
-      </Link>
+      {userInfo?.user && (
+        <Link className={globalStyles.linkStyle} href={`/players/add-player`}>
+          <h1>ADD A PLAYER</h1>
+        </Link>
+      )}
       <table className={styles.playersTable}>
         <thead>
           <tr>
@@ -58,7 +62,7 @@ export default function PlayersList() {
             <th onClick={() => handleSort('teamNumber')}>Number</th>
             <th onClick={() => handleSort('position')}>Position</th>
             <th onClick={() => handleSort('height')}>Height</th>
-            <th>Birthdate</th>
+            <th onClick={() => handleSort('birthdate')}>Birthdate</th>
             <th onClick={() => handleSort('countryOfOrigin')}>Origin</th>
           </tr>
         </thead>

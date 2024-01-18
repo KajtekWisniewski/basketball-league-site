@@ -7,6 +7,7 @@ import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import DeleteMatchButton from './DeleteMatch';
+import { useSelector } from 'react-redux';
 
 const MatchCard = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -16,6 +17,7 @@ const MatchCard = ({ matchId }) => {
   const teamColor2 = useTeamColor(teamCol2);
   const [deleted, setDeleted] = useState(false);
   //jak zostanie czas to refactor na useReducer ^^
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchMatchData = () => {
@@ -125,11 +127,17 @@ const MatchCard = ({ matchId }) => {
           ))}
         </div>
       </div>
-      <DeleteMatchButton
-        matchId={matchId}
-        onDelete={handlePlayerDelete}
-      ></DeleteMatchButton>
-      {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
+      <div>
+        {userInfo?.user?.isAdmin && (
+          <>
+            <DeleteMatchButton
+              matchId={matchId}
+              onDelete={handlePlayerDelete}
+            ></DeleteMatchButton>
+            {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
+          </>
+        )}
+      </div>
     </>
   );
 };

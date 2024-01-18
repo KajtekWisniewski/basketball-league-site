@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PlayerCard from '../../../components/playerComponents/PlayerCard';
 import NavBar from '../../../components/NavBar';
+import { useSelector } from 'react-redux';
 
 function PlayerDetails({ params }) {
   const { id } = params;
   const [player, setPlayer] = useState(null);
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPlayerDetails = async () => {

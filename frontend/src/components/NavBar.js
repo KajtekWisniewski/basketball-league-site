@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import styles from './NavBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
