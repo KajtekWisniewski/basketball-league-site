@@ -30,13 +30,12 @@ router.get('/', async (req, res) => {
 
 router.get('/teamless', async (req, res) => {
   try {
-    const players = await playerHandler.getDocumentsByField(Player, "team", "teamless");
+    const players = await playerHandler.getDocumentsByField(Player, 'team', 'teamless');
     res.json(players);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 router.get('/allids', async (req, res) => {
   try {
@@ -55,13 +54,17 @@ router.get('/calcage', async (req, res) => {
     console.error('Error fetching players:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-})
+});
 
 router.put('/:id', async (req, res) => {
   const playerId = req.params.id;
-  const updateData = req.body; 
+  const updateData = req.body;
   try {
-    const updatedPlayer = await playerHandler.patchDocument(Player, { _id: playerId }, updateData);
+    const updatedPlayer = await playerHandler.patchDocument(
+      Player,
+      { _id: playerId },
+      updateData
+    );
     res.json(updatedPlayer);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -71,12 +74,12 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const playerId = req.params.id;
   try {
-    const retrievedPlayer = await playerHandler.getSingleDocument(Player, playerId)
+    const retrievedPlayer = await playerHandler.getSingleDocument(Player, playerId);
     res.json(retrievedPlayer);
   } catch (error) {
-    res.status(500).json({error: 'Didnt find such player'});
+    res.status(500).json({ error: 'Didnt find such player' });
   }
-})
+});
 
 router.delete('/:id', async (req, res) => {
   const playerId = req.params.id;
@@ -86,6 +89,19 @@ router.delete('/:id', async (req, res) => {
     res.json(deletedPlayer);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/updateStats/:id', async (req, res) => {
+  const playerId = req.params.id;
+
+  try {
+    const updatedStats = await playerAggregationHandler.updatePlayerStatistics2(
+      playerId
+    );
+    res.json({ message: 'player stats updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error while aggregating player stats' });
   }
 });
 
@@ -106,7 +122,12 @@ router.get('/team/:teamName/players', async (req, res) => {
   try {
     const { teamName } = req.params;
 
-    const playerIds = await playerHandler.getSpecificDocumentValuesByField(Player, 'team', teamName, '_id');
+    const playerIds = await playerHandler.getSpecificDocumentValuesByField(
+      Player,
+      'team',
+      teamName,
+      '_id'
+    );
 
     res.json(playerIds);
   } catch (error) {

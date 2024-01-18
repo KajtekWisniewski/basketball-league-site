@@ -21,6 +21,9 @@ const PlayerCard = ({ playerId }) => {
 
   useEffect(() => {
     const fetchPlayerData = () => {
+      const response0 = axios.get(
+        `http://127.0.0.1:3001/players/updateStats/${playerId}`
+      );
       const response1 = axios
         .get(`http://127.0.0.1:3001/players/${playerId}`)
         .then((response) => {
@@ -87,7 +90,10 @@ const PlayerCard = ({ playerId }) => {
             <p>Points: {player.statistics.points}</p>
             <p>Fouls Committed: {player.statistics.foulsCommitted}</p>
             <p>Free Throws Made: {player.statistics.freeThrowsMade}</p>
-            <p>Free Throw Percentage: {player.statistics.freeThrowPercentage}</p>
+            <p>
+              Free Throw Percentage:{' '}
+              {player.statistics.freeThrowPercentage.toString().slice(0, 5)}%
+            </p>
 
             <p>Fantasy Score: {player.fantasyScore}</p>
             <p>TEST: playerid : {player._id}</p>
