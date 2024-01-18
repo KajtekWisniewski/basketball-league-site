@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './NavBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/redux/features/auth-slice';
+//import Image from 'next/image';
 
 const NavBar = ({}) => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -42,6 +43,9 @@ const NavBar = ({}) => {
             <h2>WELCOME {userInfo.user.name}</h2>
             <Link className={styles.linkStyle} href={`/user-profile`}>
               <h2>YOUR PROFILE</h2>
+
+              {/* <Image src={userInfo.user.pictureLink} width={250} height={250}></Image> */}
+              <img className={styles.pfp} src={userInfo.user.pictureLink}></img>
             </Link>
             <button className="button" onClick={() => dispatch(logout())}>
               Logout

@@ -12,7 +12,7 @@ const TeamPreview = ({ teamId }) => {
   const teamColor = useTeamColor(teamCol);
 
   useEffect(() => {
-    const fetchPlayerData = () => {
+    const fetchTeamsData = () => {
       axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}`)
         .then((response) => {
@@ -21,7 +21,7 @@ const TeamPreview = ({ teamId }) => {
         })
         .catch((error) => console.error('Error fetching player data:', error));
     };
-    fetchPlayerData();
+    fetchTeamsData();
   }, [teamId]);
 
   //placeholder for loading

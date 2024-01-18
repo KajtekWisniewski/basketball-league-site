@@ -18,6 +18,17 @@ const AdminPanel = () => {
     setFile(event.target.files[0]);
   };
 
+  const handleAssignRandomStats = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/assign-stats`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error assigning stats from admin panel', error);
+    }
+  };
+
   const handleImport = async () => {
     if (file) {
       if (file.type === 'application/json') {
@@ -73,6 +84,11 @@ const AdminPanel = () => {
           <div>
             <input type="file" onChange={handleFileChange} />
             <button onClick={handleImport}>Import Data</button>
+          </div>
+          <div>
+            <button onClick={handleAssignRandomStats}>
+              Assign teams with random stats
+            </button>
           </div>
         </div>
       ) : (
