@@ -19,6 +19,12 @@ const NavBar = ({}) => {
       <Link className={styles.linkStyle} href={`/matches/schedule`}>
         <h2>SCHEDULE</h2>
       </Link>
+      <Link className={styles.linkStyle} href={`/login`}>
+        <h2>LOGIN</h2>
+      </Link>
+      <Link className={styles.linkStyle} href={`/register`}>
+        <h2>REGISTER</h2>
+      </Link>
     </nav>
   );
 };
