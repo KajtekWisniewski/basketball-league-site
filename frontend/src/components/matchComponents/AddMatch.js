@@ -1,8 +1,12 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { ACTION_TYPES_MATCH } from '@/reducers/ActionTypes';
 import { INITIAL_STATE, addMatchReducer } from '@/reducers/AddMatchReducer';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
+import globalStyles from '@/app/globals.css';
+import Link from 'next/link';
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 21);
@@ -11,6 +15,7 @@ function getRandomNumber() {
 const AddMatchForm = () => {
   const [state, dispatch] = useReducer(addMatchReducer, INITIAL_STATE);
   const [errors, setErrors] = useState([]);
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -108,7 +113,7 @@ const AddMatchForm = () => {
     }
   };
 
-  return (
+  return userInfo ? (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Match Date: Specify date to proceed further: </label>
@@ -309,6 +314,10 @@ const AddMatchForm = () => {
       <button type="submit">Submit</button>
       {errors.length > 0 && errors.map((error, id) => <p key={id}>{error}</p>)}
     </form>
+  ) : (
+    <Link className={globalStyles.linkStyle} href={`/login`}>
+      <p>Please login</p>
+    </Link>
   );
 };
 

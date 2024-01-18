@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
@@ -8,10 +9,14 @@ import ManageRoster from './ManageRoster';
 import RemoveFromRoster from './RemoveFromRoster';
 import DeleteTeamButton from './RemoveTeam';
 import { INITIAL_STATE, teamCardReducer } from '@/reducers/TeamCardReducer';
+import { useSelector } from 'react-redux';
+
+const isUserInATeam = (currTeamId, userTeamId) => currTeamId === userTeamId;
 
 const TeamCard = ({ teamId }) => {
   const [state, dispatch] = useReducer(teamCardReducer, INITIAL_STATE);
   const teamColor = useTeamColor(state.teamCol);
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPlayerData = () => {
@@ -70,29 +75,38 @@ const TeamCard = ({ teamId }) => {
               </p>
               <p>TEST id: {state.team._id}</p>
             </div>
-            <DeleteTeamButton
-              teamId={teamId}
-              onDelete={handlePlayerDelete}
-            ></DeleteTeamButton>
+            {userInfo?.user?.isAdmin && (
+              <DeleteTeamButton
+                teamId={teamId}
+                onDelete={handlePlayerDelete}
+              ></DeleteTeamButton>
+            )}
           </div>
           <div>
             <h2>Current Roster</h2>
             {state.team.roster.map((player, index) => (
               <>
                 <PlayerPreview key={player._id} playerId={player._id} />
-                <RemoveFromRoster
-                  key={index}
-                  teamId={teamId}
-                  playerId={player._id}
-                  onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_MINUS' })}
-                ></RemoveFromRoster>
+                {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
+                  userInfo?.user?.isAdmin) && (
+                  <RemoveFromRoster
+                    key={index}
+                    teamId={teamId}
+                    playerId={player._id}
+                    onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_MINUS' })}
+                  ></RemoveFromRoster>
+                )}
               </>
             ))}
           </div>
-          <ManageRoster
-            teamId={teamId}
-            onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
-          ></ManageRoster>
+
+          {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
+            userInfo?.user?.isAdmin) && (
+            <ManageRoster
+              teamId={teamId}
+              onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+            ></ManageRoster>
+          )}
         </>
       )}
       {state.deleted && <div>usunieto druzyne</div>}

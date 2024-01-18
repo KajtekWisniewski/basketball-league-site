@@ -1,27 +1,31 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import formatDatabaseData from '../../functions/formatDatabaseData';
-import Link from 'next/link'
+import Link from 'next/link';
 
 const AssignToTeam = ({ playerId, onTeamChange }) => {
   const [selectedTeam, setSelectedTeam] = useState('');
   const [teamsData, setTeamsData] = useState(null);
 
-    useEffect(() => {
-        const fetchTeamList = () => {
-          axios
-          .get(`http://127.0.0.1:3001/teams`)
-          .then((response) => {
-            setTeamsData(response.data)
-          })
-          .catch((error) => console.error('Error fetching players data:', error));
-        };
-        fetchTeamList();
-      }, [])
+  useEffect(() => {
+    const fetchTeamList = () => {
+      axios
+        .get(`http://127.0.0.1:3001/teams`)
+        .then((response) => {
+          setTeamsData(response.data);
+        })
+        .catch((error) => console.error('Error fetching players data:', error));
+    };
+    fetchTeamList();
+  }, []);
 
   const handleTeamChange = async () => {
     try {
-      const response = await axios.put(`http://127.0.0.1:3001/teams/${selectedTeam}/changeRoster`, { playerId });
+      const response = await axios.put(
+        `http://127.0.0.1:3001/teams/${selectedTeam}/changeRoster`,
+        { playerId }
+      );
       console.log('Team changed successfully:', response.data);
       onTeamChange();
     } catch (error) {

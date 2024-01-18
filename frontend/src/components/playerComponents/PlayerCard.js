@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
@@ -6,6 +7,7 @@ import formatDatabaseData from '../../functions/formatDatabaseData';
 import DeletePlayerButton from './DeletePlayer';
 import AssignToTeam from './AssignToTeam';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const PlayerCard = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
@@ -14,6 +16,8 @@ const PlayerCard = ({ playerId }) => {
   const [deleted, setDeleted] = useState(false);
   const [triggerRerender, setTriggerRerender] = useState(0);
   const [teamId, setTeamId] = useState(null);
+  // do use reducera
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPlayerData = () => {
@@ -89,16 +93,17 @@ const PlayerCard = ({ playerId }) => {
             <p>TEST: playerid : {player._id}</p>
           </div>
 
-          <DeletePlayerButton
-            playerId={playerId}
-            onDelete={handlePlayerDelete}
-          ></DeletePlayerButton>
-
-          {isPlayerTeamless() && (
+          {userInfo?.user && isPlayerTeamless() && (
             <AssignToTeam
               playerId={playerId}
               onTeamChange={handleTeamChange}
             ></AssignToTeam>
+          )}
+          {userInfo?.user?.isAdmin && (
+            <DeletePlayerButton
+              playerId={playerId}
+              onDelete={handlePlayerDelete}
+            ></DeletePlayerButton>
           )}
         </div>
       )}

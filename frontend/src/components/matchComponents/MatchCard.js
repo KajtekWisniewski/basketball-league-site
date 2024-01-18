@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
@@ -6,6 +7,7 @@ import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import DeleteMatchButton from './DeleteMatch';
+import { useSelector } from 'react-redux';
 
 const MatchCard = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -15,6 +17,7 @@ const MatchCard = ({ matchId }) => {
   const teamColor2 = useTeamColor(teamCol2);
   const [deleted, setDeleted] = useState(false);
   //jak zostanie czas to refactor na useReducer ^^
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchMatchData = () => {
@@ -72,7 +75,7 @@ const MatchCard = ({ matchId }) => {
             <>
               <PlayerPreview key={player?.player._id} playerId={player?.player._id} />
               <div className={styles.individualMatchStats}>
-                <p>{player?.player.name}'s match statistics</p>
+                <p>{player?.player.name}&apos; match statistics</p>
                 <p>rebounds: {player?.matchStatistics.rebounds}</p>
                 <p>points: {player?.matchStatistics.points}</p>
                 <p>fouls: {player?.matchStatistics.foulsCommitted}</p>
@@ -111,7 +114,7 @@ const MatchCard = ({ matchId }) => {
             <>
               <PlayerPreview key={player?.player._id} playerId={player?.player._id} />
               <div className={styles.individualMatchStats}>
-                <p>{player?.player.name}'s match statistics</p>
+                <p>{player?.player.name}&apos; match statistics</p>
                 <p>rebounds: {player?.matchStatistics.rebounds}</p>
                 <p>points: {player?.matchStatistics.points}</p>
                 <p>fouls: {player?.matchStatistics.foulsCommitted}</p>
@@ -124,11 +127,17 @@ const MatchCard = ({ matchId }) => {
           ))}
         </div>
       </div>
-      <DeleteMatchButton
-        matchId={matchId}
-        onDelete={handlePlayerDelete}
-      ></DeleteMatchButton>
-      {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
+      <div>
+        {userInfo?.user?.isAdmin && (
+          <>
+            <DeleteMatchButton
+              matchId={matchId}
+              onDelete={handlePlayerDelete}
+            ></DeleteMatchButton>
+            {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
+          </>
+        )}
+      </div>
     </>
   );
 };

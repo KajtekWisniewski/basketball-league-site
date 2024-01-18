@@ -1,15 +1,18 @@
+'use client';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import styles from './matchesArchive.module.css';
+import styles from '../matchesArchive.module.css';
 import Link from 'next/link';
-import MatchPreview from '../../components/matchComponents/MatchPreview';
-import NavBar from '../../components/NavBar';
-import globalStyles from '../../app/globals.css';
+import MatchPreview from '@/components/matchComponents/MatchPreview';
+import NavBar from '@/components/NavBar';
+import globalStyles from '@/app/globals.css';
+import { useSelector } from 'react-redux';
 
 export default function Schedule() {
   const [matches, setMatches] = useState(null);
   const [sortField, setSortField] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPlayersList = () => {
@@ -45,9 +48,11 @@ export default function Schedule() {
   return (
     <>
       <NavBar></NavBar>
-      <Link className={globalStyles.linkStyle} href={`/matches/add-match`}>
-        <h1>ADD A MATCH</h1>
-      </Link>
+      {userInfo?.user && (
+        <Link className={globalStyles.linkStyle} href={`/matches/add-match`}>
+          <h1>ADD A MATCH</h1>
+        </Link>
+      )}
       <button onClick={() => handleSort('date')}>Date</button>
       {sortedMatches.map((match) => (
         <MatchPreview key={match._id} matchId={match._id} />

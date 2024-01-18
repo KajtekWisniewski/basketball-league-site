@@ -1,12 +1,11 @@
+'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import TeamCard from '../../components/teamComponents/TeamCard';
-import NavBar from '../../components/NavBar';
+import TeamCard from '../../../components/teamComponents/TeamCard';
+import NavBar from '../../../components/NavBar';
 
-function PlayerDetails() {
-  const router = useRouter();
-  const { id } = router.query;
+function PlayerDetails({ params }) {
+  const { id } = params;
   const [team, setTeam] = useState(null);
 
   useEffect(() => {
@@ -32,7 +31,7 @@ function PlayerDetails() {
   return (
     <>
       <NavBar></NavBar>
-      <TeamCard teamId={id}/>
+      <TeamCard teamId={id} />
     </>
   );
 }
