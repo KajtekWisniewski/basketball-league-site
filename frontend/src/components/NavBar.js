@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import styles from './NavBar.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '@/redux/features/auth-slice';
 
 const NavBar = ({}) => {
   const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   return (
     <nav className={styles.navbar}>
@@ -39,6 +41,9 @@ const NavBar = ({}) => {
             <Link className={styles.linkStyle} href={`/user-profile`}>
               <h2>YOUR PROFILE</h2>
             </Link>
+            <button className="button" onClick={() => dispatch(logout())}>
+              Logout
+            </button>
           </>
         )}
         {userInfo && userInfo.user.isAdmin && (
