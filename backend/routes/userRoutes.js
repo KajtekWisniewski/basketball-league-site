@@ -31,6 +31,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.route('/profile').get(userHandler.protectMiddleware, userHandler.getUserProfile);
+
 router.post('/profile/:id', async (req, res) => {
   try {
     //const protect = await userHandler.protectMiddleware(req, res);

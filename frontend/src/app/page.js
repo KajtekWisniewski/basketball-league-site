@@ -4,7 +4,6 @@ import NavBar from '../components/NavBar';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import Standings from '@/components/teamComponents/Standings';
-import LogIn from '@/components/userComponents/login-page';
 import variables from './variables.module.scss';
 
 // const Standings = dynamic(() => import('../components/teamComponents/Standings'), {

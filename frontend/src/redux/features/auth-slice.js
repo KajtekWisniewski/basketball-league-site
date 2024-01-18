@@ -1,36 +1,65 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { userLogin, registerUser } from './authActions';
+
+const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null;
 
 const initialState = {
-  value: {
-    isAuth: false,
-    username: '',
-    uid: '',
-    isModerator: false
-  }
+  loading: false,
+  userInfo: null,
+  userToken,
+  error: null,
+  success: false
 };
 
-export const auth = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logOut: () => {
-      return initialState;
+    logout: (state) => {
+      localStorage.removeItem('userToken');
+      state.loading = false;
+      state.userInfo = null;
+      state.userToken = null;
+      state.error = null;
     },
-    logIn: (state, action) => {
-      return {
-        value: {
-          isAuth: true,
-          username: action.payload,
-          uid: 'someId',
-          isModerator: false
-        }
-      };
+    setCredentials: (state, { payload }) => {
+      state.userInfo = payload;
     },
     toggleModerator: (state, action) => {
-      state.value.isModerator = !state.value.isModerator;
+      state.value.user.isAdmin = !state.value.user.isAdmin;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(userLogin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+        state.userToken = action.payload.userToken;
+      })
+      .addCase(userLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true; // registration successful
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   }
 });
 
-export const { logIn, logOut, toggleModerator } = auth.actions;
-export default auth.reducer;
+export const { logout, setCredentials, toggleModerator } = authSlice.actions;
+export default authSlice.reducer;

@@ -66,6 +66,7 @@ class UserHandler {
       user.email = req.body.email || user.email;
       user.pictureLink = req.body.pictureLink || user.pictureLink;
       user.team = req.body.team || user.team;
+      user.isAdmin = req.body.isAdmin || user.isAdmin;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -101,6 +102,24 @@ class UserHandler {
     if (!token) {
       res.status(401);
       throw new Error('Not authorized, no token');
+    }
+  }
+
+  async getUserProfile(req, res) {
+    // req.user was set in authMiddleware.js
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      res.json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        team: user.team,
+        isAdmin: user.isAdmin
+      });
+    } else {
+      res.status(404);
+      throw new Error('User not found');
     }
   }
 }

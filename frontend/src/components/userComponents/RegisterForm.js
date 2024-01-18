@@ -4,10 +4,14 @@ import React, { useState, useEffect, createContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '@/redux/features/authActions';
 
 const RegisterForm = () => {
   const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading1, setLoading] = useState(true);
+  const { loading, userInfo, error, success } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -39,20 +43,8 @@ const RegisterForm = () => {
         team: Yup.string().required('Required')
       })}
       onSubmit={async (values, { setSubmitting }) => {
-        try {
-          const response = await axios.post(
-            'http://localhost:3001/users/register',
-            values
-          );
-          console.log('Registration successful!', response.data);
-        } catch (error) {
-          console.error(
-            'Registration failed',
-            error.response?.data || 'An error occurred'
-          );
-        } finally {
-          setSubmitting(false);
-        }
+        dispatch(registerUser(values));
+        setSubmitting(false);
       }}
     >
       <Form>
@@ -74,10 +66,16 @@ const RegisterForm = () => {
           <ErrorMessage name="password" component="div" />
         </div>
 
+        {/* <div>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <Field type="password" id="confirmPassword" name="confirmPassword" />
+          <ErrorMessage name="confirmPassword" component="div" />
+        </div> */}
+
         <div>
           <label htmlFor="team">Team:</label>
           <Field as="select" id="team" name="team">
-            {loading ? (
+            {loading1 ? (
               <option value="" disabled>
                 Loading teams...
               </option>
@@ -92,7 +90,11 @@ const RegisterForm = () => {
           <ErrorMessage name="team" component="div" />
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'loading' : 'Register'}
+        </button>
+        {!error && Formik.isSubmitting && <p>registration succesfull</p>}
+        {error && <p>{error}</p>}
       </Form>
     </Formik>
   );
