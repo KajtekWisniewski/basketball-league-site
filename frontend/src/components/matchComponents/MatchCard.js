@@ -8,6 +8,7 @@ import Link from 'next/link';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import DeleteMatchButton from './DeleteMatch';
 import { useSelector } from 'react-redux';
+import CommentSection from './CommentSection';
 
 const MatchCard = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -137,6 +138,9 @@ const MatchCard = ({ matchId }) => {
             {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
           </>
         )}
+      </div>
+      <div>
+        <CommentSection matchId={matchId}></CommentSection>
       </div>
     </>
   );
