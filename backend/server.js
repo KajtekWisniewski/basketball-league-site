@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
         path: 'messages',
         populate: { path: 'author', model: 'User' }
       });
-      const initialMessages = team.messages || [];
+      const initialMessages = team.messages.slice(-20) || [];
       socket.emit('initialTeamMessages', initialMessages);
     } catch (error) {
       console.error('Error fetching initial team messages:', error);
@@ -119,7 +119,7 @@ io.on('connection', (socket) => {
         populate: { path: 'author', model: 'User' }
       });
 
-      io.to(teamId).emit('updatedTeamMessages', team.messages);
+      io.to(teamId).emit('updatedTeamMessages', team.messages.slice(-20));
     } catch (error) {
       console.error('Error saving team message and updating team:', error);
     }

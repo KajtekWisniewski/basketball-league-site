@@ -79,7 +79,7 @@ const MessagesList = ({ messages, userInfo }) => {
 
   return (
     <ul className={styles.messagesList}>
-      {messages.map((message) => (
+      {messages.slice(-20).map((message) => (
         <li
           key={message._id}
           className={`${styles.message} ${
