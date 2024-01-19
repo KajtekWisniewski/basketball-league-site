@@ -163,6 +163,20 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('deleteTraining', async (teamId, trainingId) => {
+    try {
+      const updatedTeam = await Team.findByIdAndUpdate(
+        teamId,
+        { $pull: { trainings: { _id: trainingId } } },
+        { new: true }
+      );
+
+      io.to(`trainingRoom_${teamId}`).emit('updatedTrainings', updatedTeam.trainings);
+    } catch (error) {
+      console.error('Error deleting training:', error);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });

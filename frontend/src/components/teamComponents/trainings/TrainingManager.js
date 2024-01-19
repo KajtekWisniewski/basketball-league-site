@@ -54,6 +54,12 @@ const TrainingManager = ({ teamId, page }) => {
     setEditingTraining(null);
   };
 
+  const handleTrainingDelete = (trainingId) => {
+    if (socket) {
+      socket.emit('deleteTraining', teamId, trainingId);
+    }
+  };
+
   return (
     <>
       {page ? (
@@ -64,6 +70,7 @@ const TrainingManager = ({ teamId, page }) => {
             onEdit={handleTrainingEdit}
             editingTraining={editingTraining}
             page={page}
+            onDelete={handleTrainingDelete}
           />
           {editingTraining && (
             <EditTrainingForm
