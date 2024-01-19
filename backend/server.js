@@ -125,6 +125,44 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('joinTrainingRoom', async (teamId) => {
+    socket.join(`trainingRoom_${teamId}`);
+    console.log(`Client joined training room for team ${teamId}`);
+
+    try {
+      const team = await Team.findById(teamId);
+      socket.emit('initialTrainings', team.trainings || []);
+    } catch (err) {
+      console.error('Error fetching initial trainings:', err);
+    }
+  });
+
+  socket.on('addTraining', async (teamId, newTraining) => {
+    try {
+      const updatedTeam = await Team.findByIdAndUpdate(
+        teamId,
+        { $push: { trainings: newTraining } },
+        { new: true }
+      );
+      io.to(`trainingRoom_${teamId}`).emit('updatedTrainings', updatedTeam.trainings);
+    } catch (err) {
+      console.error('Error adding training:', err);
+    }
+  });
+
+  socket.on('editTraining', async (teamId, updatedTraining) => {
+    try {
+      const updatedTeam = await Team.findOneAndUpdate(
+        { _id: teamId, 'trainings._id': updatedTraining.id },
+        { $set: { 'trainings.$': updatedTraining } },
+        { new: true }
+      );
+      io.to(`trainingRoom_${teamId}`).emit('updatedTrainings', updatedTeam.trainings);
+    } catch (err) {
+      console.error('Error editing training:', err);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });

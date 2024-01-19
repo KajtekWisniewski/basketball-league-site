@@ -1,13 +1,24 @@
 .teamimg {
-    aspect-ratio: auto;
-    height: 15em;
+  aspect-ratio: auto;
+  height: 15em;
 }
 .teamCard {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2em;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2em;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+.linkStyleTeamCard {
+  margin-top: 1em;
+  border: rgba(0, 0, 0, 0) solid 1px;
+  margin-bottom: 1em;
+}
+
+.linkStyleTeamCard:hover {
+  opacity: 70%;
+  color: orange;
 }

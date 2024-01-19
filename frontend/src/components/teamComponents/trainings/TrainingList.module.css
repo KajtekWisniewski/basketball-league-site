@@ -1,0 +1,28 @@
+.editingTraining {
+  color: orange;
+}
+
+.trainingList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.addForm {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.addForm > button {
+  padding: 0.5em;
+  margin: 0.1em;
+}
+
+.error {
+  color: red;
+}
