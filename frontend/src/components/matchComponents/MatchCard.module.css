@@ -1,29 +1,34 @@
 .teamimg {
-    aspect-ratio: auto;
-    height: 10em;
+  aspect-ratio: auto;
+  height: 10em;
 }
 
 .date {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .individualMatchStats {
-    display: flex;
-    flex-direction: row;
-    color: white;
-    gap: 1em;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  gap: 1em;
 }
 
 .singleTeamPrev {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .basicInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comment {
+  border: solid 1px white;
+  padding: 1em;
+  margin: 0.25em;
 }
