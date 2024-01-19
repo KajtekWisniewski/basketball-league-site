@@ -51,23 +51,28 @@ const MatchPreview = ({ matchId }) => {
             alt={`${match.opponents[0].team?.name} logo`}
           />
         </Link>
-        <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
-        <p>W{match.opponents[0].team?.statistics.wins}</p>
-        <p>L{match.opponents[0].team?.statistics.losses}</p>
-        <p>
-          {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}%
-        </p>
-        <h2>{match.opponents[0].score}</h2>
+        <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+          <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
+          <p>W{match.opponents[0].team?.statistics.wins}</p>
+          <p>L{match.opponents[0].team?.statistics.losses}</p>
+          <p>
+            {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}%
+          </p>
+          <h2>{match.opponents[0].score}</h2>
+        </Link>
       </div>
+
       <h2>-</h2>
       <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor2 }}>
-        <h2>{match.opponents[1].score}</h2>
-        <p>
-          {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}%
-        </p>
-        <p>W{match.opponents[1].team?.statistics.wins}</p>
-        <p>L{match.opponents[1].team?.statistics.losses}</p>
-        <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+        <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+          <h2>{match.opponents[1].score}</h2>
+          <p>
+            {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}%
+          </p>
+          <p>W{match.opponents[1].team?.statistics.wins}</p>
+          <p>L{match.opponents[1].team?.statistics.losses}</p>
+          <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+        </Link>
         <Link
           className={styles.linkStyle}
           href={`/teams/${match.opponents[1].team?._id}`}

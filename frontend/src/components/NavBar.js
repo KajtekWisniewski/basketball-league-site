@@ -27,6 +27,9 @@ const NavBar = ({}) => {
         <Link className={styles.linkStyle} href={`/matches/schedule`}>
           <h2>SCHEDULE</h2>
         </Link>
+        <Link className={styles.linkStyle} href={`/search/`}>
+          <h2>SEARCH</h2>
+        </Link>
 
         {!userInfo && (
           <>
@@ -47,7 +50,7 @@ const NavBar = ({}) => {
               {/* <Image src={userInfo.user.pictureLink} width={250} height={250}></Image> */}
               <img className={styles.pfp} src={userInfo.user.pictureLink}></img>
             </Link>
-            <button className="button" onClick={() => dispatch(logout())}>
+            <button className={styles.logoutButton} onClick={() => dispatch(logout())}>
               Logout
             </button>
           </>

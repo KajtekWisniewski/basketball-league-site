@@ -1,23 +1,30 @@
 .teamimg {
-    aspect-ratio: auto;
-    height: 5em;
+  aspect-ratio: auto;
+  height: 5em;
 }
 .matchPreviewCard {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100;
 }
 
 .singleTeamPrev {
-    color: white;
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    padding: 0.5em;
-    margin: 0.5em;
-    border-radius: 8px;
-    align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 8px;
+  align-items: center;
 }
 
-
+.linkStyle {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}

@@ -51,10 +51,15 @@ export default function UserProfile() {
             <div>{userInfo.user.isAdmin && <p>Jesteś adminem</p>}</div>
             <h2>Your team:</h2>
             <TeamPreview teamId={userInfo?.user.team}></TeamPreview>
-            <TrainingManager
-              teamId={userInfo?.user.team}
-              page={false}
-            ></TrainingManager>
+            <Link
+              className={globalStyles.linkStyle}
+              href={`/teams/${userInfo?.user.team}/trainings`}
+            >
+              <TrainingManager
+                teamId={userInfo?.user.team}
+                page={false}
+              ></TrainingManager>
+            </Link>
           </>
         ) : (
           <>
