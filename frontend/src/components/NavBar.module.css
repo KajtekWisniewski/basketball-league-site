@@ -28,3 +28,7 @@
   aspect-ratio: auto;
   width: 3em;
 }
+
+.logoutButton {
+  padding: 0.75em;
+}

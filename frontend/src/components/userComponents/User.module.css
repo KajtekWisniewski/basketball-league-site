@@ -1,0 +1,75 @@
+.userList {
+  display: flex;
+  flex-direction: column;
+  color: yellow;
+}
+
+.userList > li {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: flex-start;
+  margin: 0.15em;
+}
+
+.user {
+  color: white;
+}
+
+.admin {
+  color: red;
+}
+
+.searchArea {
+  display: flex;
+  flex-direction: column;
+  margin: 0.25em;
+  align-items: center;
+  width: 100;
+}
+
+.searchInput {
+  padding: 1em;
+  margin: 0.5em;
+  margin-bottom: 0.15em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 4px;
+  width: 50%;
+}
+.searchInput:focus {
+  outline: none;
+}
+
+.searchButton {
+  padding: 0.5em;
+  padding-left: 5em;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding-right: 5em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 4px;
+}
+
+.listElement {
+  background-color: #ffa60073;
+  margin: 1em;
+  border-radius: 4px;
+  padding: 1em;
+  list-style: none;
+  transition: 0.35s ease-in-out;
+  transition-delay: 0.1s;
+}
+
+.listElement:hover {
+  padding: 1.7em;
+  transition: 0.35s ease-in-out;
+  transition-delay: 0.1s;
+}
+
+.team {
+  background-color: rgb(155, 77, 14);
+}
+
+.player {
+  background-color: rgba(124, 88, 11, 0.582);
+}

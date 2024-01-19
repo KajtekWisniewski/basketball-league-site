@@ -4,12 +4,12 @@ import axios from 'axios';
 import TeamCard from '../../../components/teamComponents/TeamCard';
 import NavBar from '../../../components/NavBar';
 
-function PlayerDetails({ params }) {
+function TeamDetails({ params }) {
   const { id } = params;
   const [team, setTeam] = useState(null);
 
   useEffect(() => {
-    const fetchPlayerDetails = async () => {
+    const fetchTeamDetails = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${id}`
@@ -21,7 +21,7 @@ function PlayerDetails({ params }) {
     };
 
     if (id) {
-      fetchPlayerDetails();
+      fetchTeamDetails();
     }
   }, [id]);
 
@@ -38,4 +38,4 @@ function PlayerDetails({ params }) {
   );
 }
 
-export default PlayerDetails;
+export default TeamDetails;

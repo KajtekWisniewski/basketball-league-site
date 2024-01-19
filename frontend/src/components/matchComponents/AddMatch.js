@@ -96,7 +96,7 @@ const AddMatchForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state);
+    //console.log(state);
     // try {
     //   const response = await axios.post('http://127.0.0.1:3001/matches', state);
     //   console.log('Match added successfully:', response.data);
@@ -106,7 +106,10 @@ const AddMatchForm = () => {
     try {
       validationSchema.validateSync(state, { abortEarly: false });
       //console.log('Form submission successful!');
-      const response = await axios.post('http://127.0.0.1:3001/matches', state);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/matches`,
+        state
+      );
       console.log('Match added successfully:', response.data);
       setErrors([]);
       router.push(`/matches/${response.data._id}`);
@@ -114,7 +117,6 @@ const AddMatchForm = () => {
       console.error('Validation Error:', error.errors);
       setErrors(error.errors);
       console.error('Error adding a match', error);
-      // You might want to update your component state or show error messages to the user
     }
   };
 

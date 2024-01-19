@@ -149,6 +149,29 @@ router.delete('/:teamId/changeRoster', async (req, res) => {
   }
 });
 
+router.get('/:teamId/hasUpcomingTraining', async (req, res) => {
+  try {
+    const { teamId } = req.params;
+
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ error: 'Team not found' });
+    }
+
+    const hasUpcomingTraining = team.trainings.some(
+      (training) => new Date(training.date) > new Date()
+    );
+
+    const numberOfTrainings = team.trainings.length;
+
+    res.json({ hasUpcomingTraining, numberOfTrainings });
+  } catch (error) {
+    console.error('Error checking for upcoming training:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.get('/getTeamId/:playerId', async (req, res) => {
   const { playerId } = req.params;
 

@@ -36,7 +36,7 @@ const PlayerCard = ({ playerId }) => {
         .catch((error) => console.error('Error fetching player data:', error));
     };
     fetchPlayerData();
-  }, [playerId]);
+  }, [playerId, triggerRerender]);
 
   //placeholder for loading
   if (!player) {

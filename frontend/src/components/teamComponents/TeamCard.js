@@ -12,6 +12,7 @@ import { INITIAL_STATE, teamCardReducer } from '@/reducers/TeamCardReducer';
 import { useSelector } from 'react-redux';
 import EditTeamForm from './EditTeam';
 import TeamChat from './TeamChat';
+import Link from 'next/link';
 
 const isUserInATeam = (currTeamId, userTeamId) => currTeamId === userTeamId;
 
@@ -78,6 +79,7 @@ const TeamCard = ({ teamId }) => {
               </p>
               <p>TEST id: {state.team._id}</p>
             </div>
+
             {userInfo?.user?.isAdmin && (
               <DeleteTeamButton
                 teamId={teamId}
@@ -88,7 +90,7 @@ const TeamCard = ({ teamId }) => {
           <div>
             <h2>Current Roster</h2>
             {state.team.roster.map((player, index) => (
-              <>
+              <div key={player._id + index}>
                 <PlayerPreview key={player._id} playerId={player._id} />
                 {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
                   userInfo?.user?.isAdmin) && (
@@ -99,17 +101,24 @@ const TeamCard = ({ teamId }) => {
                     onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_MINUS' })}
                   ></RemoveFromRoster>
                 )}
-              </>
+              </div>
             ))}
           </div>
 
           {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
             userInfo?.user?.isAdmin) && (
             <>
+              <div>MANAGE ROSTER: ADD TEAMLESS PLAYERS</div>
               <ManageRoster
                 teamId={teamId}
                 onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
               ></ManageRoster>
+              <Link
+                className={styles.linkStyleTeamCard}
+                href={`/teams/${teamId}/trainings`}
+              >
+                <h2>TEAM TRAININGS PAGE</h2>
+              </Link>
             </>
           )}
           {userInfo?.user?.isAdmin && (

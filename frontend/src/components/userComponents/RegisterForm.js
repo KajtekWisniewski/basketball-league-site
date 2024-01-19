@@ -29,11 +29,15 @@ const RegisterForm = () => {
         setLoading(false);
       }
     };
-    if (submission) {
-      router.push('/login');
-    }
     fetchTeams();
-  }, [submission]);
+  }, []);
+
+  useEffect(() => {
+    if (!error && submission && success) {
+      router.push('/login');
+      //console.log(userInfo);
+    }
+  }, [router, error, submission, success]);
 
   return (
     <Formik
@@ -52,6 +56,9 @@ const RegisterForm = () => {
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         dispatch(registerUser(values));
         setSubmitting(false);
+        if (!error) {
+          setSubmission(true);
+        }
       }}
     >
       <Form>
