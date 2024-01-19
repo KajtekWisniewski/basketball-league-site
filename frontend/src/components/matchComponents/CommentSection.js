@@ -51,7 +51,7 @@ const CommentSection = ({ matchId }) => {
     if (socket) {
       socket.emit('comment', matchId, commentWithUserInfo);
     }
-    console.log(commentWithUserInfo);
+    //console.log(commentWithUserInfo);
   };
 
   return (

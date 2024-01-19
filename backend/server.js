@@ -8,6 +8,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const Match = require('./models/matchSchema');
 const User = require('./models/userSchema');
+const Team = require('./models/teamSchema');
 
 mongoose.connect(uri, {
   dbName: `${process.env.mongoDBname}`
@@ -87,6 +88,40 @@ io.on('connection', (socket) => {
       io.to(matchId).emit('updatedComments', updatedMatch.comments);
     } catch (error) {
       console.error('Error saving comment and updating match:', error);
+    }
+  });
+
+  socket.on('joinTeamChat', async (teamId) => {
+    socket.join(teamId);
+    console.log(`Client joined team ${teamId} chat`);
+
+    try {
+      const team = await Team.findById(teamId).populate({
+        path: 'messages',
+        populate: { path: 'author', model: 'User' }
+      });
+      const initialMessages = team.messages || [];
+      socket.emit('initialTeamMessages', initialMessages);
+    } catch (error) {
+      console.error('Error fetching initial team messages:', error);
+      socket.emit('initialTeamMessages', []);
+    }
+  });
+
+  socket.on('teamMessage', async (teamId, messageData) => {
+    try {
+      const team = await Team.findByIdAndUpdate(
+        teamId,
+        { $push: { messages: messageData } },
+        { new: true }
+      ).populate({
+        path: 'messages',
+        populate: { path: 'author', model: 'User' }
+      });
+
+      io.to(teamId).emit('updatedTeamMessages', team.messages);
+    } catch (error) {
+      console.error('Error saving team message and updating team:', error);
     }
   });
 

@@ -1,0 +1,30 @@
+.messagesList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  border-radius: 16px;
+  border: 1px solid;
+  padding: 0.25em;
+  margin: 0.1em;
+  max-width: 70%;
+}
+
+.ownMessage {
+  background-color: blue;
+  color: white;
+  align-self: flex-end;
+}
+
+.elseMessage {
+  background-color: black;
+  color: white;
+  align-self: flex-start;
+}
+
+.messageContent {
+  display: block;
+}

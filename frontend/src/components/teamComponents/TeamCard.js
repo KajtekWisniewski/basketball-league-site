@@ -11,6 +11,7 @@ import DeleteTeamButton from './RemoveTeam';
 import { INITIAL_STATE, teamCardReducer } from '@/reducers/TeamCardReducer';
 import { useSelector } from 'react-redux';
 import EditTeamForm from './EditTeam';
+import TeamChat from './TeamChat';
 
 const isUserInATeam = (currTeamId, userTeamId) => currTeamId === userTeamId;
 
@@ -109,17 +110,21 @@ const TeamCard = ({ teamId }) => {
                 teamId={teamId}
                 onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
               ></ManageRoster>
-              <EditTeamForm
-                teamId={teamId}
-                teamName={state.team.name}
-                teamLocation={state.team.location}
-                teamConference={state.team.conference}
-                teamDivision={state.team.division}
-                teamLink={state.team.logoLink}
-                onTeamEdit={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
-              ></EditTeamForm>
             </>
           )}
+          {userInfo?.user?.isAdmin && (
+            <EditTeamForm
+              teamId={teamId}
+              teamName={state.team.name}
+              teamLocation={state.team.location}
+              teamConference={state.team.conference}
+              teamDivision={state.team.division}
+              teamLink={state.team.logoLink}
+              onTeamEdit={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+            ></EditTeamForm>
+          )}
+          {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
+            userInfo?.user?.isAdmin) && <TeamChat teamId={teamId}></TeamChat>}
         </>
       )}
       {state.deleted && <div>usunieto druzyne</div>}
