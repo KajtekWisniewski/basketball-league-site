@@ -15,8 +15,7 @@ export default function UserProfile() {
         {userInfo ? (
           <>
             <span>
-              Welcome <strong>{userInfo.user.name}!</strong> You can view this page
-              because you're logged in
+              Welcome <strong>{userInfo.user.name}!</strong>
             </span>
             <div>{userInfo.user.isAdmin && <p>Jesteś adminem</p>}</div>
             <span>Your team:</span>

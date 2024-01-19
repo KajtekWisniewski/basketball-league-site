@@ -4,17 +4,17 @@ const commentSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: true
   },
   date: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: true
   },
   body: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const playerSchema = new mongoose.Schema({
@@ -25,25 +25,25 @@ const playerSchema = new mongoose.Schema({
   },
   matchStatistics: {
     rebounds: {
-        type: Number,
-        default: 0
-      },
-      points: {
-        type: Number,
-        default: 0
-      },
-      foulsCommitted: {
-        type: Number,
-        default: 0
-      },
-      freeThrowsMade: {
-        type: Number,
-        default: 0
-      },
-      freeThrowPercentage: {
-        type: Number,
-        default: 0
-      }
+      type: Number,
+      default: 0
+    },
+    points: {
+      type: Number,
+      default: 0
+    },
+    foulsCommitted: {
+      type: Number,
+      default: 0
+    },
+    freeThrowsMade: {
+      type: Number,
+      default: 0
+    },
+    freeThrowPercentage: {
+      type: Number,
+      default: 0
+    }
   }
 });
 

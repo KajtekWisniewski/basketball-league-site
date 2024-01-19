@@ -7,10 +7,10 @@ import Link from 'next/link';
 import globalStyles from '../../app/globals.css';
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Team name is required'),
-  location: Yup.string().required('Location is required'),
-  conference: Yup.string().required('Conference is required'),
-  division: Yup.string().required('Division is required'),
+  name: Yup.string(),
+  location: Yup.string(),
+  conference: Yup.string(),
+  division: Yup.string(),
   logoLink: Yup.string(),
   statistics: Yup.object({
     wins: Yup.number().integer().min(0).default(0),
@@ -19,26 +19,19 @@ const validationSchema = Yup.object({
   })
 });
 
-const AddTeamForm = () => {
-  const [teamlessPlayers, setTeamlessPlayers] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
-  const [chosenPlayers, setChosenPlayers] = useState([]);
+const EditTeamForm = ({
+  teamId,
+  teamName,
+  teamLocation,
+  teamConference,
+  teamDivision,
+  teamLink,
+  onTeamEdit
+}) => {
   const [winratio, setWinratio] = useState(100);
+  const [rerender, setRerender] = useState(0);
 
-  useEffect(() => {
-    const fetchTeamlessPlayers = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/players/teamless`
-        );
-        setTeamlessPlayers(response.data);
-      } catch (error) {
-        console.error('Error fetching teamless players:', error);
-      }
-    };
-
-    fetchTeamlessPlayers();
-  }, []);
+  const handleClick = () => setRerender(rerender + 1);
 
   const handleConferenceChange = (event) => {
     const selectedConference = event.target.value;
@@ -56,24 +49,22 @@ const AddTeamForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      location: '',
-      conference: 'western',
-      division: 'atlantic',
-      roster: chosenPlayers,
-      logoLink:
-        'https://cdn.nba.com/teams/uploads/sites/1610612738/2022/05/celtics_secondary.svg',
+      name: teamName,
+      location: teamLocation,
+      conference: teamConference,
+      division: teamDivision,
+      logoLink: teamLink,
       statistics: {
         wins: 0,
         losses: 0,
-        winPercentage: winratio
+        winPercentage: 100
       }
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`,
+        const response = await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}`,
           values
         );
         console.log('Team added successfully:', response.data);
@@ -120,7 +111,7 @@ const AddTeamForm = () => {
       <div>
         <label htmlFor="division">Division:</label>
         <select id="division" {...formik.getFieldProps('division')}>
-          {formik.values.conference === 'western' ? (
+          {formik.values.conference === 'eastern' ? (
             <>
               <option value="atlantic">Atlantic</option>
               <option value="central">Central</option>
@@ -171,54 +162,17 @@ const AddTeamForm = () => {
         id="statistics.winPercentage"
         {...formik.getFieldProps('statistics.winPercentage')}
         value={winratio}
-        disabled
       />
       {formik.touched.statistics && formik.touched.statistics.winPercentage ? (
         <div>{formik.errors.statistics && formik.errors.statistics.winPercentage}</div>
       ) : null}
 
-      <div>
-        <label>
-          Add teamless players to roster: TO JEST DO NAPRAWIENIA, po pierwsze checkboxy
-          po drugie przy dodawniu kazdy gracz musi miec wylowyana funkcje przypisania do
-          teamu + automatyczny winPercentage
-        </label>
-        {teamlessPlayers.map((player) => (
-          <div key={player._id}>
-            <input
-              type="checkbox"
-              id={`player-${player._id}`}
-              disabled
-              value={player._id}
-              onChange={() => {
-                const updatedChosenPlayers = formik.values.roster.includes(player._id)
-                  ? formik.values.roster.filter((id) => id !== player._id)
-                  : [...formik.values.roster, player._id];
-
-                setChosenPlayers(updatedChosenPlayers);
-                console.log(chosenPlayers);
-
-                formik.setFieldValue('roster', updatedChosenPlayers);
-              }}
-            />
-            <label htmlFor={`player-${player._id}`}>{player.name}</label>
-          </div>
-        ))}
-        {formik.touched.roster && formik.errors.roster && (
-          <div className="error">{formik.errors.roster}</div>
-        )}
-      </div>
-
-      <button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
-        Add Team
+      <button type="submit" onClick={handleClick}>
+        Edit team
       </button>
-      {submitted && (
-        <Link className={globalStyles.linkStyle} href={`/teams/${playerPage}`}>
-          <h2>team page</h2>
-        </Link>
-      )}
+      {formik.isSubmitting && <div>edited team</div>}
     </form>
   );
 };
 
-export default AddTeamForm;
+export default EditTeamForm;

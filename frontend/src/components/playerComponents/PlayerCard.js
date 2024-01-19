@@ -36,7 +36,7 @@ const PlayerCard = ({ playerId }) => {
         .catch((error) => console.error('Error fetching player data:', error));
     };
     fetchPlayerData();
-  }, [playerId, triggerRerender]);
+  }, [playerId]);
 
   //placeholder for loading
   if (!player) {
@@ -87,7 +87,10 @@ const PlayerCard = ({ playerId }) => {
             <p>Points: {player.statistics.points}</p>
             <p>Fouls Committed: {player.statistics.foulsCommitted}</p>
             <p>Free Throws Made: {player.statistics.freeThrowsMade}</p>
-            <p>Free Throw Percentage: {player.statistics.freeThrowPercentage}</p>
+            <p>
+              Free Throw Percentage:{' '}
+              {player.statistics.freeThrowPercentage.toString().slice(0, 5)}%
+            </p>
 
             <p>Fantasy Score: {player.fantasyScore}</p>
             <p>TEST: playerid : {player._id}</p>

@@ -6,17 +6,22 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@/redux/features/authActions';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
   const [teams, setTeams] = useState([]);
   const [loading1, setLoading] = useState(true);
   const { loading, userInfo, error, success } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [submission, setSubmission] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/teams');
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`
+        );
         setTeams(response.data);
       } catch (error) {
         console.error('Error fetching teams', error);
@@ -24,9 +29,11 @@ const RegisterForm = () => {
         setLoading(false);
       }
     };
-
+    if (submission) {
+      router.push('/login');
+    }
     fetchTeams();
-  }, []);
+  }, [submission]);
 
   return (
     <Formik
@@ -42,7 +49,7 @@ const RegisterForm = () => {
         password: Yup.string().required('Required'),
         team: Yup.string().required('Required')
       })}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
         dispatch(registerUser(values));
         setSubmitting(false);
       }}

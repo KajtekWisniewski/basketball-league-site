@@ -8,6 +8,7 @@ import Link from 'next/link';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import DeleteMatchButton from './DeleteMatch';
 import { useSelector } from 'react-redux';
+import CommentSection from './CommentSection';
 
 const MatchCard = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -22,7 +23,7 @@ const MatchCard = ({ matchId }) => {
   useEffect(() => {
     const fetchMatchData = () => {
       axios
-        .get(`http://127.0.0.1:3001/matches/${matchId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchId}`)
         .then((response) => {
           setMatch(response.data);
           setTeamCol1(response.data.opponents[0].team.name);
@@ -137,6 +138,9 @@ const MatchCard = ({ matchId }) => {
             {deleted && <p>USUNIETO MECZ POMYSLNIE</p>}
           </>
         )}
+      </div>
+      <div>
+        <CommentSection matchId={matchId}></CommentSection>
       </div>
     </>
   );

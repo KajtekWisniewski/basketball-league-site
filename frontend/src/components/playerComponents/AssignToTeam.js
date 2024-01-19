@@ -11,7 +11,7 @@ const AssignToTeam = ({ playerId, onTeamChange }) => {
   useEffect(() => {
     const fetchTeamList = () => {
       axios
-        .get(`http://127.0.0.1:3001/teams`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`)
         .then((response) => {
           setTeamsData(response.data);
         })
@@ -23,7 +23,7 @@ const AssignToTeam = ({ playerId, onTeamChange }) => {
   const handleTeamChange = async () => {
     try {
       const response = await axios.put(
-        `http://127.0.0.1:3001/teams/${selectedTeam}/changeRoster`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${selectedTeam}/changeRoster`,
         { playerId }
       );
       console.log('Team changed successfully:', response.data);

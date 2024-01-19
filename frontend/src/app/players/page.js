@@ -17,7 +17,7 @@ export default function PlayersList() {
   useEffect(() => {
     const fetchPlayersList = () => {
       axios
-        .get(`http://127.0.0.1:3001/players`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`)
         .then((response) => {
           setPlayers(response.data);
         })
@@ -66,12 +66,13 @@ export default function PlayersList() {
             <th onClick={() => handleSort('countryOfOrigin')}>Origin</th>
           </tr>
         </thead>
-        <tbody>
-          {sortedPlayers.map((player) => (
-            <PlayerPreview key={player._id} playerId={player._id} />
-          ))}
-        </tbody>
+        <tbody></tbody>
       </table>
+      <div>
+        {sortedPlayers.map((player) => (
+          <PlayerPreview key={player._id} playerId={player._id} />
+        ))}
+      </div>
     </>
   );
 }

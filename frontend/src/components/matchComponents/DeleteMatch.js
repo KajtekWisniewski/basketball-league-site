@@ -4,7 +4,7 @@ import axios from 'axios';
 const DeleteMatchButton = ({ matchId, onDelete }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:3001/matches/${matchId}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchId}`);
       console.log(`Match with ID ${matchId} deleted successfully`);
       onDelete();
     } catch (error) {

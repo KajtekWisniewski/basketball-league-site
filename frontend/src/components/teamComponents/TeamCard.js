@@ -10,6 +10,8 @@ import RemoveFromRoster from './RemoveFromRoster';
 import DeleteTeamButton from './RemoveTeam';
 import { INITIAL_STATE, teamCardReducer } from '@/reducers/TeamCardReducer';
 import { useSelector } from 'react-redux';
+import EditTeamForm from './EditTeam';
+import TeamChat from './TeamChat';
 
 const isUserInATeam = (currTeamId, userTeamId) => currTeamId === userTeamId;
 
@@ -17,11 +19,12 @@ const TeamCard = ({ teamId }) => {
   const [state, dispatch] = useReducer(teamCardReducer, INITIAL_STATE);
   const teamColor = useTeamColor(state.teamCol);
   const { userInfo } = useSelector((state) => state.auth);
+  const [rerender, setRerender] = useState(0);
 
   useEffect(() => {
-    const fetchPlayerData = () => {
+    const fetchTeamData = () => {
       axios
-        .get(`http://127.0.0.1:3001/teams/${teamId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamId}`)
         .then((response) => {
           // setTeam(response.data);
           // setTeamCol(response.data.name);
@@ -34,11 +37,11 @@ const TeamCard = ({ teamId }) => {
               rosterLength: response.data.roster.length
             }
           });
-          console.log(state);
+          //console.log(state);
         })
         .catch((error) => console.error('Error fetching player data:', error));
     };
-    fetchPlayerData();
+    fetchTeamData();
   }, [teamId, state.teamRoster]);
 
   const handlePlayerDelete = () => {
@@ -102,11 +105,26 @@ const TeamCard = ({ teamId }) => {
 
           {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
             userInfo?.user?.isAdmin) && (
-            <ManageRoster
-              teamId={teamId}
-              onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
-            ></ManageRoster>
+            <>
+              <ManageRoster
+                teamId={teamId}
+                onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+              ></ManageRoster>
+            </>
           )}
+          {userInfo?.user?.isAdmin && (
+            <EditTeamForm
+              teamId={teamId}
+              teamName={state.team.name}
+              teamLocation={state.team.location}
+              teamConference={state.team.conference}
+              teamDivision={state.team.division}
+              teamLink={state.team.logoLink}
+              onTeamEdit={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+            ></EditTeamForm>
+          )}
+          {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
+            userInfo?.user?.isAdmin) && <TeamChat teamId={teamId}></TeamChat>}
         </>
       )}
       {state.deleted && <div>usunieto druzyne</div>}

@@ -1,3 +1,4 @@
+'use client';
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -11,7 +12,7 @@ export const registerUser = createAsyncThunk(
         }
       };
       await axios.post(
-        `http://localhost:3001/users/register`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register`,
         { name, email, password, team },
         config
       );
@@ -38,7 +39,7 @@ export const userLogin = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        `http://localhost:3001/users/login`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login`,
         { email, password },
         config
       );

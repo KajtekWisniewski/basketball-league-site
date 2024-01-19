@@ -1,6 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const messageSchema = new Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  body: {
+    type: String,
+    required: true
+  }
+});
+
 const trainingSchema = new Schema({
   location: {
     type: String,
@@ -57,7 +74,8 @@ const teamSchema = new Schema({
       default: 100
     }
   },
-  trainings: [trainingSchema]
+  trainings: [trainingSchema],
+  messages: [messageSchema]
 });
 
 const Team = mongoose.model('Team', teamSchema, 'Teams');

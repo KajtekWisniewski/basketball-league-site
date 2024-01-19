@@ -17,7 +17,7 @@ export default function TeamsList() {
   useEffect(() => {
     const fetchTeamList = () => {
       axios
-        .get(`http://127.0.0.1:3001/teams`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`)
         .then((response) => {
           setTeams(response.data);
         })
@@ -62,12 +62,13 @@ export default function TeamsList() {
             <th onClick={() => handleSort('division')}>divison</th>
           </tr>
         </thead>
-        <tbody>
-          {sortedTeams.map((team) => (
-            <TeamPreview key={team._id} teamId={team._id} />
-          ))}
-        </tbody>
+        <tbody></tbody>
       </table>
+      <div>
+        {sortedTeams.map((team) => (
+          <TeamPreview key={team._id} teamId={team._id} />
+        ))}
+      </div>
     </>
   );
 }

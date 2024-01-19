@@ -1,18 +1,30 @@
 .navbar {
-    display: flex;
-    flex-direction: row;
-    text-decoration: none;
-    text-transform: none;
-    color: black;
-    gap: 1em;
-    background-color: rgb(143, 148, 146);
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  text-transform: none;
+  color: black;
+  gap: 1em;
+  background-color: rgb(143, 148, 146);
+  justify-content: space-between;
+  padding: 0.5em;
+  align-items: center;
 }
 
 .linkStyle {
-    color: orange;
-    text-decoration: none;
+  color: orange;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1em;
 }
 
 .linkStyle:hover {
-    opacity: 50%;
+  opacity: 50%;
+}
+
+.pfp {
+  aspect-ratio: auto;
+  width: 3em;
 }
