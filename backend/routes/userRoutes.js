@@ -51,6 +51,24 @@ router.post('/profile/:id', async (req, res) => {
   }
 });
 
+router.put('/profile/:id', async (req, res) => {
+  const userId = req.params.id;
+  const { isAdmin } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { isAdmin },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user isAdmin status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const players = await databaseHandler.getAllDocuments(User);

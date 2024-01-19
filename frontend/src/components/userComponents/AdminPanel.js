@@ -3,6 +3,7 @@ import React, { createContext, useReducer, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import exportDataToFile from '@/functions/exportToFile';
+import UserList from './userList';
 
 const AdminPanel = () => {
   const [selectedEndpoint, setSelectedEndpoint] = useState('');
@@ -89,6 +90,9 @@ const AdminPanel = () => {
             <button onClick={handleAssignRandomStats}>
               Assign teams with random stats
             </button>
+          </div>
+          <div>
+            <UserList></UserList>
           </div>
         </div>
       ) : (

@@ -1,0 +1,21 @@
+.userList {
+  display: flex;
+  flex-direction: column;
+  color: yellow;
+}
+
+.userList > li {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: flex-start;
+  margin: 0.15em;
+}
+
+.user {
+  color: white;
+}
+
+.admin {
+  color: red;
+}
