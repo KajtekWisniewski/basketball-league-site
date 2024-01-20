@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import globalStyles from '../../app/globals.css';
+import styles from '@/components/userComponents/User.module.css';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Team name is required'),
@@ -85,26 +86,37 @@ const AddTeamForm = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
+    <form onSubmit={formik.handleSubmit} className={styles.loginForm}>
+      <div className={styles.loginDiv}>
         <label htmlFor="name">Team Name:</label>
-        <input type="text" id="name" {...formik.getFieldProps('name')} />
+        <input
+          className={styles.inputini}
+          type="text"
+          id="name"
+          {...formik.getFieldProps('name')}
+        />
         {formik.touched.name && formik.errors.name && (
           <div className="error">{formik.errors.name}</div>
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="location">Location:</label>
-        <input type="text" id="location" {...formik.getFieldProps('location')} />
+        <input
+          className={styles.inputini}
+          type="text"
+          id="location"
+          {...formik.getFieldProps('location')}
+        />
         {formik.touched.location && formik.errors.location && (
           <div className="error">{formik.errors.location}</div>
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="conference">Conference:</label>
         <select
+          className={styles.inputini}
           id="conference"
           {...formik.getFieldProps('conference')}
           onChange={handleConferenceChange}
@@ -117,9 +129,13 @@ const AddTeamForm = () => {
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="division">Division:</label>
-        <select id="division" {...formik.getFieldProps('division')}>
+        <select
+          className={styles.inputini}
+          id="division"
+          {...formik.getFieldProps('division')}
+        >
           {formik.values.conference === 'western' ? (
             <>
               <option value="atlantic">Atlantic</option>
@@ -139,45 +155,63 @@ const AddTeamForm = () => {
         )}
       </div>
 
-      <label htmlFor="logoLink">Logo Link:</label>
-      <input type="text" id="logoLink" {...formik.getFieldProps('logoLink')} />
-      {formik.touched.logoLink && formik.errors.logoLink ? (
-        <div>{formik.errors.logoLink}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="logoLink">Logo Link:</label>
+        <input
+          className={styles.inputini}
+          type="text"
+          id="logoLink"
+          {...formik.getFieldProps('logoLink')}
+        />
+        {formik.touched.logoLink && formik.errors.logoLink ? (
+          <div>{formik.errors.logoLink}</div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.wins">Wins:</label>
-      <input
-        type="number"
-        id="statistics.wins"
-        {...formik.getFieldProps('statistics.wins')}
-      />
-      {formik.touched.statistics && formik.touched.statistics.wins ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.wins}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.wins">Wins:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.wins"
+          {...formik.getFieldProps('statistics.wins')}
+        />
+        {formik.touched.statistics && formik.touched.statistics.wins ? (
+          <div>{formik.errors.statistics && formik.errors.statistics.wins}</div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.losses">Losses:</label>
-      <input
-        type="number"
-        id="statistics.losses"
-        {...formik.getFieldProps('statistics.losses')}
-      />
-      {formik.touched.statistics && formik.touched.statistics.losses ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.losses}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.losses">Losses:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.losses"
+          {...formik.getFieldProps('statistics.losses')}
+        />
+        {formik.touched.statistics && formik.touched.statistics.losses ? (
+          <div>{formik.errors.statistics && formik.errors.statistics.losses}</div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.winPercentage">Win Percentage:</label>
-      <input
-        type="number"
-        id="statistics.winPercentage"
-        {...formik.getFieldProps('statistics.winPercentage')}
-        value={winratio}
-        disabled
-      />
-      {formik.touched.statistics && formik.touched.statistics.winPercentage ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.winPercentage}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.winPercentage">Win Percentage:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.winPercentage"
+          {...formik.getFieldProps('statistics.winPercentage')}
+          value={winratio}
+          disabled
+        />
+        {formik.touched.statistics && formik.touched.statistics.winPercentage ? (
+          <div>
+            {formik.errors.statistics && formik.errors.statistics.winPercentage}
+          </div>
+        ) : null}
+      </div>
 
-      <div>
+      {/* <div>
         <label>
           Add teamless players to roster: TO JEST DO NAPRAWIENIA, po pierwsze checkboxy
           po drugie przy dodawniu kazdy gracz musi miec wylowyana funkcje przypisania do
@@ -186,6 +220,7 @@ const AddTeamForm = () => {
         {teamlessPlayers.map((player) => (
           <div key={player._id}>
             <input
+              className={styles.inputini}
               type="checkbox"
               id={`player-${player._id}`}
               disabled
@@ -207,9 +242,13 @@ const AddTeamForm = () => {
         {formik.touched.roster && formik.errors.roster && (
           <div className="error">{formik.errors.roster}</div>
         )}
-      </div>
+      </div> */}
 
-      <button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
+      <button
+        className={styles.searchButton}
+        type="submit"
+        disabled={formik.isSubmitting || !formik.isValid}
+      >
         Add Team
       </button>
       {submitted && (

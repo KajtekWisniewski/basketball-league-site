@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from '@/components/userComponents/User.module.css';
 
 const RemoveFromRoster = ({ teamId, playerId, onTeamChange }) => {
   const handleTeamChange = async () => {
@@ -17,7 +18,7 @@ const RemoveFromRoster = ({ teamId, playerId, onTeamChange }) => {
 
   return (
     <div>
-      <button type="button" onClick={handleTeamChange}>
+      <button className={styles.searchButton} type="button" onClick={handleTeamChange}>
         Remove from roster
       </button>
     </div>

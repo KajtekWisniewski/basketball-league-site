@@ -10,15 +10,45 @@
   border: 1px solid black;
   border-radius: 8px;
   padding: 1em;
+  margin: 0.25em;
 }
 
 .linkStyleTeamCard {
   margin-top: 1em;
   border: rgba(0, 0, 0, 0) solid 1px;
   margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
 }
 
 .linkStyleTeamCard:hover {
   opacity: 70%;
   color: orange;
+}
+
+.editForm > h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  width: 100%;
+}
+
+.rosterSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.manageRoster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

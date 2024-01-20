@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import styles from './TeamChat.module.css';
+import Link from 'next/link';
 
 const TeamChat = ({ teamId }) => {
   const [socket, setSocket] = useState(null);
@@ -58,13 +59,19 @@ const TeamChat = ({ teamId }) => {
   };
 
   return (
-    <div>
-      {userInfo?.user && <h2>TEAM CHAT</h2>}
-      <div>
+    <div className={styles.chat}>
+      <div className={styles.chatHeader}>
+        {userInfo?.user && (
+          <Link className={styles.linkStyle} href={`/teams/${teamId}/chat`}>
+            <h2>TEAM CHAT</h2>
+          </Link>
+        )}
+      </div>
+      <div className={styles.chatSection}>
         <MessagesList messages={messages} userInfo={userInfo} />
       </div>
       {userInfo?.user && (
-        <div>
+        <div className={styles.formSection}>
           <MessageForm onSubmit={handleMessageSubmit} />
         </div>
       )}
@@ -111,14 +118,13 @@ const MessageForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.chatForm} onSubmit={handleSubmit}>
       <input
         type="text"
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         placeholder="..."
       />
-      <br />
       <button type="submit">Send Message</button>
     </form>
   );

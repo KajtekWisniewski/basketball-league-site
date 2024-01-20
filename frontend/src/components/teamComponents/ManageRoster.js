@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
+import styles from '@/components/userComponents/User.module.css';
 
 const ManageRoster = ({ teamId, onTeamChange }) => {
   const [playerId, setPlayerId] = useState('');
@@ -39,9 +40,10 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
   }
 
   return (
-    <div>
+    <div className={styles.editForm}>
       <label htmlFor="teamSelect">Choose a player to add to roster:</label>
       <select
+        className={styles.searchButton}
         id="teamSelect"
         name="teamSelect"
         value={playerId}
@@ -55,7 +57,12 @@ const ManageRoster = ({ teamId, onTeamChange }) => {
         ))}
       </select>
 
-      <button type="button" onClick={handleTeamChange} disabled={!playerId}>
+      <button
+        type="button"
+        className={styles.searchButton}
+        onClick={handleTeamChange}
+        disabled={!playerId}
+      >
         Add to roster
       </button>
     </div>

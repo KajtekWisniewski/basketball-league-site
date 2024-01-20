@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import globalStyles from '../../app/globals.css';
+import styles from '../userComponents/User.module.css';
 
 const validationSchema = Yup.object({
   name: Yup.string(),
@@ -57,7 +58,7 @@ const EditTeamForm = ({
       statistics: {
         wins: 0,
         losses: 0,
-        winPercentage: 100
+        winPercentage: winratio
       }
     },
     validationSchema: validationSchema,
@@ -76,26 +77,37 @@ const EditTeamForm = ({
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
+    <form className={styles.editForm} onSubmit={formik.handleSubmit}>
+      <div className={styles.loginDiv}>
         <label htmlFor="name">Team Name:</label>
-        <input type="text" id="name" {...formik.getFieldProps('name')} />
+        <input
+          className={styles.inputini}
+          type="text"
+          id="name"
+          {...formik.getFieldProps('name')}
+        />
         {formik.touched.name && formik.errors.name && (
-          <div className="error">{formik.errors.name}</div>
+          <div className={styles.error}>{formik.errors.name}</div>
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="location">Location:</label>
-        <input type="text" id="location" {...formik.getFieldProps('location')} />
+        <input
+          className={styles.inputini}
+          type="text"
+          id="location"
+          {...formik.getFieldProps('location')}
+        />
         {formik.touched.location && formik.errors.location && (
-          <div className="error">{formik.errors.location}</div>
+          <div className={styles.error}>{formik.errors.location}</div>
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="conference">Conference:</label>
         <select
+          className={styles.inputini}
           id="conference"
           {...formik.getFieldProps('conference')}
           onChange={handleConferenceChange}
@@ -104,13 +116,17 @@ const EditTeamForm = ({
           <option value="eastern">Eastern</option>
         </select>
         {formik.touched.conference && formik.errors.conference && (
-          <div className="error">{formik.errors.conference}</div>
+          <div className={styles.error}>{formik.errors.conference}</div>
         )}
       </div>
 
-      <div>
+      <div className={styles.loginDiv}>
         <label htmlFor="division">Division:</label>
-        <select id="division" {...formik.getFieldProps('division')}>
+        <select
+          className={styles.inputini}
+          id="division"
+          {...formik.getFieldProps('division')}
+        >
           {formik.values.conference === 'eastern' ? (
             <>
               <option value="atlantic">Atlantic</option>
@@ -126,48 +142,70 @@ const EditTeamForm = ({
           )}
         </select>
         {formik.touched.division && formik.errors.division && (
-          <div className="error">{formik.errors.division}</div>
+          <div className={styles.error}>{formik.errors.division}</div>
         )}
       </div>
 
-      <label htmlFor="logoLink">Logo Link:</label>
-      <input type="text" id="logoLink" {...formik.getFieldProps('logoLink')} />
-      {formik.touched.logoLink && formik.errors.logoLink ? (
-        <div>{formik.errors.logoLink}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="logoLink">Logo Link:</label>
+        <input
+          className={styles.inputini}
+          type="text"
+          id="logoLink"
+          {...formik.getFieldProps('logoLink')}
+        />
+        {formik.touched.logoLink && formik.errors.logoLink ? (
+          <div>{formik.errors.logoLink}</div>
+        ) : null}
+      </div>
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.wins">Wins:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.wins"
+          {...formik.getFieldProps('statistics.wins')}
+        />
+        {formik.touched.statistics && formik.touched.statistics.wins ? (
+          <div className={styles.error}>
+            {formik.errors.statistics && formik.errors.statistics.wins}
+          </div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.wins">Wins:</label>
-      <input
-        type="number"
-        id="statistics.wins"
-        {...formik.getFieldProps('statistics.wins')}
-      />
-      {formik.touched.statistics && formik.touched.statistics.wins ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.wins}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.losses">Losses:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.losses"
+          {...formik.getFieldProps('statistics.losses')}
+        />
+        {formik.touched.statistics && formik.touched.statistics.losses ? (
+          <div className={styles.error}>
+            {formik.errors.statistics && formik.errors.statistics.losses}
+          </div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.losses">Losses:</label>
-      <input
-        type="number"
-        id="statistics.losses"
-        {...formik.getFieldProps('statistics.losses')}
-      />
-      {formik.touched.statistics && formik.touched.statistics.losses ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.losses}</div>
-      ) : null}
+      <div className={styles.loginDiv}>
+        <label htmlFor="statistics.winPercentage">Win Percentage:</label>
+        <input
+          className={styles.inputini}
+          type="number"
+          id="statistics.winPercentage"
+          {...formik.getFieldProps('statistics.winPercentage')}
+          value={winratio}
+          disabled
+        />
+        {formik.touched.statistics && formik.touched.statistics.winPercentage ? (
+          <div className={styles.error}>
+            {formik.errors.statistics && formik.errors.statistics.winPercentage}
+          </div>
+        ) : null}
+      </div>
 
-      <label htmlFor="statistics.winPercentage">Win Percentage:</label>
-      <input
-        type="number"
-        id="statistics.winPercentage"
-        {...formik.getFieldProps('statistics.winPercentage')}
-        value={winratio}
-      />
-      {formik.touched.statistics && formik.touched.statistics.winPercentage ? (
-        <div>{formik.errors.statistics && formik.errors.statistics.winPercentage}</div>
-      ) : null}
-
-      <button type="submit" onClick={handleClick}>
+      <button type="submit" onClick={handleClick} className={styles.searchButton}>
         Edit team
       </button>
       {formik.isSubmitting && <div>edited team</div>}

@@ -87,10 +87,10 @@ const TeamCard = ({ teamId }) => {
               ></DeleteTeamButton>
             )}
           </div>
-          <div>
+          <div className={styles.rosterSection}>
             <h2>Current Roster</h2>
             {state.team.roster.map((player, index) => (
-              <div key={player._id + index}>
+              <div key={player._id + index} className={styles.playerSection}>
                 <PlayerPreview key={player._id} playerId={player._id} />
                 {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
                   userInfo?.user?.isAdmin) && (
@@ -107,30 +107,37 @@ const TeamCard = ({ teamId }) => {
 
           {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
             userInfo?.user?.isAdmin) && (
-            <>
-              <div>MANAGE ROSTER: ADD TEAMLESS PLAYERS</div>
-              <ManageRoster
-                teamId={teamId}
-                onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
-              ></ManageRoster>
-              <Link
-                className={styles.linkStyleTeamCard}
-                href={`/teams/${teamId}/trainings`}
-              >
-                <h2>TEAM TRAININGS PAGE</h2>
-              </Link>
-            </>
+            <div>
+              <div className={styles.manageRoster}>
+                <h1>MANAGE ROSTER</h1>
+                <ManageRoster
+                  teamId={teamId}
+                  onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+                ></ManageRoster>
+              </div>
+              <div>
+                <Link
+                  className={styles.linkStyleTeamCard}
+                  href={`/teams/${teamId}/trainings`}
+                >
+                  <h1>TEAM TRAININGS PAGE &#8594;</h1>
+                </Link>
+              </div>
+            </div>
           )}
           {userInfo?.user?.isAdmin && (
-            <EditTeamForm
-              teamId={teamId}
-              teamName={state.team.name}
-              teamLocation={state.team.location}
-              teamConference={state.team.conference}
-              teamDivision={state.team.division}
-              teamLink={state.team.logoLink}
-              onTeamEdit={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
-            ></EditTeamForm>
+            <div className={styles.editForm}>
+              <h2>EDIT TEAM FORM</h2>
+              <EditTeamForm
+                teamId={teamId}
+                teamName={state.team.name}
+                teamLocation={state.team.location}
+                teamConference={state.team.conference}
+                teamDivision={state.team.division}
+                teamLink={state.team.logoLink}
+                onTeamEdit={() => dispatch({ type: 'ROSTER_LENGTH_PLUS' })}
+              ></EditTeamForm>
+            </div>
           )}
           {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
             userInfo?.user?.isAdmin) && <TeamChat teamId={teamId}></TeamChat>}

@@ -6,6 +6,7 @@ import styles from './PlayerPreview.module.css';
 import React, { useState, useEffect, useReducer } from 'react';
 import Link from 'next/link';
 import { INITIAL_STATE, addPlayerReducer } from '@/reducers/AddPlayerReducer';
+import formStyles from '@/components/userComponents/User.module.css';
 
 function getRandomNumber(min, max) {
   min = typeof min === 'number' ? min : 0;
@@ -22,7 +23,7 @@ const AddPlayerForm = () => {
     age: state.calculatedAge,
     birthdate: '',
     countryOfOrigin: '',
-    height: '',
+    height: 160,
     team: 'teamless',
     position: '',
     teamNumber: getRandomNumber(0, 100),
@@ -122,18 +123,25 @@ const AddPlayerForm = () => {
   }, [formik.values.birthdate]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
+    <form onSubmit={formik.handleSubmit} className={formStyles.editForm}>
+      <div className={formStyles.filler}></div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="name">Name:</label>
-        <input type="text" id="name" {...formik.getFieldProps('name')} />
+        <input
+          className={formStyles.inputini}
+          type="text"
+          id="name"
+          {...formik.getFieldProps('name')}
+        />
         {formik.touched.name && formik.errors.name && (
           <div className={styles.error}>{formik.errors.name}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="age">Age:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="age"
           {...formik.getFieldProps('age')}
@@ -145,57 +153,94 @@ const AddPlayerForm = () => {
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="birthdate">Birthdate:</label>
-        <input type="date" id="birthdate" {...formik.getFieldProps('birthdate')} />
+        <input
+          className={formStyles.inputini}
+          type="date"
+          id="birthdate"
+          {...formik.getFieldProps('birthdate')}
+        />
         {formik.touched.birthdate && formik.errors.birthdate && (
           <div className={styles.error}>{formik.errors.birthdate}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="countryOfOrigin">Country of Origin:</label>
-        <select id="countryOfOrigin" {...formik.getFieldProps('countryOfOrigin')}>
+        <select
+          className={formStyles.inputini}
+          id="countryOfOrigin"
+          {...formik.getFieldProps('countryOfOrigin')}
+        >
           <option value="">Select Country</option>
           <option value="united-states">United States</option>
           <option value="canada">Canada</option>
+          <option value="germany">Germany</option>
+          <option value="mexico">Mexico</option>
+          <option value="france">France</option>
+          <option value="spain">Spain</option>
+          <option value="nigeria">Nigeria</option>
+          <option value="camerun">Camerun</option>
+          <option value="poland">Poland</option>
         </select>
         {formik.touched.countryOfOrigin && formik.errors.countryOfOrigin && (
           <div className={styles.error}>{formik.errors.countryOfOrigin}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="height">Height:</label>
-        <input type="number" id="height" {...formik.getFieldProps('height')} />
+        <input
+          className={formStyles.inputini}
+          type="number"
+          id="height"
+          {...formik.getFieldProps('height')}
+        />
         {formik.touched.height && formik.errors.height && (
           <div className={styles.error}>{formik.errors.height}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="team">Team:</label>
-        <input type="text" id="team" {...formik.getFieldProps('team')} disabled />
+        <input
+          className={formStyles.inputini}
+          type="text"
+          id="team"
+          {...formik.getFieldProps('team')}
+          disabled
+        />
         {formik.touched.team && formik.errors.team && (
           <div className={styles.error}>{formik.errors.team}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="position">Position:</label>
-        <select id="position" {...formik.getFieldProps('position')}>
+        <select
+          className={formStyles.inputini}
+          id="position"
+          {...formik.getFieldProps('position')}
+        >
           <option value="">Select Position</option>
           <option value="point-guard">Point Guard</option>
           <option value="forward-guard">Forward Guard</option>
+          <option value="center">Center</option>
+          <option value="forward">Forward</option>
+          <option value="small-forward">Small Forward</option>
+          <option value="power-forward">Power Forward</option>
+          <option value="shooting-forward">Shooting Forward</option>
         </select>
         {formik.touched.position && formik.errors.position && (
           <div className={styles.error}>{formik.errors.position}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="teamNumber">Team Number:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="teamNumber"
           {...formik.getFieldProps('teamNumber')}
@@ -206,17 +251,23 @@ const AddPlayerForm = () => {
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="pictureLink">Picture Link:</label>
-        <input type="text" id="pictureLink" {...formik.getFieldProps('pictureLink')} />
+        <input
+          className={formStyles.inputini}
+          type="text"
+          id="pictureLink"
+          {...formik.getFieldProps('pictureLink')}
+        />
         {formik.touched.pictureLink && formik.errors.pictureLink && (
           <div className={styles.error}>{formik.errors.pictureLink}</div>
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="fantasyScore">Fantasy Score:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="fantasyScore"
           {...formik.getFieldProps('fantasyScore')}
@@ -226,9 +277,10 @@ const AddPlayerForm = () => {
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.gamesPlayed">Games Played:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.gamesPlayed"
           {...formik.getFieldProps('statistics.gamesPlayed')}
@@ -241,9 +293,10 @@ const AddPlayerForm = () => {
           )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.rebounds">Rebounds:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.rebounds"
           {...formik.getFieldProps('statistics.rebounds')}
@@ -254,9 +307,10 @@ const AddPlayerForm = () => {
           )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.points">Points:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.points"
           {...formik.getFieldProps('statistics.points')}
@@ -266,9 +320,10 @@ const AddPlayerForm = () => {
         )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.foulsCommitted">Fouls Committed:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.foulsCommitted"
           {...formik.getFieldProps('statistics.foulsCommitted')}
@@ -281,9 +336,10 @@ const AddPlayerForm = () => {
           )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.freeThrowsMade">Free Throws Made:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.freeThrowsMade"
           {...formik.getFieldProps('statistics.freeThrowsMade')}
@@ -296,9 +352,10 @@ const AddPlayerForm = () => {
           )}
       </div>
 
-      <div>
+      <div className={formStyles.loginDiv}>
         <label htmlFor="statistics.freeThrowPercentage">Free Throw Percentage:</label>
         <input
+          className={formStyles.inputini}
           type="number"
           id="statistics.freeThrowPercentage"
           {...formik.getFieldProps('statistics.freeThrowPercentage')}
@@ -311,7 +368,11 @@ const AddPlayerForm = () => {
           )}
       </div>
 
-      <button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
+      <button
+        type="submit"
+        className={formStyles.searchButton}
+        disabled={formik.isSubmitting || !formik.isValid}
+      >
         Add Player
       </button>
       {state.nameError && (

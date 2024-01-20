@@ -63,6 +63,7 @@ router.put('/:id', async (req, res) => {
       { _id: teamId },
       updateData
     );
+    const updateWr = await teamAggregationHandler.calculateWinPercentage(Team);
     res.json(updatedTeam);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });

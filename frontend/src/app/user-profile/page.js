@@ -7,6 +7,7 @@ import NavBar from '@/components/NavBar';
 import TrainingManager from '@/components/teamComponents/trainings/TrainingManager';
 import { useEffect } from 'react';
 import axios from 'axios';
+import styles from '@/components/userComponents/User.module.css';
 
 export default function UserProfile() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -45,11 +46,13 @@ export default function UserProfile() {
       <div>
         {userInfo ? (
           <>
-            <span>
-              Welcome <strong>{userInfo.user.name}!</strong>
-            </span>
-            <div>{userInfo.user.isAdmin && <p>Jesteś adminem</p>}</div>
-            <h2>Your team:</h2>
+            <div className={styles.editForm}>
+              <h1>
+                Welcome <strong>{userInfo.user.name}!</strong>
+              </h1>
+              <div>{userInfo.user.isAdmin && <p>Jesteś adminem</p>}</div>
+              <h2>Your team:</h2>
+            </div>
             <TeamPreview teamId={userInfo?.user.team}></TeamPreview>
             <Link
               className={globalStyles.linkStyle}

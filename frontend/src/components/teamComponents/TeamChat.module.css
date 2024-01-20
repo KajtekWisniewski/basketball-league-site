@@ -28,3 +28,53 @@
 .messageContent {
   display: block;
 }
+
+.chatForm {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.chatForm > input {
+  width: 80%;
+  padding: 0.5em;
+  margin: 0.1em;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.chatForm > input:focus {
+  outline: none;
+}
+.chatForm > button {
+  width: 20%;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 0.1em;
+}
+.formSection {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  background-color: #1c1b22;
+}
+
+.chatSection {
+  border: solid rgba(252, 252, 252, 0.116) 2px;
+  border-radius: 8px;
+}
+
+.chatHeader {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+}

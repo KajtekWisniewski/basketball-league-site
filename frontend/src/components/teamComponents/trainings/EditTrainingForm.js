@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styles from './TrainingList.module.css';
+import styles from '@/components/userComponents/User.module.css';
 
 const EditTrainingForm = ({ onSubmit, onCancel, editingTraining }) => {
   const initialValues = {
@@ -36,21 +36,28 @@ const EditTrainingForm = ({ onSubmit, onCancel, editingTraining }) => {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      <Form className={styles.addForm}>
-        <label>
-          Location:
-          <Field type="text" name="location" />
-          <ErrorMessage name="location" component="div" className="error" />
-        </label>
+      <Form className={styles.editForm}>
+        <div className={styles.filler}></div>
+        <div className={styles.loginDiv}>
+          <label className={styles.inputini}>
+            Location:
+            <Field className={styles.inputini} type="text" name="location" />
+            <ErrorMessage name="location" component="div" className="error" />
+          </label>
+        </div>
 
-        <label>
-          Date and Time:
-          <Field type="datetime-local" name="date" />
-          <ErrorMessage name="date" component="div" className="error" />
-        </label>
+        <div className={styles.loginDiv}>
+          <label className={styles.inputini}>
+            Date and Time:
+            <Field className={styles.inputini} type="datetime-local" name="date" />
+            <ErrorMessage name="date" component="div" className="error" />
+          </label>
+        </div>
 
-        <button type="submit">Edit Training</button>
-        <button type="button" onClick={onCancel}>
+        <button className={styles.searchButton} type="submit">
+          Edit Training
+        </button>
+        <button className={styles.searchButton} type="button" onClick={onCancel}>
           Cancel Edit
         </button>
       </Form>

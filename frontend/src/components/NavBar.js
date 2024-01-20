@@ -4,6 +4,7 @@ import styles from './NavBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/redux/features/auth-slice';
 //import Image from 'next/image';
+import formStyles from '@/components/userComponents/User.module.css';
 
 const NavBar = ({}) => {
   const { userInfo } = useSelector((state) => state.auth);

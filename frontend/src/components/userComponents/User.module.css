@@ -73,3 +73,77 @@
 .player {
   background-color: rgba(124, 88, 11, 0.582);
 }
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  width: 100;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 10em;
+}
+
+.loginDiv {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  align-items: flex-start;
+}
+
+.inputini {
+  padding: 0.5em;
+  width: 100%;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 4px;
+}
+
+.inputini:focus {
+  outline: none;
+}
+
+.error {
+  color: red;
+}
+
+.teamsList {
+  width: 100%;
+  text-align: center;
+  padding: 0.75em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 4px;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  width: 100;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.filler {
+  margin-top: 1em;
+}
+
+.selectPlayers {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+  border: solid 1px rgba(255, 255, 255, 0.185);
+  padding: 0.25em;
+  margin: 0.25em;
+}
+
+.trainingListDiv {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  text-align: center;
+  justify-content: space-evenly;
+  gap: 1em;
+}
+.editingTraining {
+  color: orange;
+}

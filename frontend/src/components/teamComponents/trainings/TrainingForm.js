@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styles from './TrainingList.module.css';
+import styles from '@/components/userComponents/User.module.css';
 
 const AddTrainingForm = ({ onSubmit }) => {
   const initialValues = {
@@ -33,20 +33,27 @@ const AddTrainingForm = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      <Form className={styles.addForm}>
-        <label>
-          Location:
-          <Field type="text" name="location" />
-          <ErrorMessage name="location" component="div" className={styles.error} />
-        </label>
+      <Form className={styles.editForm}>
+        <div className={styles.filler}></div>
+        <div className={styles.loginDiv}>
+          <label className={styles.inputini}>
+            Location:
+            <Field className={styles.inputini} type="text" name="location" />
+            <ErrorMessage name="location" component="div" className={styles.error} />
+          </label>
+        </div>
 
-        <label>
-          Date and Time:
-          <Field type="datetime-local" name="date" />
-          <ErrorMessage name="date" component="div" className={styles.error} />
-        </label>
+        <div className={styles.loginDiv}>
+          <label className={styles.inputini}>
+            Date and Time:
+            <Field className={styles.inputini} type="datetime-local" name="date" />
+            <ErrorMessage name="date" component="div" className={styles.error} />
+          </label>
+        </div>
 
-        <button type="submit">Add Training</button>
+        <button className={styles.searchButton} type="submit">
+          Add Training
+        </button>
       </Form>
     </Formik>
   );

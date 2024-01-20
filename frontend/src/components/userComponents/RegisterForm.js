@@ -7,6 +7,8 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@/redux/features/authActions';
 import { useRouter } from 'next/navigation';
+import styles from './User.module.css';
+import formatDatabaseData from '@/functions/formatDatabaseData';
 
 const RegisterForm = () => {
   const [teams, setTeams] = useState([]);
@@ -61,22 +63,28 @@ const RegisterForm = () => {
         }
       }}
     >
-      <Form>
-        <div>
+      <Form className={styles.loginForm}>
+        <h2>REGISTER PAGE</h2>
+        <div className={styles.loginDiv}>
           <label htmlFor="name">Name:</label>
-          <Field type="text" id="name" name="name" />
+          <Field className={styles.inputini} type="text" id="name" name="name" />
           <ErrorMessage name="name" component="div" />
         </div>
 
-        <div>
+        <div className={styles.loginDiv}>
           <label htmlFor="email">Email:</label>
-          <Field type="email" id="email" name="email" />
+          <Field className={styles.inputini} type="email" id="email" name="email" />
           <ErrorMessage name="email" component="div" />
         </div>
 
-        <div>
+        <div className={styles.loginDiv}>
           <label htmlFor="password">Password:</label>
-          <Field type="password" id="password" name="password" />
+          <Field
+            className={styles.inputini}
+            type="password"
+            id="password"
+            name="password"
+          />
           <ErrorMessage name="password" component="div" />
         </div>
 
@@ -86,9 +94,9 @@ const RegisterForm = () => {
           <ErrorMessage name="confirmPassword" component="div" />
         </div> */}
 
-        <div>
+        <div className={styles.loginDiv}>
           <label htmlFor="team">Team:</label>
-          <Field as="select" id="team" name="team">
+          <Field className={styles.teamsList} as="select" id="team" name="team">
             {loading1 ? (
               <option value="" disabled>
                 Loading teams...
@@ -96,7 +104,7 @@ const RegisterForm = () => {
             ) : (
               teams.map((team) => (
                 <option key={team._id} value={team._id}>
-                  {team.name}
+                  {formatDatabaseData(team.name)}
                 </option>
               ))
             )}
@@ -104,7 +112,7 @@ const RegisterForm = () => {
           <ErrorMessage name="team" component="div" />
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className={styles.searchButton}>
           {loading ? 'loading' : 'Register'}
         </button>
         {!error && Formik.isSubmitting && <p>registration succesfull</p>}

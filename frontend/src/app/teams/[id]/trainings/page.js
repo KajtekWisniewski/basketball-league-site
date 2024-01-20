@@ -4,6 +4,8 @@ import axios from 'axios';
 import NavBar from '@/components/NavBar';
 import { useSelector } from 'react-redux';
 import TrainingManager from '@/components/teamComponents/trainings/TrainingManager';
+import formatDatabaseData from '@/functions/formatDatabaseData';
+import styles from '@/components/userComponents/User.module.css';
 
 function TrainingsPage({ params }) {
   const { id } = params;
@@ -37,8 +39,12 @@ function TrainingsPage({ params }) {
       <NavBar></NavBar>
       {(userInfo?.user && userInfo?.user.team === id) || userInfo?.user.isAdmin ? (
         <div>
-          <h1> this is a trainings page for {team.name}</h1>
-          <TrainingManager teamId={id} page={true}></TrainingManager>
+          <div className={styles.editForm}>
+            <h1>{formatDatabaseData(team.name)} - Trainings</h1>
+          </div>
+          <div>
+            <TrainingManager teamId={id} page={true}></TrainingManager>
+          </div>
         </div>
       ) : (
         <h1>unauthorized</h1>

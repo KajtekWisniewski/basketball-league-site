@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '@/redux/features/authActions';
 import { useRouter } from 'next/navigation';
+import styles from './User.module.css';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -41,24 +42,30 @@ const LoginForm = () => {
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <div>
+      <Form className={styles.loginForm}>
+        <h2>LOGIN PAGE</h2>
+        <div className={styles.loginDiv}>
           <label htmlFor="email">Email:</label>
-          <Field type="email" id="email" name="email" />
-          <ErrorMessage name="email" component="div" />
+          <Field className={styles.inputini} type="email" id="email" name="email" />
+          <ErrorMessage className={styles.error} name="email" component="div" />
         </div>
 
-        <div>
+        <div className={styles.loginDiv}>
           <label htmlFor="password">Password:</label>
-          <Field type="password" id="password" name="password" />
-          <ErrorMessage name="password" component="div" />
+          <Field
+            className={styles.inputini}
+            type="password"
+            id="password"
+            name="password"
+          />
+          <ErrorMessage className={styles.error} name="password" component="div" />
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" className={styles.searchButton} disabled={loading}>
           {loading ? 'loading' : 'Login'}
         </button>
         {!error && Formik.isSubmitting && <p>login success</p>}
-        {error && <p>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </Form>
     </Formik>
   );

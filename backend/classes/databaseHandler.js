@@ -13,15 +13,15 @@ class DatabaseHandler {
 
   async patchDocument(model, identifier, updateData) {
     try {
-      const allowedFields = Object.keys(model.schema.paths);
-      const filteredUpdateData = {};
-      Object.keys(updateData).forEach((field) => {
-        if (allowedFields.includes(field)) {
-          filteredUpdateData[field] = updateData[field];
-        }
-      });
+      // const allowedFields = Object.keys(model.schema.paths);
+      // const filteredUpdateData = {};
+      // Object.keys(updateData).forEach((field) => {
+      //   if (allowedFields.includes(field)) {
+      //     filteredUpdateData[field] = updateData[field];
+      //   }
+      // });
 
-      const document = await model.findOneAndUpdate(identifier, filteredUpdateData, {
+      const document = await model.findOneAndUpdate(identifier, updateData, {
         new: true
       });
       return document;

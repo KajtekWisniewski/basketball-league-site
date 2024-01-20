@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TrainingList.module.css';
+import styles from '@/components/userComponents/User.module.css';
 
 const TrainingList = ({ trainings, onEdit, editingTraining, page, onDelete }) => {
   const sortedTrainings = [...trainings].sort(
@@ -7,21 +7,42 @@ const TrainingList = ({ trainings, onEdit, editingTraining, page, onDelete }) =>
   );
 
   return (
-    <ul className={styles.trainingList}>
+    <div className={styles.editForm}>
+      <div className={styles.filler}></div>
       <h2>upcoming trainings</h2>
-      {sortedTrainings.map((training) => (
-        <li
-          key={training._id}
-          className={
-            training._id === editingTraining?._id ? styles.editingTraining : ''
-          }
-        >
-          {training.location} - {new Date(training.date).toLocaleString()}
-          {page && <button onClick={() => onEdit(training)}>Edit</button>}
-          {page && <button onClick={() => onDelete(training._id)}>Delete</button>}
-        </li>
-      ))}
-    </ul>
+      <div className={styles.trainingListDiv}>
+        {sortedTrainings.map((training, index) => (
+          <div key={index}>
+            <div
+              key={training._id}
+              className={
+                training._id === editingTraining?._id ? styles.editingTraining : ''
+              }
+            >
+              {training.location} - {new Date(training.date).toLocaleString()}
+            </div>
+            <div key={training._id + index}>
+              {page && (
+                <button
+                  className={styles.searchButton}
+                  onClick={() => onEdit(training)}
+                >
+                  Edit
+                </button>
+              )}
+              {page && (
+                <button
+                  className={styles.searchButton}
+                  onClick={() => onDelete(training._id)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

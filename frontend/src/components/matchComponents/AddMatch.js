@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import globalStyles from '@/app/globals.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import styles from '@/components/userComponents/User.module.css';
+import formatDatabaseData from '@/functions/formatDatabaseData';
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 21);
@@ -121,10 +123,12 @@ const AddMatchForm = () => {
   };
 
   return userInfo ? (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className={styles.editForm} onSubmit={handleSubmit}>
+      <div className={styles.filler}></div>
+      <div className={styles.loginDiv}>
         <label>Match Date: Specify date to proceed further: </label>
         <input
+          className={styles.inputini}
           type="datetime-local"
           value={state.date}
           onChange={(e) =>
@@ -135,17 +139,18 @@ const AddMatchForm = () => {
 
       {state.date !== '' &&
         state.opponents.map((opponent, index) => (
-          <div key={index}>
+          <div className={styles.loginDiv} key={index}>
             <h3>Opponent {index + 1}</h3>
             <label>Select Team:</label>
             <select
+              className={styles.inputini}
               value={opponent.team._id}
               onChange={(e) => handleTeamSelect(e.target.value, index)}
             >
               <option value="select-team">Select Team</option>
               {state.allteams.map((team) => (
                 <option key={team._id} value={team._id}>
-                  {team.name}
+                  {formatDatabaseData(team.name)}
                 </option>
               ))}
             </select>
@@ -154,6 +159,7 @@ const AddMatchForm = () => {
               <div>
                 <label>Team Score:</label>
                 <input
+                  className={styles.inputini}
                   type="number"
                   value={opponent.score || 0}
                   onChange={(e) => {
@@ -169,7 +175,7 @@ const AddMatchForm = () => {
                 {state.allteams
                   .find((team) => team._id === opponent.team)
                   ?.roster.map((player) => (
-                    <div key={player._id}>
+                    <div className={styles.selectPlayers} key={player._id}>
                       <input
                         type="checkbox"
                         id={`player_${player._id}`}
@@ -198,6 +204,7 @@ const AddMatchForm = () => {
                         <div>
                           <label>Rebounds:</label>
                           <input
+                            className={styles.inputini}
                             type="number"
                             value={
                               opponent.players.find((p) => p.player === player._id)
@@ -221,6 +228,7 @@ const AddMatchForm = () => {
 
                           <label>Points:</label>
                           <input
+                            className={styles.inputini}
                             type="number"
                             value={
                               opponent.players.find((p) => p.player === player._id)
@@ -244,6 +252,7 @@ const AddMatchForm = () => {
 
                           <label>Fouls Committed:</label>
                           <input
+                            className={styles.inputini}
                             type="number"
                             value={
                               opponent.players.find((p) => p.player === player._id)
@@ -267,6 +276,7 @@ const AddMatchForm = () => {
 
                           <label>Free Throws Made:</label>
                           <input
+                            className={styles.inputini}
                             type="number"
                             value={
                               opponent.players.find((p) => p.player === player._id)
@@ -289,6 +299,7 @@ const AddMatchForm = () => {
                           />
                           <label>Free Throw Percentage:</label>
                           <input
+                            className={styles.inputini}
                             type="number"
                             value={
                               opponent.players.find((p) => p.player === player._id)
@@ -318,7 +329,9 @@ const AddMatchForm = () => {
           </div>
         ))}
 
-      <button type="submit">Submit</button>
+      <button className={styles.searchButton} type="submit">
+        Submit
+      </button>
       {errors.length > 0 && errors.map((error, id) => <p key={id}>{error}</p>)}
     </form>
   ) : (
