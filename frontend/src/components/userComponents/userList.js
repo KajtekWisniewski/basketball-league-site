@@ -53,7 +53,9 @@ const UserList = () => {
         {users.map((user) => (
           <li key={user._id} className={user.isAdmin ? styles.admin : styles.user}>
             {user.name} - {user.email} - Admin: {user.isAdmin ? 'Yes' : 'No'}
-            <button onClick={() => handleDelete(user._id)}>Delete</button>
+            {!user.isAdmin && (
+              <button onClick={() => handleDelete(user._id)}>Delete</button>
+            )}
             <button onClick={() => handleToggleAdmin(user._id, user.isAdmin)}>
               Toggle Admin
             </button>

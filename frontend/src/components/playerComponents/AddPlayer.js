@@ -7,6 +7,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Link from 'next/link';
 import { INITIAL_STATE, addPlayerReducer } from '@/reducers/AddPlayerReducer';
 import formStyles from '@/components/userComponents/User.module.css';
+import { useRouter } from 'next/navigation';
 
 function getRandomNumber(min, max) {
   min = typeof min === 'number' ? min : 0;
@@ -17,6 +18,7 @@ function getRandomNumber(min, max) {
 
 const AddPlayerForm = () => {
   const [state, dispatch] = useReducer(addPlayerReducer, INITIAL_STATE);
+  const router = useRouter();
 
   const initialValues = {
     name: '',
@@ -87,6 +89,7 @@ const AddPlayerForm = () => {
       console.log('Player added successfully:', response.data);
       dispatch({ type: 'SUBMIT', payload: response.data._id });
       resetForm();
+      router.push(`/players/${response.data._id}`);
     } catch (error) {
       dispatch({ type: 'ERROR' });
       console.error('Error adding player:', error);

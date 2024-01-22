@@ -332,7 +332,7 @@ const AddMatchForm = () => {
       <button className={styles.searchButton} type="submit">
         Submit
       </button>
-      {errors.length > 0 && errors.map((error, id) => <p key={id}>{error}</p>)}
+      {errors?.length > 0 && errors?.map((error, id) => <p key={id}>{error}</p>)}
     </form>
   ) : (
     <Link className={globalStyles.linkStyle} href={`/login`}>

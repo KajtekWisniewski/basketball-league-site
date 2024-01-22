@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const DataHandler = require('../classes/databaseHandler');
 const databaseHandler = new DataHandler();
 const MatchHandler = require('../classes/matchHandler');
+const TeamHandler = require('../classes/teamHandler');
 const matchHandler = new MatchHandler();
+const teamHandler = new TeamHandler();
 
 router.use(bodyParser.json());
 

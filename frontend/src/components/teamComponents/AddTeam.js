@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import globalStyles from '../../app/globals.css';
 import styles from '@/components/userComponents/User.module.css';
+import { useRouter } from 'next/navigation';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Team name is required'),
@@ -25,6 +26,7 @@ const AddTeamForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [chosenPlayers, setChosenPlayers] = useState([]);
   const [winratio, setWinratio] = useState(100);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTeamlessPlayers = async () => {
@@ -79,6 +81,7 @@ const AddTeamForm = () => {
         );
         console.log('Team added successfully:', response.data);
         resetForm();
+        router.push(`/teams/${response.data._id}`);
       } catch (error) {
         console.error('Error adding team:', error);
       }

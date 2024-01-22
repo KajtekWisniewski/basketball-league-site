@@ -14,11 +14,15 @@
   flex-direction: row;
   color: white;
   gap: 1em;
+  justify-content: center;
 }
 
 .singleTeamPrev {
   display: flex;
   flex-direction: column;
+  margin: 1em;
+  border-radius: 8px;
+  padding: 0.25em;
 }
 
 .basicInfo {
