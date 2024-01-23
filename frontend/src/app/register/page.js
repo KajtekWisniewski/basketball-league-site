@@ -6,7 +6,7 @@ export default function RegisterPage() {
   return (
     <>
       <NavBar></NavBar>
-      <RegisterForm></RegisterForm>;
+      <RegisterForm></RegisterForm>
     </>
   );
 }

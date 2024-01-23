@@ -49,8 +49,8 @@ const AddTeamForm = () => {
 
     const availableDivisions =
       selectedConference === 'western'
-        ? ['atlantic', 'central', 'southeast']
-        : ['northwest', 'pacific', 'southwest'];
+        ? ['northwest', 'pacific', 'southwest']
+        : ['atlantic', 'central', 'southeast'];
 
     if (!availableDivisions.includes(formik.values.division)) {
       formik.setFieldValue('division', availableDivisions[0]);
@@ -61,7 +61,7 @@ const AddTeamForm = () => {
     initialValues: {
       name: '',
       location: '',
-      conference: 'western',
+      conference: 'eastern',
       division: 'atlantic',
       roster: chosenPlayers,
       logoLink:
@@ -139,7 +139,7 @@ const AddTeamForm = () => {
           id="division"
           {...formik.getFieldProps('division')}
         >
-          {formik.values.conference === 'western' ? (
+          {formik.values.conference === 'eastern' ? (
             <>
               <option value="atlantic">Atlantic</option>
               <option value="central">Central</option>

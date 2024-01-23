@@ -16,6 +16,9 @@ router.post('/', async (req, res) => {
     const newTeamData = req.body;
     newTeamData.name = req.body.name.toLowerCase().replaceAll(' ', '-');
     const addedTeam = await genericHandler.addDocument(Team, newTeamData);
+    const teamsWithWinPercentage = await teamAggregationHandler.calculateWinPercentage(
+      Team
+    );
     res.status(201).json(addedTeam);
   } catch (error) {
     res.status(400).json({ message: error.message });
