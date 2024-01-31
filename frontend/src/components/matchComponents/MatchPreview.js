@@ -33,12 +33,16 @@ const MatchPreview = ({ matchId }) => {
   if (!match) {
     return (
       <tr className="flex justify-center">
-        <ClipLoader
-          color="#ffffff"
-          size={50}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        ></ClipLoader>
+        <td className="flex justify-center">
+          <div className="flex justify-center">
+            <ClipLoader
+              color="#ffffff"
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            ></ClipLoader>
+          </div>
+        </td>
       </tr>
     );
   }

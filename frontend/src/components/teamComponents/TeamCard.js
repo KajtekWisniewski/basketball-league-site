@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
-import styles from './TeamCard.module.css';
+import styles from './TeamCard.module.scss';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import PlayerPreview from '../playerComponents/PlayerPreview';
 import ManageRoster from './ManageRoster';
@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import EditTeamForm from './EditTeam';
 import TeamChat from './TeamChat';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
 const isUserInATeam = (currTeamId, userTeamId) => currTeamId === userTeamId;
 
@@ -50,7 +51,16 @@ const TeamCard = ({ teamId }) => {
   };
   //placeholder for loading
   if (!state.team) {
-    return <div></div>;
+    return (
+      <div className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </div>
+    );
   }
 
   return (
@@ -89,8 +99,24 @@ const TeamCard = ({ teamId }) => {
           </div>
           <div className={styles.rosterSection}>
             <h2>Current Roster</h2>
+            <table className={styles.playerTable}>
+              <thead>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>Name</td>
+                  <td>Age</td>
+                  <td>Short</td>
+                  <td>Number</td>
+                  <td>Position</td>
+                  <td>Height</td>
+                  <td>Birthdate</td>
+                  <td>Country</td>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
             {state.team.roster.map((player, index) => (
-              <div key={player._id + index} className={styles.playerSection}>
+              <tr key={player._id + index} className={styles.playerSection}>
                 <PlayerPreview key={player._id} playerId={player._id} />
                 {((userInfo?.user && isUserInATeam(teamId, userInfo?.user?.team)) ||
                   userInfo?.user?.isAdmin) && (
@@ -101,7 +127,7 @@ const TeamCard = ({ teamId }) => {
                     onTeamChange={() => dispatch({ type: 'ROSTER_LENGTH_MINUS' })}
                   ></RemoveFromRoster>
                 )}
-              </div>
+              </tr>
             ))}
           </div>
 

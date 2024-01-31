@@ -4,6 +4,7 @@ import TeamPreview from './TeamPreview';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
+import tableStyles from './TeamCard.module.scss';
 
 const Standings = () => {
   const [teams, setTeams] = useState([]);
@@ -109,18 +110,22 @@ const Standings = () => {
           </select>
         </label>
 
-        <div>
+        <table className={tableStyles.playerTable}>
           {sortedTeams.map((team, id) => {
             const position = sortOrder === 'asc' ? id + 1 : sortedTeams.length - id;
 
             return (
-              <div key={id} className={styles.standing}>
-                <h1>{position}</h1>
+              <tbody key={id} className={styles.standing}>
+                <tr>
+                  <td>
+                    <h1 className="text-5xl">#{position}</h1>
+                  </td>
+                </tr>
                 <TeamPreview teamId={team._id}></TeamPreview>
-              </div>
+              </tbody>
             );
           })}
-        </div>
+        </table>
       </div>
     </>
   );

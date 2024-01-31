@@ -22,3 +22,13 @@
 .teamCard > td {
   flex: 1;
 }
+
+.standing {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.standing > tr:first-child {
+  flex: 0;
+}
