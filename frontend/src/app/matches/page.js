@@ -51,7 +51,7 @@ export default function MatchesArchive() {
 
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/matches/add-match`}>
-          <h1>ADD A MATCH</h1>
+          <h1 className="text-xl">ADD A MATCH</h1>
         </Link>
       )}
       <button onClick={() => handleSort('date')}>Date</button>

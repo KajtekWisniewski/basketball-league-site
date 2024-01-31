@@ -2,7 +2,7 @@
 import axios from 'axios';
 import TeamPreview from '../../components/teamComponents/TeamPreview';
 import React, { useState, useEffect } from 'react';
-import styles from './teamsList.module.css';
+import styles from './teamsList.module.scss';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
@@ -50,16 +50,16 @@ export default function TeamsList() {
       <NavBar></NavBar>
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
-          <h1>ADD A TEAM</h1>
+          <h1 className="text-xl">ADD A TEAM</h1>
         </Link>
       )}
       <table className={styles.teamsTable}>
         <thead>
           <tr>
-            <th onClick={() => handleSort('name')}>Name</th>
-            <th onClick={() => handleSort('statistics.winPercentage')}>WR</th>
-            <th onClick={() => handleSort('conference')}>conference</th>
-            <th onClick={() => handleSort('division')}>divison</th>
+            <button onClick={() => handleSort('name')}>Name</button>
+            <button onClick={() => handleSort('statistics.winPercentage')}>WR</button>
+            <button onClick={() => handleSort('conference')}>conference</button>
+            <button onClick={() => handleSort('division')}>divison</button>
           </tr>
         </thead>
         <tbody></tbody>

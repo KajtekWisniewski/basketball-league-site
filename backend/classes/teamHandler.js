@@ -154,6 +154,17 @@ class TeamHandler {
       throw error;
     }
   }
+
+  async isPlayerOnTeam(playerId, teamId) {
+    try {
+      const team = await Team.findOne({ _id: teamId, roster: playerId });
+
+      return !!team;
+    } catch (error) {
+      console.error('Error checking if player is on team:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = TeamHandler;

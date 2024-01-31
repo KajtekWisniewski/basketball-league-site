@@ -9,6 +9,7 @@ import formatDatabaseData from '@/functions/formatDatabaseData';
 const SearchBox = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -18,11 +19,15 @@ const SearchBox = () => {
     try {
       if (searchQuery === '') {
         setSearchResults([]);
+        setError('please specify a search query');
       } else {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/util/search?q=${searchQuery}`
         );
         setSearchResults(response.data);
+        if (searchResults.length == 0) {
+          setError('no results found');
+        }
       }
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -54,12 +59,15 @@ const SearchBox = () => {
           value={searchQuery}
           onChange={handleInputChange}
           className={styles.searchInput}
-          placeholder="Search for a player, team or matchdate"
+          placeholder="Search for a player, team or matchdate (YYYY-MM-DD)"
         />
         <button onClick={handleSearch} className={styles.searchButton}>
           Search
         </button>
-        {searchResults.length > 0 && <h1>search results</h1>}
+        {searchResults.length > 0 && <h1 className="text-xl">search results</h1>}
+        {searchResults.length == 0 && error !== '' && (
+          <h1 className="text-xl text-orange-700">{error}</h1>
+        )}
       </div>
       <ul>
         {searchResults.map((result, index) => (

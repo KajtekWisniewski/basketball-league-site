@@ -50,7 +50,7 @@ export default function PlayersList() {
       <NavBar></NavBar>
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/players/add-player`}>
-          <h1>ADD A PLAYER</h1>
+          <h1 className="text-xl">ADD A PLAYER</h1>
         </Link>
       )}
       <table className={styles.playersTable}>
