@@ -57,6 +57,19 @@ router.get('/update-player-stats', async (req, res) => {
   }
 });
 
+router.get('/find-player-matches/:id', async (req, res) => {
+  const playerId = req.params.id;
+
+  try {
+    const matchesIds = await matchHandler.findPlayerMatches(playerId);
+    res.json(matchesIds);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Internal Server error while getting player matches' });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   const matchId = req.params.id;
   const updateData = req.body;

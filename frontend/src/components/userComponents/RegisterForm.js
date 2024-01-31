@@ -47,7 +47,7 @@ const RegisterForm = () => {
         name: '',
         email: '',
         password: '',
-        team: teams.length > 0 ? teams[0]?._id : teams[0]?._id
+        team: teams?.length > 0 ? teams[0]?._id : '659b152b541744eae81546e0'
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('Required').min(3),
@@ -55,7 +55,7 @@ const RegisterForm = () => {
         password: Yup.string()
           .required('Required')
           .min(3, 'Password must be at least 3 characters long'),
-        team: Yup.string().required('Required')
+        team: Yup.string().required('Required').default(teams[0]?._id)
       })}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         dispatch(registerUser(values));
@@ -70,13 +70,21 @@ const RegisterForm = () => {
         <div className={styles.loginDiv}>
           <label htmlFor="name">Name:</label>
           <Field className={styles.inputini} type="text" id="name" name="name" />
-          <ErrorMessage name="name" component="div" />
+          <ErrorMessage
+            className="text-red-700 font-bold"
+            name="name"
+            component="div"
+          />
         </div>
 
         <div className={styles.loginDiv}>
           <label htmlFor="email">Email:</label>
           <Field className={styles.inputini} type="email" id="email" name="email" />
-          <ErrorMessage name="email" component="div" />
+          <ErrorMessage
+            className="text-red-700 font-bold"
+            name="email"
+            component="div"
+          />
         </div>
 
         <div className={styles.loginDiv}>
@@ -87,7 +95,11 @@ const RegisterForm = () => {
             id="password"
             name="password"
           />
-          <ErrorMessage name="password" component="div" />
+          <ErrorMessage
+            className="text-red-700 font-bold"
+            name="password"
+            component="div"
+          />
         </div>
 
         {/* <div>
@@ -111,14 +123,18 @@ const RegisterForm = () => {
               ))
             )}
           </Field>
-          <ErrorMessage name="team" component="div" />
+          <ErrorMessage
+            className="text-red-700 font-bold"
+            name="team"
+            component="div"
+          />
         </div>
 
         <button type="submit" disabled={loading} className={styles.searchButton}>
           {loading ? 'loading' : 'Register'}
         </button>
         {!error && Formik.isSubmitting && <p>registration succesfull</p>}
-        {error && <p>{error}</p>}
+        {error && <p className="text-red-700 font-bold">{error}</p>}
       </Form>
     </Formik>
   );

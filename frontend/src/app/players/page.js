@@ -2,7 +2,7 @@
 import axios from 'axios';
 import PlayerPreview from '../../components/playerComponents/PlayerPreview';
 import React, { useState, useEffect } from 'react';
-import styles from './playersList.module.css';
+import styles from './playersList.module.scss';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
@@ -55,15 +55,16 @@ export default function PlayersList() {
       )}
       <table className={styles.playersTable}>
         <thead>
-          <tr>
-            <th onClick={() => handleSort('name')}>Name</th>
-            <th onClick={() => handleSort('age')}>Age</th>
-            <th onClick={() => handleSort('team')}>Team</th>
-            <th onClick={() => handleSort('teamNumber')}>Number</th>
-            <th onClick={() => handleSort('position')}>Position</th>
-            <th onClick={() => handleSort('height')}>Height</th>
-            <th onClick={() => handleSort('birthdate')}>Birthdate</th>
-            <th onClick={() => handleSort('countryOfOrigin')}>Origin</th>
+          <tr className="flex flex-row gap-1 content-center border-solid border-1 border-white">
+            <th>Sort By: </th>
+            <button onClick={() => handleSort('name')}>Name</button>
+            <button onClick={() => handleSort('age')}>Age</button>
+            <button onClick={() => handleSort('team')}>Team</button>
+            <button onClick={() => handleSort('teamNumber')}>Number</button>
+            <button onClick={() => handleSort('position')}>Position</button>
+            <button onClick={() => handleSort('height')}>Height</button>
+            <button onClick={() => handleSort('birthdate')}>Birthdate</button>
+            <button onClick={() => handleSort('countryOfOrigin')}>Origin</button>
           </tr>
         </thead>
         <tbody></tbody>

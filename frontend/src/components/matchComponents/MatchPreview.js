@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
-import styles from './MatchPreview.module.css';
+import styles from './MatchPreview.module.scss';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
 
@@ -36,11 +36,10 @@ const MatchPreview = ({ matchId }) => {
   return (
     <div className={styles.matchPreviewCard}>
       <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
-        <h3>
-          {match.date.slice(0, 10)} {match.date.slice(11, 16)}
-        </h3>
+        <h3>{match.date.slice(0, 10)}</h3>
+        <h2>{match.date.slice(11, 16)}</h2>
       </Link>
-      <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor1 }}>
+      <div className={styles.singleTeamPrev1} style={{ backgroundColor: teamColor1 }}>
         <Link
           className={styles.linkStyle}
           href={`/teams/${match.opponents[0].team?._id}`}
@@ -58,14 +57,14 @@ const MatchPreview = ({ matchId }) => {
           <p>
             {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}%
           </p>
-          <h2>{match.opponents[0].score}</h2>
+          <h2 className="text-xl font-bold ">{match.opponents[0].score}</h2>
         </Link>
       </div>
 
       <h2>-</h2>
       <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor2 }}>
         <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
-          <h2>{match.opponents[1].score}</h2>
+          <h2 className="text-xl font-bold ">{match.opponents[1].score}</h2>
           <p>
             {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}%
           </p>
