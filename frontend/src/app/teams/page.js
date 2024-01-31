@@ -56,8 +56,12 @@ export default function TeamsList() {
       <table className={styles.teamsTable}>
         <thead>
           <tr className="flex flex-row gap-1 content-center border-solid border-1 border-white">
+            <td></td>
             <td>
               <button onClick={() => handleSort('name')}>Name</button>
+            </td>
+            <td>
+              <button>City</button>
             </td>
             <td>
               <button onClick={() => handleSort('conference')}>conference</button>

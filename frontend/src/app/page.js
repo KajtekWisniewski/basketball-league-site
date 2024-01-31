@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <NavBar></NavBar>
-      <h1 style={{ color: variables.primaryColor }} className="text-xl">
+      <h1 style={{ color: variables.primaryColor }} className="text-4xl">
         STANDINGS:
       </h1>
       <Standings></Standings>

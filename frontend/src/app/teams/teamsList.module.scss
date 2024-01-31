@@ -4,4 +4,7 @@
   td {
     flex: 1;
   }
+  td > button {
+    width: 100%;
+  }
 }

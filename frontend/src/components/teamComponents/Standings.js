@@ -60,6 +60,7 @@ const Standings = () => {
         <label>
           Conference:
           <select
+            className="p-1.5 m-1"
             value={conferenceFilter}
             onChange={(e) => setConferenceFilter(e.target.value)}
           >
@@ -70,6 +71,7 @@ const Standings = () => {
         <label>
           Division:
           <select
+            className="p-1.5 m-1"
             value={divisionFilter}
             onChange={(e) => setDivisionFilter(e.target.value)}
           >
@@ -83,7 +85,11 @@ const Standings = () => {
         </label>
         <label>
           Sort Order:
-          <select value={sortOrder} onChange={handleSortOrderChange}>
+          <select
+            className="p-1.5 m-1"
+            value={sortOrder}
+            onChange={handleSortOrderChange}
+          >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
