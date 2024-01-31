@@ -50,25 +50,38 @@ export default function TeamsList() {
       <NavBar></NavBar>
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
-          <h1 className="text-xl">ADD A TEAM</h1>
+          <h1 className="text-3xl">ADD A TEAM</h1>
         </Link>
       )}
       <table className={styles.teamsTable}>
         <thead>
-          <tr>
-            <button onClick={() => handleSort('name')}>Name</button>
-            <button onClick={() => handleSort('statistics.winPercentage')}>WR</button>
-            <button onClick={() => handleSort('conference')}>conference</button>
-            <button onClick={() => handleSort('division')}>divison</button>
+          <tr className="flex flex-row gap-1 content-center border-solid border-1 border-white">
+            <td>
+              <button onClick={() => handleSort('name')}>Name</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('conference')}>conference</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('division')}>divison</button>
+            </td>
+            <td>
+              <button>Wins</button>
+            </td>
+            <td>
+              <button>Losses</button>
+            </td>
+            <td>
+              <button>WR</button>
+            </td>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody className="flex flex-col flex-1">
+          {sortedTeams.map((team) => (
+            <TeamPreview key={team._id} teamId={team._id} />
+          ))}
+        </tbody>
       </table>
-      <div>
-        {sortedTeams.map((team) => (
-          <TeamPreview key={team._id} teamId={team._id} />
-        ))}
-      </div>
     </>
   );
 }

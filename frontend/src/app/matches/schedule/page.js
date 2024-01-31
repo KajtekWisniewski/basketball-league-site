@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import styles from '../matchesArchive.module.css';
+import styles from '../matchesArchive.module.scss';
 import Link from 'next/link';
 import MatchPreview from '@/components/matchComponents/MatchPreview';
 import NavBar from '@/components/NavBar';
@@ -54,9 +54,13 @@ export default function Schedule() {
         </Link>
       )}
       <button onClick={() => handleSort('date')}>Date</button>
-      {sortedMatches.map((match) => (
-        <MatchPreview key={match._id} matchId={match._id} />
-      ))}
+      <table className={styles.matchTable}>
+        <tbody className="flex flex-col flex-1">
+          {sortedMatches.map((match) => (
+            <MatchPreview key={match._id} matchId={match._id} />
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }

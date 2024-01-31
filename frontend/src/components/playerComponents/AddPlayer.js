@@ -2,7 +2,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import styles from './PlayerPreview.module.css';
+import styles from './PlayerPreview.module.scss';
 import React, { useState, useEffect, useReducer } from 'react';
 import Link from 'next/link';
 import { INITIAL_STATE, addPlayerReducer } from '@/reducers/AddPlayerReducer';

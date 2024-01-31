@@ -14,6 +14,9 @@
 .playersTable {
   display: flex;
   flex-direction: column;
+  td {
+    flex: 1;
+  }
 }
 
 .playersTable > tr > th:hover {
@@ -31,6 +34,7 @@ $base-color: black;
 @for $i from 1 through 9 {
   .playersTable > thead > tr > button:nth-child(3n + #{$i}) {
     background-color: lighten($base-color, $i * 5%);
+    flex: 1;
   }
   .playersTable > thead > tr > button:nth-child(3n + #{$i}):hover {
     opacity: $i * 10%;

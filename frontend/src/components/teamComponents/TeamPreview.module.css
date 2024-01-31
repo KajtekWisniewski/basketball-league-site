@@ -1,22 +1,24 @@
 .teamimg {
-    aspect-ratio: auto;
-    height: 5em;
+  aspect-ratio: auto;
+  height: 5em;
 }
 .teamCard {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2em;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 1em;
-    color: white;
-    margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2em;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 1em;
+  color: white;
+  margin: 0.5em;
 }
 
 .linkStyle {
-    color: white;
-    text-decoration: none;
-
+  color: white;
+  text-decoration: none;
 }
 
+.teamCard > td {
+  flex: 1;
+}

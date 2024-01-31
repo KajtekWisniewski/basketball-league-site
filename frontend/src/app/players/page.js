@@ -28,7 +28,7 @@ export default function PlayersList() {
 
   //placeholder for loading
   if (!players) {
-    return <div></div>;
+    return <div>loading players</div>;
   }
 
   const handleSort = (field) => {
@@ -50,30 +50,46 @@ export default function PlayersList() {
       <NavBar></NavBar>
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/players/add-player`}>
-          <h1 className="text-xl">ADD A PLAYER</h1>
+          <h1 className="text-3xl">ADD A PLAYER</h1>
         </Link>
       )}
       <table className={styles.playersTable}>
         <thead>
           <tr className="flex flex-row gap-1 content-center border-solid border-1 border-white">
-            <th>Sort By: </th>
-            <button onClick={() => handleSort('name')}>Name</button>
-            <button onClick={() => handleSort('age')}>Age</button>
-            <button onClick={() => handleSort('team')}>Team</button>
-            <button onClick={() => handleSort('teamNumber')}>Number</button>
-            <button onClick={() => handleSort('position')}>Position</button>
-            <button onClick={() => handleSort('height')}>Height</button>
-            <button onClick={() => handleSort('birthdate')}>Birthdate</button>
-            <button onClick={() => handleSort('countryOfOrigin')}>Origin</button>
+            <th>Sort By:</th>
+            <th className="text-6xl">{sortOrder === 'asc' ? '↑' : '↓'}</th>
+            <td>
+              <button onClick={() => handleSort('name')}>Name</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('age')}>Age</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('team')}>Team</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('teamNumber')}>Number</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('position')}>Position</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('height')}>Height</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('birthdate')}>Birthdate</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('countryOfOrigin')}>Origin</button>
+            </td>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {sortedPlayers.map((player) => (
+            <PlayerPreview key={player._id} playerId={player._id} />
+          ))}
+        </tbody>
       </table>
-      <div>
-        {sortedPlayers.map((player) => (
-          <PlayerPreview key={player._id} playerId={player._id} />
-        ))}
-      </div>
     </>
   );
 }
