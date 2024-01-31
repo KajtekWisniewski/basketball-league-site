@@ -7,6 +7,7 @@ import Link from 'next/link';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
 import { useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
 
 export default function PlayersList() {
   const [players, setPlayers] = useState(null);
@@ -28,7 +29,16 @@ export default function PlayersList() {
 
   //placeholder for loading
   if (!players) {
-    return <div>loading players</div>;
+    return (
+      <div className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </div>
+    );
   }
 
   const handleSort = (field) => {

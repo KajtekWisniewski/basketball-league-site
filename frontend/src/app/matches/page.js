@@ -7,6 +7,7 @@ import MatchPreview from '../../components/matchComponents/MatchPreview';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
 import { useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
 
 export default function MatchesArchive() {
   const [matches, setMatches] = useState(null);
@@ -28,7 +29,19 @@ export default function MatchesArchive() {
 
   //placeholder for loading
   if (!matches) {
-    return <div></div>;
+    return (
+      <>
+        <NavBar></NavBar>
+        <div className="flex justify-center">
+          <ClipLoader
+            color="#ffffff"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          ></ClipLoader>
+        </div>
+      </>
+    );
   }
 
   const handleSort = (field) => {

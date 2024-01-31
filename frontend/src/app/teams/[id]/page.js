@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TeamCard from '../../../components/teamComponents/TeamCard';
 import NavBar from '../../../components/NavBar';
+import { ClipLoader } from 'react-spinners';
 
 function TeamDetails({ params }) {
   const { id } = params;
@@ -27,7 +28,19 @@ function TeamDetails({ params }) {
 
   //placeholder for loading
   if (!team) {
-    return <div></div>;
+    return (
+      <>
+        <NavBar></NavBar>
+        <div className="flex justify-center">
+          <ClipLoader
+            color="#ffffff"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          ></ClipLoader>
+        </div>
+      </>
+    );
   }
 
   return (

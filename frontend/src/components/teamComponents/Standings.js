@@ -3,6 +3,7 @@ import styles from './TeamPreview.module.css';
 import TeamPreview from './TeamPreview';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 
 const Standings = () => {
   const [teams, setTeams] = useState([]);
@@ -53,6 +54,19 @@ const Standings = () => {
     const orderMultiplier = sortOrder === 'asc' ? 1 : -1;
     return orderMultiplier * (b.statistics.winPercentage - a.statistics.winPercentage);
   });
+
+  if (teams.length === 0) {
+    return (
+      <div className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </div>
+    );
+  }
 
   return (
     <>

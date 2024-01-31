@@ -5,6 +5,7 @@ import PlayerCard from '../../../components/playerComponents/PlayerCard';
 import NavBar from '../../../components/NavBar';
 import { useSelector } from 'react-redux';
 import MatchPreview from '@/components/matchComponents/MatchPreview';
+import { ClipLoader } from 'react-spinners';
 
 function PlayerDetails({ params }) {
   const { id } = params;
@@ -36,7 +37,19 @@ function PlayerDetails({ params }) {
 
   //placeholder for loading
   if (!player) {
-    return <div></div>;
+    return (
+      <>
+        <NavBar></NavBar>
+        <div className="flex justify-center">
+          <ClipLoader
+            color="#ffffff"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          ></ClipLoader>
+        </div>
+      </>
+    );
   }
 
   return (

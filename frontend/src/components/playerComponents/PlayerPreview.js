@@ -6,6 +6,7 @@ import styles from './PlayerPreview.module.scss';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import abbreviateTeamName from '../../functions/abbreviateTeamName';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
 const PlayerPreview = ({ playerId }) => {
   const [player, setPlayer] = useState(null);
@@ -27,7 +28,16 @@ const PlayerPreview = ({ playerId }) => {
 
   //placeholder for loading
   if (!player) {
-    return <tr></tr>;
+    return (
+      <tr className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </tr>
+    );
   }
 
   return (

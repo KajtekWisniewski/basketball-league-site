@@ -5,6 +5,7 @@ import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamPreview.module.css';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
 const TeamPreview = ({ teamId }) => {
   const [team, setTeam] = useState(null);
@@ -26,7 +27,16 @@ const TeamPreview = ({ teamId }) => {
 
   //placeholder for loading
   if (!team) {
-    return <tr></tr>;
+    return (
+      <tr className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </tr>
+    );
   }
 
   return (
