@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
-import styles from './MatchPreview.module.css';
+import styles from './MatchPreview.module.scss';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
 
@@ -33,58 +33,120 @@ const MatchPreview = ({ matchId }) => {
     return <div></div>;
   }
 
-  return (
-    <div className={styles.matchPreviewCard}>
-      <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
-        <h3>
-          {match.date.slice(0, 10)} {match.date.slice(11, 16)}
-        </h3>
-      </Link>
-      <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor1 }}>
-        <Link
-          className={styles.linkStyle}
-          href={`/teams/${match.opponents[0].team?._id}`}
-        >
-          <img
-            className={styles.teamimg}
-            src={match.opponents[0].team?.logoLink}
-            alt={`${match.opponents[0].team?.name} logo`}
-          />
-        </Link>
-        <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
-          <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
-          <p>W{match.opponents[0].team?.statistics.wins}</p>
-          <p>L{match.opponents[0].team?.statistics.losses}</p>
-          <p>
-            {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}%
-          </p>
-          <h2>{match.opponents[0].score}</h2>
-        </Link>
-      </div>
+  // return (
+  //   <div className={styles.matchPreviewCard}>
+  //     <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+  //       <h3>{match.date.slice(0, 10)}</h3>
+  //       <h2>{match.date.slice(11, 16)}</h2>
+  //     </Link>
+  //     <div className={styles.singleTeamPrev1} style={{ backgroundColor: teamColor1 }}>
+  //       <Link
+  //         className={styles.linkStyle}
+  //         href={`/teams/${match.opponents[0].team?._id}`}
+  //       >
+  //         <img
+  //           className={styles.teamimg}
+  //           src={match.opponents[0].team?.logoLink}
+  //           alt={`${match.opponents[0].team?.name} logo`}
+  //         />
+  //       </Link>
+  //       <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+  //         <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
+  //         <p>W{match.opponents[0].team?.statistics.wins}</p>
+  //         <p>L{match.opponents[0].team?.statistics.losses}</p>
+  //         <p>
+  //           {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}%
+  //         </p>
+  //         <h2 className="text-xl font-bold ">{match.opponents[0].score}</h2>
+  //       </Link>
+  //     </div>
 
-      <h2>-</h2>
-      <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor2 }}>
+  //     <h2>-</h2>
+  //     <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor2 }}>
+  //       <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+  //         <h2 className="text-xl font-bold ">{match.opponents[1].score}</h2>
+  //         <p>
+  //           {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}%
+  //         </p>
+  //         <p>W{match.opponents[1].team?.statistics.wins}</p>
+  //         <p>L{match.opponents[1].team?.statistics.losses}</p>
+  //         <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+  //       </Link>
+  //       <Link
+  //         className={styles.linkStyle}
+  //         href={`/teams/${match.opponents[1].team?._id}`}
+  //       >
+  //         <img
+  //           className={styles.teamimg}
+  //           src={match.opponents[1].team?.logoLink}
+  //           alt={`${match.opponents[1].team?.name} logo`}
+  //         />
+  //       </Link>
+  //     </div>
+  //   </div>
+  // );
+  return (
+    <tr className={styles.matchPreviewCard}>
+      <td>
         <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
-          <h2>{match.opponents[1].score}</h2>
-          <p>
-            {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}%
-          </p>
-          <p>W{match.opponents[1].team?.statistics.wins}</p>
-          <p>L{match.opponents[1].team?.statistics.losses}</p>
-          <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+          <h3>{match.date.slice(0, 10)}</h3>
+          <h2>{match.date.slice(11, 16)}</h2>
         </Link>
-        <Link
-          className={styles.linkStyle}
-          href={`/teams/${match.opponents[1].team?._id}`}
-        >
-          <img
-            className={styles.teamimg}
-            src={match.opponents[1].team?.logoLink}
-            alt={`${match.opponents[1].team?.name} logo`}
-          />
-        </Link>
-      </div>
-    </div>
+      </td>
+      <td>
+        <div className={styles.singleTeamPrev1} style={{ backgroundColor: teamColor1 }}>
+          <Link
+            className={styles.linkStyle}
+            href={`/teams/${match.opponents[0].team?._id}`}
+          >
+            <img
+              className={styles.teamimg}
+              src={match.opponents[0].team?.logoLink}
+              alt={`${match.opponents[0].team?.name} logo`}
+            />
+          </Link>
+          <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+            <h2>{formatDatabaseData(match.opponents[0].team?.name)}</h2>
+            <p>W{match.opponents[0].team?.statistics.wins}</p>
+            <p>L{match.opponents[0].team?.statistics.losses}</p>
+            <p>
+              {match.opponents[0].team?.statistics.winPercentage.toString().slice(0, 5)}
+              %
+            </p>
+          </Link>
+          <h2 className="text-3xl font-bold ">{match.opponents[0].score}</h2>
+        </div>
+      </td>
+
+      <td>
+        <h2 className="text-4xl">&nbsp;-</h2>
+      </td>
+
+      <td>
+        <div className={styles.singleTeamPrev} style={{ backgroundColor: teamColor2 }}>
+          <h2 className="text-3xl font-bold ">{match.opponents[1].score}</h2>
+          <Link className={styles.linkStyle} href={`/matches/${match._id}`}>
+            <p>
+              {match.opponents[1].team?.statistics.winPercentage.toString().slice(0, 5)}
+              %
+            </p>
+            <p>W{match.opponents[1].team?.statistics.wins}</p>
+            <p>L{match.opponents[1].team?.statistics.losses}</p>
+            <h2>{formatDatabaseData(match.opponents[1].team?.name)}</h2>
+          </Link>
+          <Link
+            className={styles.linkStyle}
+            href={`/teams/${match.opponents[1].team?._id}`}
+          >
+            <img
+              className={styles.teamimg}
+              src={match.opponents[1].team?.logoLink}
+              alt={`${match.opponents[1].team?.name} logo`}
+            />
+          </Link>
+        </div>
+      </td>
+    </tr>
   );
 };
 

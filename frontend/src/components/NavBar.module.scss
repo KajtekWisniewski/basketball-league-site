@@ -20,6 +20,11 @@
   gap: 1em;
 }
 
+.linkStyle > h2 {
+  font-size: larger;
+  font-weight: bold;
+}
+
 .linkStyle:hover {
   opacity: 50%;
 }

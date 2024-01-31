@@ -6,7 +6,6 @@
 .playerPreviewData {
   display: flex;
   flex-direction: row;
-  background-color: pink;
   justify-content: space-around;
   align-items: center;
   padding: 0.25em;
@@ -19,4 +18,9 @@
 
 .error {
   color: red;
+}
+@for $i from 1 through 9 {
+  .playerPreviewData > td:nth-child(3n + #{$i}) {
+    flex: 1;
+  }
 }

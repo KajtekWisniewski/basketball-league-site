@@ -7,6 +7,7 @@ import formatDatabaseData from '../../functions/formatDatabaseData';
 import DeletePlayerButton from './DeletePlayer';
 import AssignToTeam from './AssignToTeam';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 const PlayerCard = ({ playerId }) => {
@@ -16,20 +17,22 @@ const PlayerCard = ({ playerId }) => {
   const [deleted, setDeleted] = useState(false);
   const [triggerRerender, setTriggerRerender] = useState(0);
   const [teamId, setTeamId] = useState(null);
+  const [matchesList, setMatchesList] = useState(null);
   // do use reducera
   const { userInfo } = useSelector((state) => state.auth);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPlayerData = () => {
       const response1 = axios
-        .get(`http://127.0.0.1:3001/players/${playerId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players/${playerId}`)
         .then((response) => {
           setPlayer(response.data);
           setTeam(response.data.team);
         })
         .catch((error) => console.error('Error fetching player data:', error));
       const response2 = axios
-        .get(`http://127.0.0.1:3001/teams/getTeamId/${playerId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/getTeamId/${playerId}`)
         .then((response) => {
           setTeamId(response.data.teamId);
         })
@@ -45,6 +48,9 @@ const PlayerCard = ({ playerId }) => {
 
   const handlePlayerDelete = () => {
     setDeleted(true);
+    setTimeout(() => {
+      router.push(`/players/`);
+    }, '1000');
   };
 
   const handleTeamChange = () => {

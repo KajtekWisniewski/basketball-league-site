@@ -2,12 +2,13 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import styles from './PlayerPreview.module.css';
+import styles from './PlayerPreview.module.scss';
 import React, { useState, useEffect, useReducer } from 'react';
 import Link from 'next/link';
 import { INITIAL_STATE, addPlayerReducer } from '@/reducers/AddPlayerReducer';
 import formStyles from '@/components/userComponents/User.module.css';
 import { useRouter } from 'next/navigation';
+import formatDatabaseData from '@/functions/formatDatabaseData';
 
 function getRandomNumber(min, max) {
   min = typeof min === 'number' ? min : 0;
@@ -19,6 +20,21 @@ function getRandomNumber(min, max) {
 const AddPlayerForm = () => {
   const [state, dispatch] = useReducer(addPlayerReducer, INITIAL_STATE);
   const router = useRouter();
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`
+        );
+        setTeams(response.data);
+      } catch (error) {
+        console.error('Error fetching teams', error);
+      }
+    };
+    fetchTeams();
+  }, []);
 
   const initialValues = {
     name: '',
@@ -89,6 +105,12 @@ const AddPlayerForm = () => {
       console.log('Player added successfully:', response.data);
       dispatch({ type: 'SUBMIT', payload: response.data._id });
       resetForm();
+      if (values.team !== 'teamless') {
+        const response2 = await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${values.team}/changeRoster`,
+          { playerId: response.data._id }
+        );
+      }
       router.push(`/players/${response.data._id}`);
     } catch (error) {
       dispatch({ type: 'ERROR' });
@@ -205,7 +227,7 @@ const AddPlayerForm = () => {
         )}
       </div>
 
-      <div className={formStyles.loginDiv}>
+      {/* <div className={formStyles.loginDiv}>
         <label htmlFor="team">Team:</label>
         <input
           className={formStyles.inputini}
@@ -214,6 +236,38 @@ const AddPlayerForm = () => {
           {...formik.getFieldProps('team')}
           disabled
         />
+        {formik.touched.team && formik.errors.team && (
+          <div className={styles.error}>{formik.errors.team}</div>
+        )}
+      </div> */}
+      <div className={formStyles.loginDiv}>
+        <label htmlFor="team">Team:</label>
+        <select
+          className={formStyles.teamsList}
+          id="team"
+          name="team"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          {...formik.getFieldProps('team')}
+        >
+          {teams.length === 0 ? (
+            <option value="" disabled>
+              Loading teams...
+            </option>
+          ) : (
+            <>
+              <option value="" disabled>
+                Select a team
+              </option>
+              <option value="teamless">Teamless</option>
+              {teams.map((team) => (
+                <option key={team._id} value={team._id}>
+                  {formatDatabaseData(team.name)}
+                </option>
+              ))}
+            </>
+          )}
+        </select>
         {formik.touched.team && formik.errors.team && (
           <div className={styles.error}>{formik.errors.team}</div>
         )}

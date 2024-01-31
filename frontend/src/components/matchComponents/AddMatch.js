@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import axios from 'axios';
 import { ACTION_TYPES_MATCH } from '@/reducers/ActionTypes';
 import { INITIAL_STATE, addMatchReducer } from '@/reducers/AddMatchReducer';
@@ -20,6 +20,7 @@ const AddMatchForm = () => {
   const [errors, setErrors] = useState([]);
   const { userInfo } = useSelector((state) => state.auth);
   const router = useRouter();
+  const dateInputRef = useRef(null);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -33,9 +34,14 @@ const AddMatchForm = () => {
         console.error('Error fetching teams:', error);
       }
     };
-
     fetchTeams();
   }, []);
+
+  useEffect(() => {
+    if (dateInputRef.current) {
+      dateInputRef.current.focus();
+    }
+  }, [dateInputRef.current]);
 
   const validationSchema = Yup.object().shape({
     allteams: Yup.array(),
@@ -134,6 +140,7 @@ const AddMatchForm = () => {
           onChange={(e) =>
             dispatch({ type: ACTION_TYPES_MATCH.SET_DATE, payload: e.target.value })
           }
+          ref={dateInputRef}
         />
       </div>
 

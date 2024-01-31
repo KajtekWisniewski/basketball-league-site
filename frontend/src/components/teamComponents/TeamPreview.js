@@ -5,6 +5,7 @@ import useTeamColor from '../../hooks/useTeamColor';
 import styles from './TeamPreview.module.css';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
 const TeamPreview = ({ teamId }) => {
   const [team, setTeam] = useState(null);
@@ -26,24 +27,35 @@ const TeamPreview = ({ teamId }) => {
 
   //placeholder for loading
   if (!team) {
-    return <div></div>;
+    return (
+      <tr className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </tr>
+    );
   }
 
   return (
-    <>
-      <div className={styles.teamCard} style={{ backgroundColor: teamColor }}>
+    <tr className={styles.teamCard} style={{ backgroundColor: teamColor }}>
+      <td>
         <img className={styles.teamimg} src={team.logoLink} alt={`${team.name} logo`} />
+      </td>
+      <td>
         <Link className={styles.linkStyle} href={`/teams/${team._id}`}>
           <h2>{formatDatabaseData(team.name)}</h2>
         </Link>
-        <p>{team.location}</p>
-        <p>{formatDatabaseData(team.conference)}</p>
-        <p>{formatDatabaseData(team.division)}</p>
-        <p>{team.statistics.wins}</p>
-        <p>{team.statistics.losses}</p>
-        <p>{team.statistics.winPercentage.toString().slice(0, 5)}%</p>
-      </div>
-    </>
+      </td>
+      <td>{team.location}</td>
+      <td>{formatDatabaseData(team.conference)}</td>
+      <td>{formatDatabaseData(team.division)}</td>
+      <td>{team.statistics.wins}</td>
+      <td>{team.statistics.losses}</td>
+      <td>{team.statistics.winPercentage.toString().slice(0, 5)}%</td>
+    </tr>
   );
 };
 

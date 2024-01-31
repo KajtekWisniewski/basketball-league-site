@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import styles from './NavBar.module.css';
+import styles from './NavBar.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/redux/features/auth-slice';
 //import Image from 'next/image';

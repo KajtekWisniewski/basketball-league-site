@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import useTeamColor from '../../hooks/useTeamColor';
 import styles from './MatchCard.module.css';
@@ -9,6 +9,7 @@ import PlayerPreview from '../playerComponents/PlayerPreview';
 import DeleteMatchButton from './DeleteMatch';
 import { useSelector } from 'react-redux';
 import CommentSection from './CommentSection';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const MatchCard = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -20,7 +21,7 @@ const MatchCard = ({ matchId }) => {
   //jak zostanie czas to refactor na useReducer ^^
   const { userInfo } = useSelector((state) => state.auth);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchMatchData = () => {
       axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchId}`)
@@ -41,7 +42,16 @@ const MatchCard = ({ matchId }) => {
 
   // placeholder for loading
   if (!match) {
-    return <div></div>;
+    return (
+      <div className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </div>
+    );
   }
 
   return (

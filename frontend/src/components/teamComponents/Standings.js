@@ -3,6 +3,7 @@ import styles from './TeamPreview.module.css';
 import TeamPreview from './TeamPreview';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 
 const Standings = () => {
   const [teams, setTeams] = useState([]);
@@ -54,12 +55,26 @@ const Standings = () => {
     return orderMultiplier * (b.statistics.winPercentage - a.statistics.winPercentage);
   });
 
+  if (teams.length === 0) {
+    return (
+      <div className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </div>
+    );
+  }
+
   return (
     <>
       <div>
         <label>
           Conference:
           <select
+            className="p-1.5 m-1"
             value={conferenceFilter}
             onChange={(e) => setConferenceFilter(e.target.value)}
           >
@@ -70,6 +85,7 @@ const Standings = () => {
         <label>
           Division:
           <select
+            className="p-1.5 m-1"
             value={divisionFilter}
             onChange={(e) => setDivisionFilter(e.target.value)}
           >
@@ -83,7 +99,11 @@ const Standings = () => {
         </label>
         <label>
           Sort Order:
-          <select value={sortOrder} onChange={handleSortOrderChange}>
+          <select
+            className="p-1.5 m-1"
+            value={sortOrder}
+            onChange={handleSortOrderChange}
+          >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>

@@ -165,6 +165,24 @@ class MatchesHandler {
       throw error;
     }
   }
+
+  async findPlayerMatches(playerId) {
+    try {
+      const player = await Player.findById(playerId);
+
+      if (!player) {
+        console.error('Player not found');
+        return;
+      }
+
+      const matches = await Match.find({ 'opponents.players.player': playerId });
+      const sortedMatches = matches.sort((a, b) => b.date - a.date);
+      const matchesIds = sortedMatches.map((match) => match._id);
+      return matchesIds;
+    } catch (error) {
+      console.error('Error finding player matches', error);
+    }
+  }
 }
 
 module.exports = MatchesHandler;

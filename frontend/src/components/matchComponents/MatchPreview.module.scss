@@ -2,13 +2,24 @@
   aspect-ratio: auto;
   height: 5em;
 }
+
 .matchPreviewCard {
   display: flex;
   flex-direction: row;
   gap: 1em;
   align-items: center;
   justify-content: flex-start;
-  width: 100;
+  width: 100%;
+
+  td:first-child {
+    flex: 0;
+  }
+  td:nth-child(2) {
+    flex: 1;
+  }
+  td:nth-child(4) {
+    flex: 1;
+  }
 }
 
 .singleTeamPrev {
@@ -20,6 +31,13 @@
   margin: 0.5em;
   border-radius: 8px;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
+
+  &1 {
+    @extend .singleTeamPrev;
+    justify-content: flex-between;
+  }
 }
 
 .linkStyle {

@@ -14,7 +14,43 @@ router.use(bodyParser.json());
 router.post('/', async (req, res) => {
   try {
     const newMatchdata = req.body;
-    const addedMatch = await matchHandler.addMatch(newMatchdata);
+    const filterMatchdata = async () => {
+      try {
+        const filteredOpponents = await Promise.all(
+          newMatchdata.opponents.map(async (team) => {
+            const filteredPlayers = await Promise.all(
+              team.players.map(async (player) => {
+                const isPlayerOnTeam = await teamHandler.isPlayerOnTeam(
+                  player.player,
+                  team.team
+                );
+                return { ...player, isOnTeam: isPlayerOnTeam };
+              })
+            );
+
+            const finalFilteredPlayers = filteredPlayers.filter(
+              (player) => player.isOnTeam === true
+            );
+
+            team.players = finalFilteredPlayers;
+            return team;
+          })
+        );
+
+        return {
+          date: newMatchdata.date,
+          played: newMatchdata.played,
+          opponents: filteredOpponents
+        };
+      } catch (error) {
+        console.error('Error filtering match data:', error);
+        throw error;
+      }
+    };
+
+    const filteredMatchdata = await filterMatchdata();
+    console.dir(filteredMatchdata, { depth: null });
+    const addedMatch = await matchHandler.addMatch(filteredMatchdata);
     res.status(201).json(addedMatch);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -54,6 +90,19 @@ router.get('/update-player-stats', async (req, res) => {
     res.json(matches);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/find-player-matches/:id', async (req, res) => {
+  const playerId = req.params.id;
+
+  try {
+    const matchesIds = await matchHandler.findPlayerMatches(playerId);
+    res.json(matchesIds);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Internal Server error while getting player matches' });
   }
 });
 

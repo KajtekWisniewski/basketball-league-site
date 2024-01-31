@@ -2,11 +2,12 @@
 import axios from 'axios';
 import TeamPreview from '../../components/teamComponents/TeamPreview';
 import React, { useState, useEffect } from 'react';
-import styles from './teamsList.module.css';
+import styles from './teamsList.module.scss';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar';
 import globalStyles from '../../app/globals.css';
 import { useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
 
 export default function TeamsList() {
   const [teams, setTeams] = useState(null);
@@ -28,7 +29,19 @@ export default function TeamsList() {
 
   //placeholder for loading
   if (!teams) {
-    return <div></div>;
+    return (
+      <>
+        <NavBar></NavBar>
+        <div className="flex justify-center">
+          <ClipLoader
+            color="#ffffff"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          ></ClipLoader>
+        </div>
+      </>
+    );
   }
 
   const handleSort = (field) => {
@@ -50,25 +63,42 @@ export default function TeamsList() {
       <NavBar></NavBar>
       {userInfo?.user && (
         <Link className={globalStyles.linkStyle} href={`/teams/add-team`}>
-          <h1>ADD A TEAM</h1>
+          <h1 className="text-3xl">ADD A TEAM</h1>
         </Link>
       )}
       <table className={styles.teamsTable}>
         <thead>
-          <tr>
-            <th onClick={() => handleSort('name')}>Name</th>
-            <th onClick={() => handleSort('statistics.winPercentage')}>WR</th>
-            <th onClick={() => handleSort('conference')}>conference</th>
-            <th onClick={() => handleSort('division')}>divison</th>
+          <tr className="flex flex-row gap-1 content-center border-solid border-1 border-white">
+            <td></td>
+            <td>
+              <button onClick={() => handleSort('name')}>Name</button>
+            </td>
+            <td>
+              <button>City</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('conference')}>conference</button>
+            </td>
+            <td>
+              <button onClick={() => handleSort('division')}>divison</button>
+            </td>
+            <td>
+              <button>Wins</button>
+            </td>
+            <td>
+              <button>Losses</button>
+            </td>
+            <td>
+              <button>WR</button>
+            </td>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody className="flex flex-col flex-1">
+          {sortedTeams.map((team) => (
+            <TeamPreview key={team._id} teamId={team._id} />
+          ))}
+        </tbody>
       </table>
-      <div>
-        {sortedTeams.map((team) => (
-          <TeamPreview key={team._id} teamId={team._id} />
-        ))}
-      </div>
     </>
   );
 }

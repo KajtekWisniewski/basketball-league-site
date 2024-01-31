@@ -110,3 +110,13 @@ a {
 .linkStyle {
   text-decoration: none;
 }
+
+button {
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 0.25em;
+}
+
+button:hover {
+  opacity: 50%;
+}
