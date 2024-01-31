@@ -48,6 +48,16 @@ class DatabaseHandler {
       if (existingDocument) {
         throw new Error(`Document with name '${name}' already exists.`);
       }
+      if (
+        Object.values(data).some((value) => {
+          if (typeof value === 'string') {
+            return value.trim() === '';
+          }
+          return value === '' || value === null || value === undefined;
+        })
+      ) {
+        throw new Error('Fields cannot be empty if they are present in the data.');
+      }
       const newDocument = await model.create(data);
       return newDocument;
     } catch (error) {
