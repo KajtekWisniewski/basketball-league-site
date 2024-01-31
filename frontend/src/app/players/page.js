@@ -30,14 +30,17 @@ export default function PlayersList() {
   //placeholder for loading
   if (!players) {
     return (
-      <div className="flex justify-center">
-        <ClipLoader
-          color="#ffffff"
-          size={150}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        ></ClipLoader>
-      </div>
+      <>
+        <NavBar></NavBar>
+        <div className="flex justify-center">
+          <ClipLoader
+            color="#ffffff"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          ></ClipLoader>
+        </div>
+      </>
     );
   }
 

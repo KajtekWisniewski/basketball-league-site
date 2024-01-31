@@ -5,6 +5,7 @@ import useTeamColor from '../../hooks/useTeamColor';
 import styles from './MatchPreview.module.scss';
 import formatDatabaseData from '../../functions/formatDatabaseData';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
 const MatchPreview = ({ matchId }) => {
   const [match, setMatch] = useState(null);
@@ -30,7 +31,16 @@ const MatchPreview = ({ matchId }) => {
 
   // placeholder for loading
   if (!match) {
-    return <div></div>;
+    return (
+      <tr className="flex justify-center">
+        <ClipLoader
+          color="#ffffff"
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        ></ClipLoader>
+      </tr>
+    );
   }
 
   // return (
