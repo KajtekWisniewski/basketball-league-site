@@ -7,6 +7,7 @@ import formatDatabaseData from '../../functions/formatDatabaseData';
 import DeletePlayerButton from './DeletePlayer';
 import AssignToTeam from './AssignToTeam';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 const PlayerCard = ({ playerId }) => {
@@ -19,6 +20,7 @@ const PlayerCard = ({ playerId }) => {
   const [matchesList, setMatchesList] = useState(null);
   // do use reducera
   const { userInfo } = useSelector((state) => state.auth);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPlayerData = () => {
@@ -46,6 +48,9 @@ const PlayerCard = ({ playerId }) => {
 
   const handlePlayerDelete = () => {
     setDeleted(true);
+    setTimeout(() => {
+      router.push(`/players/`);
+    }, '1000');
   };
 
   const handleTeamChange = () => {
