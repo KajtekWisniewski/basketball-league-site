@@ -71,9 +71,7 @@ const AdminPanel = () => {
             {' '}
             <label htmlFor="endpoints">Select Endpoint:</label>
             <select id="endpoints" onChange={handleEndpointChange}>
-              <option value="" disabled>
-                Select an endpoint
-              </option>
+              <option value="">Select an endpoint</option>
               {endpoints.map((endpoint) => (
                 <option key={endpoint} value={endpoint}>
                   {endpoint}

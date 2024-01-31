@@ -47,12 +47,14 @@ const RegisterForm = () => {
         name: '',
         email: '',
         password: '',
-        team: teams.length > 0 ? teams[0]._id : ''
+        team: teams.length > 0 ? teams[0]?._id : teams[0]?._id
       }}
       validationSchema={Yup.object({
-        name: Yup.string().required('Required'),
+        name: Yup.string().required('Required').min(3),
         email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().required('Required'),
+        password: Yup.string()
+          .required('Required')
+          .min(3, 'Password must be at least 3 characters long'),
         team: Yup.string().required('Required')
       })}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
